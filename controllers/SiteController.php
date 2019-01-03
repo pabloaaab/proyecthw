@@ -22,7 +22,25 @@ use app\models\User;
 
 class SiteController extends Controller
 {
-    public function actionUser()
+    /**
+     * @inheritdoc
+     */
+    
+    
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
+    }
+	
+	public function actionUser()
     {
         return $this->render('user');
     }
@@ -187,7 +205,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(["site/login"]);//$this->goHome();
         }
 
         $model = new LoginForm();

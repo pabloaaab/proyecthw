@@ -43,7 +43,7 @@ $this->title = 'Inscritos   ';
 
         </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-condensed">
         <table class="table table-hover">
             <thead>
             <tr>
