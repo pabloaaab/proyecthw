@@ -89,6 +89,7 @@ class PeriodosController extends Controller {
                         $pagosperiodo->pago1 = 0;
                         $pagosperiodo->total = $_POST["valor_mensual"][$intIndice];
                         $pagosperiodo->afecta_pago = 0;
+                        $pagosperiodo->anulado = 0;
                         $pagosperiodo->sede = $estudiante->sede;
                         $pagosperiodo->matricula = $estudiante->consecutivo;
                         $pagosperiodo->nivel = $estudiante->nivel;
@@ -112,24 +113,32 @@ class PeriodosController extends Controller {
     
     public function actionGenerarperiodoclonar($mesaclonar) {        
         $pagosperiodosaclonar = PagosPeriodo::find()->where(['=','mensualidad',$mesaclonar])->all();
-        $mensaje = "";
-        $periodo = date("F-Y", strtotime($_POST["periodo"]));
+        $mensaje = "";                
         if(Yii::$app->request->post()) {
             if (isset($_POST["consecutivo"])) {
+                $periodo = date("F-Y", strtotime($_POST["periodo"]));
                 $intIndice = 0;
                 foreach ($_POST["consecutivo"] as $intCodigo) {
                     $pagosperiodo = new PagosPeriodo();                    
                     $pagoaclonar = PagosPeriodo::find()->where(['consecutivo' => $intCodigo])->one();
-                    $pagosperiodo->identificacion = $pagosperiodo->identificacion;
-                    $pagosperiodo->mensualidad = $periodo;
-                    $pagosperiodo->pago1 = 0;
-                    $pagosperiodo->total = $_POST["valor_mensual"][$intIndice];
-                    $pagosperiodo->afecta_pago = 0;
-                    $pagosperiodo->sede = $pagosperiodo->sede;
-                    $pagosperiodo->matricula = $pagosperiodo->matricula;
-                    $pagosperiodo->nivel = $pagosperiodo->nivel;
-                    $pagosperiodo->insert(false);
-                                            
+                    $estudiante = Matriculados::find()->where(['consecutivo' => $pagoaclonar->matricula])->one();
+                    $pagosperiodosgenerados = PagosPeriodo::find()
+                        ->where(['=', 'mensualidad', $periodo])
+                        ->andWhere(['=', 'identificacion', $estudiante->identificacion])
+                        ->all();
+                    $reg = count($pagosperiodosgenerados);
+                    if ($reg == 0) {
+                        $pagosperiodo->identificacion = $pagoaclonar->identificacion;
+                        $pagosperiodo->mensualidad = $periodo;
+                        $pagosperiodo->pago1 = 0;
+                        $pagosperiodo->total = $estudiante->valor_mensual;
+                        $pagosperiodo->afecta_pago = 0;
+                        $pagosperiodo->anulado = 0;
+                        $pagosperiodo->sede = $estudiante->sede;
+                        $pagosperiodo->matricula = $estudiante->consecutivo;
+                        $pagosperiodo->nivel = $estudiante->nivel;
+                        $pagosperiodo->insert(false);
+                    }
                     $intIndice++;
                 }
                 $this->redirect(["periodos/index"]);

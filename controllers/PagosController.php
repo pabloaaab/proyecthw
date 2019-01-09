@@ -49,8 +49,7 @@ class PagosController extends Controller {
                 }
             } else {
                 $table = Pagos::find()
-                        ->where(['=', 'tipo_pago', 'mensualidad'])
-                        ->andFilterWhere(['like', 'identificacion', $identificación])                            
+                        ->where(['=', 'tipo_pago', 'mensualidad'])                                                    
                         ->orderBy('nropago desc');
                 $count = clone $table;
                 $pages = new Pagination([

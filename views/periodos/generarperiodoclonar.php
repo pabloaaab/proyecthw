@@ -14,6 +14,9 @@ use yii\helpers\ArrayHelper;
 use yii\web\Session;
 use yii\data\Pagination;
 use yii\db\ActiveQuery;
+use kartik\date\DatePicker;
+
+$this->title = 'Periodos a clonar';
 
 ?>
 
@@ -41,7 +44,7 @@ if ($mensaje != ""){
             <table class="table table-condensed">
                 <thead>
                 <tr>
-                    <td><input type="text" name="periodo" value="<?= date("Y-m-d") ?>"></td>
+                    <td><label>Fecha de Generación: </label><input type="date" name="periodo" required>  </td>
                 </tr>
                 </thead>                
             </table>
@@ -72,8 +75,8 @@ if ($mensaje != ""){
                     if ($estudiante) { ?>
                 <tr>
                     <td><?= $val->consecutivo ?></td>
-                    <td><?= $val->identificacion ?></td>
-                    <td><?= $val->identificacion ?></td>
+                    <td><?= $estudiante->entificacion->nombreestudiante ?></td>
+                    <td><?= $estudiante->entificacion->nombredocente ?></td>
                     <td><?= $val->nivel ?></td>
                     <td><?= $val->sede ?></td>
                     <td><input type="text" name="total[]" value="<?= $val->total ?>"></td>                    

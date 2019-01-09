@@ -73,7 +73,7 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => 'Otros Pagos', 'url' => ['/pagosotros/index']],
                         ['label' => 'Pagos Mensualidad', 'url' => ['/pagos/index']],
-                        ['label' => 'Pagos Periodo', 'url' => ['/site/index']],                        
+                        ['label' => 'Pagos Periodo', 'url' => ['/pagosperiodo/index']],                        
                         ['label' => 'HabeasData', 'url' => ['/site/index']],
                         ['label' => 'Notas', 'url' => ['/site/index']],
                     ]

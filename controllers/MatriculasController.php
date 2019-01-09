@@ -55,8 +55,7 @@ class MatriculasController extends Controller {
                     $form->getErrors();
                 }
             } else {
-                $table = Matriculados::find()
-                        ->where(['<>', 'estado2', 'ANTERIOR'])
+                $table = Matriculados::find()                        
                         ->orderBy('consecutivo desc');
                 $count = clone $table;
                 $pages = new Pagination([

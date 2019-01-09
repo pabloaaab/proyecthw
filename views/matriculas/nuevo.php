@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\Sede;
+use kartik\date\DatePicker;
 
 $this->title = 'Nueva Matricula';
 ?>
@@ -34,8 +35,13 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
 <div class="row" id="matricula">
     <div class="col-lg-3">
         <?= $form->field($model, 'consecutivo')->input("hidden") ?>
-        <?= $form->field($model, 'identificacion')->input("text") ?>
-        <?= $form->field($model, 'fechamat')->input("text") ?>        
+        <?= $form->field($model, 'identificacion')->input("text") ?>        
+        <?= $form->field($model,'fechamat')->widget(DatePicker::className(),['name' => 'check_issue_date',
+                'value' => date('d-M-Y', strtotime('+2 days')),
+                'options' => ['placeholder' => 'Seleccione una fecha ...'],
+                'pluginOptions' => [
+                    'format' => 'yyyy-m-d',
+                    'todayHighlight' => true]]) ?>
         <?= $form->field($model, 'nivel')->dropDownList($nivel,['prompt' => 'Seleccione...' ]) ?>
         <?= $form->field($model, 'valor_matricula')->input("text") ?>
         <?= $form->field($model, 'valor_mensual')->input("text") ?>

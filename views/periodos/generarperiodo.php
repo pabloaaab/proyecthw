@@ -14,7 +14,9 @@ use yii\helpers\ArrayHelper;
 use yii\web\Session;
 use yii\data\Pagination;
 use yii\db\ActiveQuery;
+use kartik\date\DatePicker;
 
+$this->title = 'Periodos';
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -41,7 +43,7 @@ if ($mensaje != ""){
             <table class="table table-condensed">
                 <thead>
                 <tr>
-                    <td><input type="text" name="periodo" value="<?= date("Y-m-d") ?>"></td>
+                    <td><label>Fecha de Generación: </label><input type="date" name="periodo" required>  </td>                   
                 </tr>
                 </thead>                
             </table>
