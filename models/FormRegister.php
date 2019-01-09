@@ -11,18 +11,22 @@ class FormRegister extends model{
     public $email;
     public $password;
     public $password_repeat;
-
+    public $nombrecompleto;
+    public $sede;    
+    public $perfil;
+    
     public function rules()
     {
         return [
-            [['username', 'email', 'password', 'password_repeat'], 'required', 'message' => 'Campo requerido'],
+            [['username', 'email', 'password', 'password_repeat','sede','nombrecompleto','perfil'], 'required', 'message' => 'Campo requerido'],
             ['username', 'match', 'pattern' => "/^.{3,50}$/", 'message' => 'Mínimo 3 y máximo 50 caracteres'],
             ['username', 'match', 'pattern' => "/^[0-9a-z]+$/i", 'message' => 'Sólo se aceptan letras y números'],
             ['username', 'username_existe'],
+            ['nombrecompleto', 'match', 'pattern' => "/^.{3,50}$/", 'message' => 'Mínimo 3 y máximo 50 caracteres'],
             ['email', 'match', 'pattern' => "/^.{5,80}$/", 'message' => 'Mínimo 5 y máximo 80 caracteres'],
             ['email', 'email', 'message' => 'Formato no válido'],
             ['email', 'email_existe'],
-            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 6 y máximo 16 caracteres'],
+            ['password', 'match', 'pattern' => "/^.{6,16}$/", 'message' => 'Mínimo 6 y máximo 16 caracteres'],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Los passwords no coinciden'],
         ];
     }
@@ -50,6 +54,19 @@ class FormRegister extends model{
         {
             $this->addError($attribute, "El usuario seleccionado existe");
         }
+    }
+    
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Usuario:',
+            'email' => 'Email:',
+            'password' => 'Clave:',
+            'password_repeat' => 'Confirmar Clave:',
+            'sede' => 'Sede:',
+            'nombrecompleto' => 'Nombre Completo:',
+            'perfil' => 'Perfil:',
+        ];
     }
 
 }

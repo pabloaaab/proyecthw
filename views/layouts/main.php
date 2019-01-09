@@ -50,14 +50,14 @@ AppAsset::register($this);
                   'items' => [
                       ['label' => 'Inscritos', 'url' => ['/inscritos/index']],
                       ['label' => 'Sedes', 'url' => ['/sedes/index']],
-                      ['label' => 'Grupos', 'url' => ['/grupos/index']],
+                      ['label' => 'Grupos', 'url' => ['/site/index']],
                   ]
                 ],
                 [
                 'label' => 'Procesos',
                 'items' => [
-                    ['label' => 'Matriculas', 'url' => ['/grupos/grupo_matricula']],
-                    ['label' => 'Periodos Generados', 'url' => ['/site/index']],
+                    ['label' => 'Matriculas', 'url' => ['/matriculas/index']],
+                    ['label' => 'Periodos Generados', 'url' => ['/periodos/index']],
                     ['label' => 'Facturas Faltantes', 'url' => ['/site/index']],
                     ]
                 ],
@@ -71,11 +71,18 @@ AppAsset::register($this);
                 [
                     'label' => 'Movimientos',
                     'items' => [
-                        ['label' => 'Pagos Mensualidad', 'url' => ['/site/index']],
-                        ['label' => 'Pagos Periodo', 'url' => ['/site/index']],
-                        ['label' => 'Otros Pagos', 'url' => ['/site/index']],
+                        ['label' => 'Otros Pagos', 'url' => ['/pagosotros/index']],
+                        ['label' => 'Pagos Mensualidad', 'url' => ['/pagos/index']],
+                        ['label' => 'Pagos Periodo', 'url' => ['/site/index']],                        
                         ['label' => 'HabeasData', 'url' => ['/site/index']],
                         ['label' => 'Notas', 'url' => ['/site/index']],
+                    ]
+                ],
+                [
+                    'label' => 'Configuración',
+                    'items' => [                                                
+                        ['label' => 'Usuarios', 'url' => ['/site/usuarios']],
+                        ['label' => 'Otros', 'url' => ['/site/index']],
                     ]
                 ]
             ],
@@ -92,7 +99,7 @@ AppAsset::register($this);
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Cerrar(' . Yii::$app->user->identity->username . ')',
+                    'Cerrar (' . Yii::$app->user->identity->perfil.' - '. Yii::$app->user->identity->nombrecompleto . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()

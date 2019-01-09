@@ -164,5 +164,5 @@ class FormInscrito extends Model
         {
             $this->addError($attribute, "El email ya existe".$this->consecutivo);
         }
-    }
+    }        
 }

@@ -18,5 +18,15 @@ class Inscritos extends ActiveRecord
     {
         return 'inscritos';
     }
+    
+    public function getNombreDocente()
+    {
+        return "{$this->identificacion} - {$this->nombre1}  {$this->nombre2}  {$this->apellido1}  {$this->apellido2}";
+    }
+    
+    public function getNombreEstudiante()
+    {
+        return "{$this->identificacion} - {$this->nombre1}  {$this->nombre2}  {$this->apellido1}  {$this->apellido2}";
+    }
 
 }

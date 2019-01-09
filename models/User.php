@@ -13,6 +13,10 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $accessToken;
     public $activate;
     public $role;
+    public $nombrecompleto;
+    public $sede;
+    public $fechacreacion;
+    public $perfil;
 
     public static function isUserAdmin($id)
     {

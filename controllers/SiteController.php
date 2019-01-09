@@ -17,6 +17,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\FormRegister;
+use app\models\FormFiltroUsuarios;
 use app\models\Users;
 use app\models\User;
 
@@ -109,11 +110,65 @@ class SiteController extends Controller
         }
     }*/
 
+    public function actionUsuarios() {
+        if (!Yii::$app->user->isGuest) {
+            $form = new FormFiltroUsuarios;
+            $perfil = null;
+            $username = null;
+            $nombrecompleto = null;
+            $sede = null;
+            if ($form->load(Yii::$app->request->get())) {
+                if ($form->validate()) {
+                    $perfil = Html::encode($form->perfil);
+                    $username = Html::encode($form->username);
+                    $nombrecompleto = Html::encode($form->nombrecompleto);
+                    $sede = Html::encode($form->sede);
+                    $table = Users::find()                            
+                            ->andFilterWhere(['like', 'perfil', $perfil])
+                            ->andFilterWhere(['like', 'username', $username])
+                            ->andFilterWhere(['like', 'nombrecompleto', $nombrecompleto])
+                            ->andFilterWhere(['like', 'sede', $sede])
+                            ->orderBy('perfil asc');
+                    $count = clone $table;
+                    $pages = new Pagination([
+                        'pageSize' => 20,
+                        'totalCount' => $count->count()
+                    ]);
+                    $model = $table
+                            ->offset($pages->offset)
+                            ->limit($pages->limit)
+                            ->all();
+                } else {
+                    $form->getErrors();
+                }
+            } else {
+                $table = Users::find()
+                        ->orderBy('perfil asc');
+                $count = clone $table;
+                $pages = new Pagination([
+                    'pageSize' => 20,
+                    'totalCount' => $count->count(),
+                ]);
+                $model = $table
+                        ->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->all();
+            }
+            return $this->render('usuarios', [
+                        'model' => $model,
+                        'form' => $form,
+                        'pagination' => $pages,
+            ]);
+        } else {
+            return $this->redirect(["site/login"]);
+        }
+    }
+    
     public function actionRegister()
     {
         //Creamos la instancia con el model de validación
         $model = new FormRegister;
-
+        $tipomsg = null;
         //Mostrará un mensaje en la vista cuando el usuario se haya registrado
         $msg = null;
 
@@ -144,6 +199,19 @@ class SiteController extends Controller
                 //Creamos un token de acceso único para el usuario
                 $table->accessToken = $this->randKey("abcdef0123456789", 200);
                 $table->activate = 1;
+                $table->nombrecompleto = $model->nombrecompleto;
+                $table->role = $model->perfil;
+                if ($table->role == 1){
+                    $perfil = "Administrativo";
+                } 
+                if ($table->role == 2){
+                        $perfil = "Administrador"; 
+                }
+                if ($table->role == 3){
+                        $perfil = "Docente"; 
+                }
+                $table->perfil = $perfil;
+                $table->sede = $model->sede;
                 //Si el registro es guardado correctamente
                 if ($table->insert())
                 {
@@ -160,7 +228,7 @@ class SiteController extends Controller
                 $model->getErrors();
             }
         }
-        return $this->render("register", ["model" => $model, "msg" => $msg]);
+        return $this->render("register", ["model" => $model, "msg" => $msg,'tipomsg' => $tipomsg]);
     }
 
 
