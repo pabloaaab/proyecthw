@@ -17,22 +17,32 @@ $this->title = 'Inscritos   ';
     "method" => "get",
     "action" => Url::toRoute("inscritos/index"),
     "enableClientValidation" => true,
+    'options' => ['class' => 'form-horizontal'],
+    'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-10 form-group">{input}{error}</div>',
+                    'labelOptions' => ['class' => 'col-sm-2 control-label'],
+                    'options' => []
+                ],
+
 ]);
 ?>
-
-<div class="form-group">
-    <?= $f->field($form, "q")->input("search") ?>
-</div>
-
-<div class="row" >
-    <div class="col-lg-4">
-        <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-        <a align="right" href="<?= Url::toRoute("inscritos/index") ?>" class="btn btn-primary">Actualizar</a>
+<div class="panel panel-primary panel-filters">
+    <div class="panel-heading">
+        Filtros de busqueda <i class="glyphicon glyphicon-filter"></i>
     </div>
-</div>
-<?php $f->end() ?>
+	
+    <div class="panel-body" id="filtromatriculas">
+        <div class="row" >
+            <?= $f->field($form, "q")->input("search") ?>
+        </div>
+        <div class="panel-footer text-right">
+            <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
+            <a align="right" href="<?= Url::toRoute("inscritos/index") ?>" class="btn btn-primary">Actualizar</a>
+        </div>
+    </div>
+</div> 
 
-<h3><?= $search ?></h3>
+<?php $f->end() ?>
 
     <div class = "form-group" align="right">
         <a align="right" href="<?= Url::toRoute("inscritos/nuevo") ?>" class="btn btn-primary">Nuevo Inscrito</a>

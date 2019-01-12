@@ -23,7 +23,7 @@ class FormFiltroInscritos extends Model
     public function attributeLabels()
     {
         return [
-            'q' => 'Buscar:',
+            'q' => 'N° Identificacion:',
         ];
     }
 }

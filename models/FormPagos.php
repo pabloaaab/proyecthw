@@ -9,7 +9,7 @@ use app\models\Pagos;
 /**
  * ContactForm is the model behind the contact form.
  */
-class FormOtrosPagos extends Model
+class FormPagos extends Model
 {    
     public $identificacion;
     public $mensualidad;

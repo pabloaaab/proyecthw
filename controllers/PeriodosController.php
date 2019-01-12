@@ -31,7 +31,7 @@ class PeriodosController extends Controller {
                     $table = PagosPeriodo::find()                            
                             ->andFilterWhere(['like', 'mensualidad', $mes]) 
                             ->groupBy('mensualidad')
-                            ->orderBy('nropago desc');
+                            ->orderBy('consecutivo desc');
                     $count = clone $table;
                     $pages = new Pagination([
                         'pageSize' => 40,
@@ -47,7 +47,7 @@ class PeriodosController extends Controller {
             } else {
                 $table = PagosPeriodo::find()                        
                         ->groupBy('mensualidad')
-                        ->orderBy('nropago desc');
+                        ->orderBy('consecutivo desc');
                 $count = clone $table;
                 $pages = new Pagination([
                     'pageSize' => 100,

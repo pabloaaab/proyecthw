@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\Sede;
+use kartik\date\DatePicker;
 
 $this->title = 'Anular Pago';
 ?>
@@ -27,7 +28,12 @@ $form = ActiveForm::begin([
 
 <div class="row" id="Pagosotros">
     <div class="col-lg-3">                               
-        <?= $form->field($model, 'fechaanulado')->input("text") ?>                
+        <?= $form->field($model,'fechaanulado')->widget(DatePicker::className(),['name' => 'check_issue_date',
+                'value' => date('d-M-Y', strtotime('+2 days')),
+                'options' => ['placeholder' => 'Seleccione una fecha ...'],
+                'pluginOptions' => [
+                    'format' => 'yyyy-m-d',
+                    'todayHighlight' => true]]) ?>                
         <?= $form->field($model, 'motivo')->textArea(['maxlength' => true]) ?>      
     </div>
 

@@ -31,6 +31,7 @@ use app\models\FormFiltroSede;
                         $search = Html::encode($form->q);
                         $table = Sede::find()
                             ->where(['like', 'consecutivo', $search])
+                            ->andWhere(['=','estado','1'])    
                             ->orWhere(['like', 'sede', $search])
                             ->orderBy('consecutivo asc');
                         $count = clone $table;
@@ -47,6 +48,7 @@ use app\models\FormFiltroSede;
                     }
                 } else {
                     $table = Sede::find()
+                        ->where(['=','estado','1'])
                         ->orderBy('consecutivo asc');
                     $count = clone $table;
                     $pages = new Pagination([

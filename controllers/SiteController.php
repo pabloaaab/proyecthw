@@ -18,8 +18,12 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\FormRegister;
 use app\models\FormFiltroUsuarios;
+use app\models\FormEditRegister;
+use app\models\FormChangepassword;
 use app\models\Users;
 use app\models\User;
+use app\models\UsersDetalle;
+use app\models\Permisos;
 
 class SiteController extends Controller
 {
@@ -231,7 +235,156 @@ class SiteController extends Controller
         return $this->render("register", ["model" => $model, "msg" => $msg,'tipomsg' => $tipomsg]);
     }
 
+    public function actionEditar($id) {
+        $model = new FormEditRegister;
+        $msg = null;
 
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+                $table = Users::find()->where(['id' => $id])->one();
+                if ($table) {
+                    $table->username = $model->username;
+                    $table->nombrecompleto = $model->nombrecompleto;
+                    $table->role = $model->role;
+                    $table->sede = $model->sede;
+                    $table->email = $model->email;
+                    $table->activate = $model->activo;
+                    if ($table->update()) {
+                        $msg = "El registro ha sido actualizado correctamente";
+                        return $this->redirect(["site/usuarios"]);
+                    } else {
+                        $msg = "El registro no sufrio ningun cambio";
+                        return $this->redirect(["site/usuarios"]);
+                    }
+                } else {
+                    $msg = "El registro seleccionado no ha sido encontrado";
+                }
+            } else {
+                $model->getErrors();
+            }
+        }
+
+        if (Yii::$app->request->get("id")) {
+            $table = Users::find()->where(['id' => $id])->one();
+
+            if ($table) {
+                $model->username = $table->username;
+                $model->nombrecompleto = $table->nombrecompleto;
+                $model->role = $table->role;
+                $model->sede = $table->sede;
+                $model->email = $table->email;
+                $model->activo = $table->activate;
+            } else {
+                return $this->redirect(["site/usuarios"]);
+            }
+        } else {
+            return $this->redirect(["site/usuarios"]);
+        }
+        return $this->render("editregister", ["model" => $model, "msg" => $msg]);
+    }
+    
+    public function actionChangepassword($id) {
+        $model = new FormChangepassword;
+        $msg = null;
+
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+                $table = Users::find()->where(['id' => $id])->one();
+                if ($table) {
+                    //Encriptamos el password
+                    $table->password = crypt($model->password, Yii::$app->params["salt"]);
+                    //Creamos una cookie para autenticar al usuario cuando decida recordar la sesión, esta misma
+                    //clave será utilizada para activar el usuario
+                    $table->authKey = $this->randKey("abcdef0123456789", 200);
+                    //Creamos un token de acceso único para el usuario
+                    $table->accessToken = $this->randKey("abcdef0123456789", 200);
+                    if ($table->update()) {
+                        $msg = "El registro ha sido actualizado correctamente";
+                        return $this->redirect(["site/usuarios"]);
+                    } else {
+                        $msg = "El registro no sufrio ningun cambio";
+                        return $this->redirect(["site/usuarios"]);
+                    }
+                } else {
+                    $msg = "El registro seleccionado no ha sido encontrado";
+                }
+            } else {
+                $model->getErrors();
+            }
+        }
+
+        return $this->render("changepassword", ["model" => $model, "msg" => $msg]);
+    }
+    
+    public function actionUserspermisos($id) {
+        $user = Users::findOne($id);
+        $userspermisos = UsersDetalle::find()->where(['=', 'id_users', $id])->all();
+        $mensaje = "";        
+        if (isset($_POST["actualizar"])) {
+                if (isset($_POST["id_users_detalle"])) {
+                    $intIndice = 0;
+                    foreach ($_POST["id_users_detalle"] as $intCodigo) {                        
+                        $table = UsersDetalle::findOne($intCodigo);
+                        $table->activo = $_POST["activo"][$intIndice];
+                        $table->update();
+                        $intIndice++;
+                    }
+                    $this->redirect(["site/userspermisos", 'id' => $id]);
+                }
+            }
+        return $this->render('userspermisos', [
+            'userspermisos' => $userspermisos,
+            'model' => $user,
+            'mensaje' => $mensaje,
+
+        ]);
+    }
+    
+    public function actionNewpermiso($id) {
+        $permisos = Permisos::find()->all();
+        $mensaje = "";
+        if(Yii::$app->request->post()) {
+            if (isset($_POST["idpermiso"])) {
+                $intIndice = 0;
+                foreach ($_POST["idpermiso"] as $intCodigo) {
+                    $permiso = Permisos::findOne($intCodigo);
+                    $userspermisos = new UsersDetalle();                    
+                    $userspermisosdetalle = UsersDetalle::find()
+                            ->where(['=','id',$id])
+                            ->where(['=','id_permiso_fk',$intCodigo])
+                            ->all();                    
+                    $reg = count($userspermisosdetalle);
+                    if ($reg == 0) {
+                        $userspermisos->id_permiso_fk = $intCodigo;                        
+                        $userspermisos->id_users = $id;                        
+                        $userspermisos->insert(false);                        
+                    }
+                    $intIndice++;
+                }
+                $this->redirect(["site/userspermisos",'id' => $id]);
+            }else{
+                $mensaje = "Debe seleccionar al menos un registro";
+            }
+        }
+
+        return $this->render('newpermiso', [
+            'permisos' => $permisos,            
+            'mensaje' => $mensaje,
+            'id' => $id,
+
+        ]);
+    }        
+    
     public function behaviors()
     {
         return [

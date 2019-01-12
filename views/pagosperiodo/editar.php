@@ -5,9 +5,10 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\Sede;
+use app\models\PagosPeriodo;
 use kartik\date\DatePicker;
 
-$this->title = 'Editar Matricula';
+$this->title = 'Editar Pago Periodo';
 ?>
 
 <h1>Editar registro con Consecutivo <?= Html::encode($_GET["consecutivo"]) ?></h1>
@@ -26,27 +27,23 @@ $this->title = 'Editar Matricula';
 ?>
 
 <?php
-$sede = ArrayHelper::map(\app\models\Sede::find()->all(), 'sede','sede');
-$nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
-$docentes = app\models\Inscritos::find()->Where(['=', 'tipo_personal', 'Docente'])->all();
-$docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
+$sede = ArrayHelper::map(Sede::find()->all(), 'sede','sede');
+$periodos = PagosPeriodo::find()
+            ->groupBy('mensualidad')
+            ->orderBy('nropago desc')
+            ->all();
+$periodos = ArrayHelper::map($periodos, "mensualidad", "mensualidad");
 ?>
 
 <div class="row" id="matricula">
     <div class="col-lg-3">
-        <?= $form->field($model, 'consecutivo')->input("hidden") ?>
-        <?= $form->field($model, 'identificacion')->input("text") ?>
-        <?= $form->field($model,'fechamat')->widget(DatePicker::className(),['name' => 'check_issue_date',
-                'value' => date('d-M-Y', strtotime('+2 days')),
-                'options' => ['placeholder' => 'Seleccione una fecha ...'],
-                'pluginOptions' => [
-                    'format' => 'yyyy-m-d',
-                    'todayHighlight' => true]]) ?>        
-        <?= $form->field($model, 'nivel')->dropDownList($nivel,['prompt' => 'Seleccione...' ]) ?>
-        <?= $form->field($model, 'valor_matricula')->input("text") ?>
-        <?= $form->field($model, 'valor_mensual')->input("text") ?>
-        <?= $form->field($model, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?>
+        <?= $form->field($model, 'nropago')->input("text") ?>
         <?= $form->field($model, 'sede')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?>
+        <?= $form->field($model, 'mensualidad')->dropDownList($periodos, ['prompt' => 'Seleccione...']) ?>        
+        <?= $form->field($model, 'identificacion')->input("text") ?>                       
+        <?= $form->field($model, 'cuota')->input("text") ?>
+        <?= $form->field($model, 'valorpagado')->input("text") ?>        
+        <?= $form->field($model, 'pagado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>        
     </div>
 
 </div>
@@ -54,7 +51,7 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
 <div class="row">
     <div class="col-lg-4">
         <?= Html::submitButton("Actualizar", ["class" => "btn btn-primary"])?>
-        <a href="<?= Url::toRoute("matriculas/index") ?>" class="btn btn-primary">Regresar</a>
+        <a href="<?= Url::toRoute("pagosperiodo/index") ?>" class="btn btn-primary">Regresar</a>
     </div>
 </div>
 

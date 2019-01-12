@@ -38,8 +38,8 @@ $this->title = 'Pagos Periodos';
             <?= $formulario->field($form, "nivel")->input("search") ?>
             <?= $formulario->field($form, "sede")->input("search") ?>
             <?= $formulario->field($form, "mensualidad")->input("search") ?>
-            <?= $formulario->field($form, "anulado")->input("search") ?>
-            <?= $formulario->field($form, "pagado")->input("search") ?>
+            <?= $formulario->field($form, 'anulado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>
+            <?= $formulario->field($form, 'pagado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>
         </div>
         <div class="panel-footer text-right">
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
@@ -76,17 +76,23 @@ $this->title = 'Pagos Periodos';
             <tbody>
             <?php foreach ($model as $val): ?>
             <tr>
+                <?php if ($val->anulado == 1) { $anulado = "SI"; }else { $anulado = "NO"; } ?>
+                <?php if ($val->afecta_pago == 1) { $pagado = "SI"; }else { $pagado = "NO"; } ?>
                 <th scope="row"><?= $val->consecutivo ?></th>                
                 <td><?= $val->nropago ?></td>                                
                 <td><?= $val->mensualidad ?></td>
                 <td><?= $val->identificacion ?></td>
                 <td><?= "$ ".number_format($val->total) ?></td>
                 <td><?= "$ ".number_format($val->pago1) ?></td>
-                <td><?= $val->afecta_pago ?></td>
-                <td><?= $val->anulado ?></td>
+                <td><?= $pagado ?></td>
+                <td><?= $anulado ?></td>
                 <td><?= $val->sede ?></td>
                 <td><?= $val->nivel ?></td>
+                <?php if ($val->anulado == 0) { ?>
                 <td><a href="<?= Url::toRoute(["pagosperiodo/editar", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-document-edit.svg" align="center" width="20px" height="20px" title="Editar"></a></td>                                                
+                <?php } else { ?>
+                <td></td>
+                <?php } ?>
                 <td><a href="<?= Url::toRoute(["pagosperiodo/cerrar", "consecutivo" => $val->consecutivo]) ?>"><img src="svg/si-glyph-delete.svg" align="center" width="20px" height="20px" title="Cerrar Pago"></a></td>
             </tr>
             </tbody>

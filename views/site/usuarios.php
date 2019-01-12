@@ -80,9 +80,13 @@ $this->title = 'Usuarios';
                 <td><?= $val->perfil ?></td>
                 <td><?= $val->sede ?></td>
                 <td><?= $val->fechacreacion ?></td>
-                <td><a href="<?= Url::toRoute(["site/view", "id" => $val->id]) ?>" ><img src="svg/si-glyph-document-edit.svg" align="center" width="20px" height="20px" title="Editar"></a></td>                
-                <td><a href="<?= Url::toRoute(["site/editar", "id" => $val->id]) ?>"><img src="svg/si-glyph-print.svg" align="center" width="20px" height="20px" title="Imprimir"></a></td>
-                <td><a href="<?= Url::toRoute(["site/cambiarclave", "id" => $val->id]) ?>"><img src="svg/si-glyph-checked.svg" align="center" width="20px" height="20px" title="Aprobar"></a></td>                
+                <td><a href="<?= Url::toRoute(["site/editar", "id" => $val->id]) ?>" ><img src="svg/si-glyph-document-edit.svg" align="center" width="20px" height="20px" title="Editar"></a></td>                                
+                <td><?= Html::a('Cambio Clave', ["site/changepassword", "id" => $val->id], ['class' => 'btn btn-default']) ?></td>                
+                <?php if ($val->role == 1){ ?>
+                    <td><?= Html::a('Permisos', ["site/userspermisos", "id" => $val->id], ['class' => 'btn btn-default']) ?></td>                
+                <?php } else { ?>
+                   <td></td>                
+                <?php } ?>
             </tr>
             </tbody>
             <?php endforeach; ?>

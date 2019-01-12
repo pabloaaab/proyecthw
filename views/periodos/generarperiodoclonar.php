@@ -61,8 +61,7 @@ if ($mensaje != ""){
                 <thead>
                 <tr>
                     <th scope="col">Matricula</th>
-                    <th scope="col">Estudiante</th>
-                    <th scope="col">Docente</th>
+                    <th scope="col">Estudiante</th>                    
                     <th scope="col">Nivel</th>
                     <th scope="col">Sede</th>
                     <th scope="col">Valor Mensualidad</th>                    
@@ -75,8 +74,7 @@ if ($mensaje != ""){
                     if ($estudiante) { ?>
                 <tr>
                     <td><?= $val->consecutivo ?></td>
-                    <td><?= $estudiante->entificacion->nombreestudiante ?></td>
-                    <td><?= $estudiante->entificacion->nombredocente ?></td>
+                    <td><?= $estudiante->entificacion->nombreestudiante ?></td>                    
                     <td><?= $val->nivel ?></td>
                     <td><?= $val->sede ?></td>
                     <td><input type="text" name="total[]" value="<?= $val->total ?>"></td>                    

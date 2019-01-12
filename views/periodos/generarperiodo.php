@@ -71,9 +71,16 @@ if ($mensaje != ""){
                 <tbody>
                 <?php foreach ($matriculasabiertas as $val): ?>
                 <tr>
+                    <?php if($val->docente){
+                        $docente = \app\models\Inscritos::find()->where(['=','identificacion',$val->docente])->one();
+                        $dato = $docente->nombredocente;
+                        } else {
+                            $dato = "Sin definir";
+                        }
+                    ?>
                     <td><?= $val->consecutivo ?></td>
                     <td><?= $val->entificacion->nombreestudiante ?></td>
-                    <td><?= $val->entificacion->nombredocente ?></td>
+                    <td><?= $dato ?></td>
                     <td><?= $val->nivel ?></td>
                     <td><?= $val->sede ?></td>
                     <td><input type="text" name="valor_mensual[]" value="<?= $val->valor_mensual ?>"></td>                    

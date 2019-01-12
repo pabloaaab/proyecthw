@@ -17,29 +17,41 @@ $this->title = 'Periodos';
 <?php
 $f = ActiveForm::begin([
             "method" => "get",
-            "action" => Url::toRoute("periodos/index"),
+            "action" => Url::toRoute("periodos/index"),            
             "enableClientValidation" => true,
-        ]);
+            'options' => ['class' => 'form-horizontal'],
+            'fieldConfig' => [
+                            'template' => '{label}<div class="col-sm-11 form-group">{input}{error}</div>',
+                            'labelOptions' => ['class' => 'col-sm-1 control-label'],
+                            'options' => []
+                        ],
+]);
 ?>
 
-<div class="form-group">
-    <?php
-    $periodos = PagosPeriodo::find()
-            ->groupBy('mensualidad')
-            ->orderBy('nropago desc')
-            ->all();
-    ;
-    $periodos = ArrayHelper::map($periodos, "mensualidad", "mensualidad");
-    ?>
-    <?= $f->field($form, 'mes')->dropDownList($periodos, ['prompt' => 'Seleccione...']) ?>    
-</div>
-
-<div class="row" >
-    <div class="col-lg-4">
-        <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-        <a align="right" href="<?= Url::toRoute("periodos/index") ?>" class="btn btn-primary">Actualizar</a>
+<div class="panel panel-primary panel-filters">
+    <div class="panel-heading">
+        Filtros de busqueda <i class="glyphicon glyphicon-filter"></i>
+    </div>
+	
+    <div class="panel-body" id="filtromatriculas">
+        <div class="row" >
+            <?php
+            $periodos = PagosPeriodo::find()
+                    ->groupBy('mensualidad')
+                    ->orderBy('nropago desc')
+                    ->all();
+            ;
+            $periodos = ArrayHelper::map($periodos, "mensualidad", "mensualidad");
+            ?>
+            <?= $f->field($form, 'mes')->dropDownList($periodos, ['prompt' => 'Seleccione...']) ?>
+        </div>
+        <div class="panel-footer text-right">
+            <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
+            <a align="right" href="<?= Url::toRoute("periodos/index") ?>" class="btn btn-primary">Actualizar</a>
+        </div>
     </div>
 </div>
+
 <?php $f->end() ?>
 
 <div class="container-fluid">

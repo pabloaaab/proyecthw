@@ -17,19 +17,31 @@ $f = ActiveForm::begin([
             "method" => "get",
             "action" => Url::toRoute("pagosotros/index"),
             "enableClientValidation" => true,
-        ]);
+            'options' => ['class' => 'form-horizontal'],
+            'fieldConfig' => [
+                            'template' => '{label}<div class="col-sm-10 form-group">{input}{error}</div>',
+                            'labelOptions' => ['class' => 'col-sm-2 control-label'],
+                            'options' => []
+                        ],
+]);
 ?>
 
-<div class="form-group">
-    <?= $f->field($form, "identificacion")->input("search") ?>
-</div>
-
-<div class="row" >
-    <div class="col-lg-4">
-        <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-        <a align="right" href="<?= Url::toRoute("pagosotros/index") ?>" class="btn btn-primary">Actualizar</a>
+<div class="panel panel-primary panel-filters">
+    <div class="panel-heading">
+        Filtros de busqueda <i class="glyphicon glyphicon-filter"></i>
+    </div>
+	
+    <div class="panel-body" id="filtromatriculas">
+        <div class="row" >
+            <?= $f->field($form, "identificacion")->input("search") ?>
+        </div>
+        <div class="panel-footer text-right">
+            <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
+            <a align="right" href="<?= Url::toRoute("pagosotros/index") ?>" class="btn btn-primary">Actualizar</a>
+        </div>
     </div>
 </div>
+
 <?php $f->end() ?>
 
 <div class="container-fluid">

@@ -17,17 +17,27 @@ $f = ActiveForm::begin([
             "method" => "get",
             "action" => Url::toRoute("pagos/index"),
             "enableClientValidation" => true,
-        ]);
+            'options' => ['class' => 'form-horizontal'],
+            'fieldConfig' => [
+                            'template' => '{label}<div class="col-sm-10 form-group">{input}{error}</div>',
+                            'labelOptions' => ['class' => 'col-sm-2 control-label'],
+                            'options' => []
+                        ],
+]);
 ?>
-
-<div class="form-group">
-    <?= $f->field($form, "identificacion")->input("search") ?>
-</div>
-
-<div class="row" >
-    <div class="col-lg-4">
-        <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-        <a align="right" href="<?= Url::toRoute("pagos/index") ?>" class="btn btn-primary">Actualizar</a>
+<div class="panel panel-primary panel-filters">
+    <div class="panel-heading">
+        Filtros de busqueda <i class="glyphicon glyphicon-filter"></i>
+    </div>
+	
+    <div class="panel-body" id="filtromatriculas">
+        <div class="row" >
+            <?= $f->field($form, "identificacion")->input("search") ?>
+        </div>
+        <div class="panel-footer text-right">
+            <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
+            <a align="right" href="<?= Url::toRoute("pagos/index") ?>" class="btn btn-primary">Actualizar</a>
+        </div>
     </div>
 </div>
 <?php $f->end() ?>
@@ -38,17 +48,18 @@ $f = ActiveForm::begin([
     </div>
 </div>
 <div class = "form-group" align="right">
-    <a href="<?= Url::toRoute("pagos/nuevo") ?>" class="btn btn-primary">Nuevo Pago</a>
+    <a href="<?= Url::toRoute("pagos/pagospendientes") ?>" class="btn btn-primary" target="_blank">Nuevo Pago</a>
 </div>
 <div class="table-condensed">
     <table class="table table-condensed">
         <thead>
             <tr>
                 <th scope="col">N° Pago</th>                                
-                <th scope="col">Estudiante</th>                
-                <th scope="col">Fecha Pago</th>                
+                <th scope="col">Estudiante</th>                                                
+                <th scope="col">Pago</th>
                 <th scope="col">Tipo Pago</th>                
                 <th scope="col">Valor Pago</th>
+                <th scope="col">Fecha Pago</th>
                 <th scope="col">Observaciones</th>
                 <th scope="col">Anulado</th>                
                 <th scope="col"></th>
@@ -64,10 +75,11 @@ $f = ActiveForm::begin([
                         $anulado = "SI";
                     } ?>
                     <th scope="row"><?= $val->nropago ?></th>                
-                    <td><?= $val->entificacion->nombreestudiante ?></td>                                                
-                    <td><?= $val->fecha_registro ?></td>                
+                    <td><?= $val->entificacion->nombreestudiante ?></td>                                                                    
+                    <td><?= $val->mensualidad ?></td>
                     <td><?= $val->ttpago ?></td>                    
                     <td><?= number_format($val->total) ?></td>
+                    <td><?= $val->fecha_registro ?></td>
                     <td><?= $val->observaciones ?></td>
                     <td align="center"><?= $anulado ?></td>
                     <td><a href="<?= Url::toRoute(["pagos/imprimir", "nropago" => $val->nropago]) ?>" target="_blank"><img src="svg/si-glyph-print.svg" align="center" width="20px" height="20px" title="Imprimir"></a></td>
@@ -82,7 +94,7 @@ $f = ActiveForm::begin([
     </table>
 
     <div class = "form-group" align="right">
-        <a href="<?= Url::toRoute("pagos/nuevo") ?>" class="btn btn-primary">Nuevo Pago</a>
+        <a href="<?= Url::toRoute("pagos/pagospendientes") ?>" class="btn btn-primary">Nuevo Pago</a>
     </div>
     <div class = "form-group" align="left">
 <?= LinkPager::widget(['pagination' => $pagination]) ?>

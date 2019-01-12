@@ -37,8 +37,6 @@ $this->title = 'Inicio de Sesión';
                 <?= Html::submitButton('Entrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
-
     <?php ActiveForm::end(); ?>
-
 
 </div>

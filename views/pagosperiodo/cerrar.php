@@ -5,8 +5,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\Sede;
+use kartik\date\DatePicker;
 
-$this->title = 'Cancelar Matricula';
+$this->title = 'Cerrar Pago Periodo';
 ?>
 
 <h1>Cancelar registro con Consecutivo <?= Html::encode($_GET["consecutivo"]) ?></h1>
@@ -27,8 +28,13 @@ $form = ActiveForm::begin([
 
 <div class="row" id="matricula">
     <div class="col-lg-3">                       
-        <?= $form->field($model, 'motivo_can')->textArea(['maxlength' => true]) ?>      
-        <?= $form->field($model, 'fecha_can')->input("text") ?>                
+        <?= $form->field($model,'fecha_cerro_grupo')->widget(DatePicker::className(),['name' => 'check_issue_date',
+                'value' => date('d-M-Y', strtotime('+2 days')),
+                'options' => ['placeholder' => 'Seleccione una fecha ...'],
+                'pluginOptions' => [
+                    'format' => 'yyyy-m-d',
+                    'todayHighlight' => true]]) ?>        
+        <?= $form->field($model, 'cerro_grupo')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>                        
     </div>
 
 </div>
@@ -36,7 +42,7 @@ $form = ActiveForm::begin([
 <div class="row">
     <div class="col-lg-4">
         <?= Html::submitButton("Guardar", ["class" => "btn btn-primary"]) ?>
-        <a href="<?= Url::toRoute("matriculas/index") ?>" class="btn btn-primary">Regresar</a>
+        <a href="<?= Url::toRoute("pagosperiodo/index") ?>" class="btn btn-primary">Regresar</a>
     </div>
 </div>
 
