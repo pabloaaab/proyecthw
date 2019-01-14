@@ -77,13 +77,16 @@ class PeriodosController extends Controller {
                 foreach ($_POST["consecutivo"] as $intCodigo) {
                     $pagosperiodo = new PagosPeriodo();
                     $mensualidad = date("F-Y", strtotime($_POST["periodo"]));
+                    $validar = date('Y-m', strtotime($_POST["periodo"]));                    
                     $estudiante = Matriculados::find()->where(['consecutivo' => $intCodigo])->one();
+                    $validar2 = date('Y-m', strtotime($estudiante->fechamat));                    
                     $pagosperiodosgenerados = PagosPeriodo::find()
                         ->where(['=', 'mensualidad', $mensualidad])
                         ->andWhere(['=', 'identificacion', $estudiante->identificacion])
                         ->all();
                     $reg = count($pagosperiodosgenerados);
                     if ($reg == 0) {
+                        if ($validar2 <= $validar){
                         $pagosperiodo->identificacion = $estudiante->identificacion;
                         $pagosperiodo->mensualidad = $mensualidad;
                         $pagosperiodo->pago1 = 0;
@@ -94,6 +97,7 @@ class PeriodosController extends Controller {
                         $pagosperiodo->matricula = $estudiante->consecutivo;
                         $pagosperiodo->nivel = $estudiante->nivel;
                         $pagosperiodo->insert(false);
+                        }
                         
                     }
                     $intIndice++;

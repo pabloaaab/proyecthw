@@ -6,6 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'FPDF_TPL' => $vendorDir . '/setasign/fpdi/fpdf_tpl.php',
+    'FPDI' => $vendorDir . '/setasign/fpdi/fpdi.php',
+    'FilterASCII85' => $vendorDir . '/setasign/fpdi/filters/FilterASCII85.php',
+    'FilterASCIIHexDecode' => $vendorDir . '/setasign/fpdi/filters/FilterASCIIHexDecode.php',
+    'FilterLZW' => $vendorDir . '/setasign/fpdi/filters/FilterLZW.php',
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert.php',
     'PHPUnit\\Framework\\AssertionFailedError' => $vendorDir . '/phpunit/phpunit/src/Framework/AssertionFailedError.php',
@@ -174,7 +179,7 @@ return array(
     'PHPUnit\\Util\\Configuration' => $vendorDir . '/phpunit/phpunit/src/Util/Configuration.php',
     'PHPUnit\\Util\\ConfigurationGenerator' => $vendorDir . '/phpunit/phpunit/src/Util/ConfigurationGenerator.php',
     'PHPUnit\\Util\\ErrorHandler' => $vendorDir . '/phpunit/phpunit/src/Util/ErrorHandler.php',
-    'PHPUnit\\Util\\FileLoader' => $vendorDir . '/phpunit/phpunit/src/Util/FileLoader.php',
+    'PHPUnit\\Util\\FileLoader' => $vendorDir . '/phpunit/phpunit/src/Util/Fileloader.php',
     'PHPUnit\\Util\\Filesystem' => $vendorDir . '/phpunit/phpunit/src/Util/Filesystem.php',
     'PHPUnit\\Util\\Filter' => $vendorDir . '/phpunit/phpunit/src/Util/Filter.php',
     'PHPUnit\\Util\\Getopt' => $vendorDir . '/phpunit/phpunit/src/Util/Getopt.php',
@@ -199,7 +204,7 @@ return array(
     'PHPUnit\\Util\\TextTestListRenderer' => $vendorDir . '/phpunit/phpunit/src/Util/TextTestListRenderer.php',
     'PHPUnit\\Util\\Type' => $vendorDir . '/phpunit/phpunit/src/Util/Type.php',
     'PHPUnit\\Util\\XdebugFilterScriptGenerator' => $vendorDir . '/phpunit/phpunit/src/Util/XdebugFilterScriptGenerator.php',
-    'PHPUnit\\Util\\Xml' => $vendorDir . '/phpunit/phpunit/src/Util/Xml.php',
+    'PHPUnit\\Util\\Xml' => $vendorDir . '/phpunit/phpunit/src/Util/XML.php',
     'PHPUnit\\Util\\XmlTestListRenderer' => $vendorDir . '/phpunit/phpunit/src/Util/XmlTestListRenderer.php',
     'PHPUnit_Framework_MockObject_MockObject' => $vendorDir . '/phpunit/phpunit/src/Framework/MockObject/MockObject.php',
     'PHP_Token' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
@@ -549,4 +554,6 @@ return array(
     'TheSeer\\Tokenizer\\TokenCollectionException' => $vendorDir . '/theseer/tokenizer/src/TokenCollectionException.php',
     'TheSeer\\Tokenizer\\Tokenizer' => $vendorDir . '/theseer/tokenizer/src/Tokenizer.php',
     'TheSeer\\Tokenizer\\XMLSerializer' => $vendorDir . '/theseer/tokenizer/src/XMLSerializer.php',
+    'fpdi_pdf_parser' => $vendorDir . '/setasign/fpdi/fpdi_pdf_parser.php',
+    'pdf_context' => $vendorDir . '/setasign/fpdi/pdf_context.php',
 );

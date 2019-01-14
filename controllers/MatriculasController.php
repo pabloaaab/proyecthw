@@ -14,10 +14,12 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Matriculados;
 use app\models\Notas;
+use app\models\PagosPeriodo;
 use yii\helpers\Url;
 use app\models\FormFiltromatriculas;
 use app\models\FormCancelarMatricula;
 use app\models\FormAprobarMatricula;
+use app\models\FormFiltroNiveles;
 use yii\web\UploadedFile;
 
 class MatriculasController extends Controller {
@@ -29,18 +31,21 @@ class MatriculasController extends Controller {
             $identificación = null;
             $docente = null;
             $sede = null;
+            $jornada = null;
             if ($form->load(Yii::$app->request->get())) {
                 if ($form->validate()) {
                     $nivel = Html::encode($form->nivel);
                     $identificación = Html::encode($form->identificacion);
                     $docente = Html::encode($form->docente);
                     $sede = Html::encode($form->sede);
+                    $jornada = Html::encode($form->jornada);
                     $table = Matriculados::find()
                             ->where(['<>', 'estado2', 'ANTERIOR'])
                             ->andFilterWhere(['like', 'nivel', $nivel])
                             ->andFilterWhere(['like', 'identificacion', $identificación])
                             ->andFilterWhere(['like', 'docente', $docente])
                             ->andFilterWhere(['like', 'sede', $sede])
+                            ->andFilterWhere(['like', 'tipo_jornada', $jornada])
                             ->orderBy('consecutivo desc');
                     $count = clone $table;
                     $pages = new Pagination([
@@ -55,8 +60,15 @@ class MatriculasController extends Controller {
                     $form->getErrors();
                 }
             } else {
-                $table = Matriculados::find()                        
-                        ->orderBy('consecutivo desc');
+                if(Yii::$app->user->identity->role == 2){
+                    $table = Matriculados::find()                        
+                        ->orderBy('consecutivo desc'); 
+                }else{
+                    $table = Matriculados::find()                                                
+                        ->where(['=', 'sede', Yii::$app->user->identity->sede])
+                        ->orderBy('consecutivo desc');                    
+                }
+                
                 $count = clone $table;
                 $pages = new Pagination([
                     'pageSize' => 20,
@@ -71,6 +83,133 @@ class MatriculasController extends Controller {
                         'model' => $model,
                         'form' => $form,
                         'pagination' => $pages,
+            ]);
+        } else {
+            return $this->redirect(["site/login"]);
+        }
+    }
+    
+    public function actionNiveles() {
+        if (!Yii::$app->user->isGuest) {
+            $form = new FormFiltroNiveles;
+            $nivel = null;            
+            $sede = null;
+            if ($form->load(Yii::$app->request->get())) {
+                if ($form->validate()) {
+                    $nivel = Html::encode($form->nivel);                    
+                    $sede = Html::encode($form->sede);
+                    $table = Matriculados::find()
+                            ->where(['=', 'estado2', 'ABIERTA'])
+                            ->andFilterWhere(['like', 'nivel', $nivel])                            
+                            ->andFilterWhere(['like', 'sede', $sede])
+                            ->orderBy('consecutivo desc');
+                    $count = clone $table;
+                    $pages = new Pagination([
+                        'pageSize' => 20,
+                        'totalCount' => $count->count()
+                    ]);
+                    $model = $table
+                            ->offset($pages->offset)
+                            ->limit($pages->limit)
+                            ->all();
+                    $A1 = 0;
+                    $A2 = 0;
+                    $B1 = 0;
+                    $B2 = 0;
+                    $C1 = 0;
+                    $C2 = 0;
+                    $pedagogia = 0;
+                    $seb = 0;
+                    foreach ($model as $val){
+                        if($val->nivel == "A1"){
+                            $A1++;
+                        }
+                        if($val->nivel == "A2"){
+                            $A2++;
+                        }
+                        if($val->nivel == "B1"){
+                            $B1++;
+                        }
+                        if($val->nivel == "B2"){
+                            $B2++;
+                        }
+                        if($val->nivel == "C1"){
+                            $C1++;
+                        }
+                        if($val->nivel == "C2"){
+                            $C2++;
+                        }
+                        if($val->nivel == "Pedagogia"){
+                            $pedagogia++;
+                        }
+                        if($val->nivel == "s.e.b"){
+                            $seb++;
+                        }
+                    }
+                } else {
+                    $form->getErrors();
+                }
+            } else {
+                
+                $table = Matriculados::find()
+                    ->where(['=', 'estado2', 'ABIERTA'])    
+                    ->orderBy('consecutivo desc');                
+                $count = clone $table;
+                $pages = new Pagination([
+                    'pageSize' => 20,
+                    'totalCount' => $count->count(),
+                ]);
+                $model = $table
+                        ->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->all();
+                $A1 = 0;
+                $A2 = 0;
+                $B1 = 0;
+                $B2 = 0;
+                $C1 = 0;
+                $C2 = 0;
+                $pedagogia = 0;
+                $seb = 0;
+                foreach ($model as $val){
+                    if($val->nivel == "A1"){
+                        $A1++;
+                    }
+                    if($val->nivel == "A2"){
+                        $A2++;
+                    }
+                    if($val->nivel == "B1"){
+                        $B1++;
+                    }
+                    if($val->nivel == "B2"){
+                        $B2++;
+                    }
+                    if($val->nivel == "C1"){
+                        $C1++;
+                    }
+                    if($val->nivel == "C2"){
+                        $C2++;
+                    }
+                    if($val->nivel == "Pedagogia"){
+                        $pedagogia++;
+                    }
+                    if($val->nivel == "s.e.b"){
+                        $seb++;
+                    }
+                }
+            }
+            return $this->render('niveles', [
+                        'model' => $model,
+                        'form' => $form,
+                        'pagination' => $pages,
+                        'A1' => $A1,
+                        'A2' => $A2,
+                        'B1' => $B1,
+                        'B2' => $B2,
+                        'C1' => $C1,
+                        'C2' => $C2,
+                        'pedagogia' => $pedagogia,
+                        'seb' => $seb,
             ]);
         } else {
             return $this->redirect(["site/login"]);
@@ -98,6 +237,7 @@ class MatriculasController extends Controller {
                 $table->docente = $model->docente;
                 $table->sede = $model->sede;
                 $table->estado2 = "ABIERTA";
+                $table->tipo_jornada = $model->tipo_jornada;
                 if ($table->insert()) {
                     $msg = "Registros guardados correctamente";
                     $model->identificacion = null;
@@ -112,6 +252,7 @@ class MatriculasController extends Controller {
                     $nota = new Notas;
                     $nota->identificacion = $table->identificacion;
                     $nota->matricula = $table->consecutivo;
+                    $nota->tipo_jornada = $table->tipo_jornada;
                     $nota->insert();
                 } else {
                     $msg = "error";
@@ -145,6 +286,7 @@ class MatriculasController extends Controller {
                     $table->valor_mensual = $model->valor_mensual;
                     $table->docente = $model->docente;
                     $table->sede = $model->sede;
+                    $table->tipo_jornada = $model->tipo_jornada;
                     if ($table->update()) {
                         $msg = "El registro ha sido actualizado correctamente";
                     } else {
@@ -174,6 +316,7 @@ class MatriculasController extends Controller {
                 $model->valor_mensual = $table->valor_mensual;
                 $model->docente = $table->docente;
                 $model->sede = $table->sede;
+                $model->tipo_jornada = $table->tipo_jornada;
             } else {
                 return $this->redirect(["matriculas/index"]);
             }
@@ -199,9 +342,19 @@ class MatriculasController extends Controller {
                         $table->motivo_can = $model->motivo_can;
                         $table->fecha_can = $model->fecha_can;
                         $table->fecha_cierre = $model->fecha_can;
-                        $table->estado2 = 'CANCELADA';
+                        $table->estado2 = 'CANCELADA';                        
                         if ($table->save(false)) {
                             $msg = "El registro ha sido actualizado correctamente";
+                            $pagoperiodo = PagosPeriodo::find()->where(['=','identificacion',$table->identificacion])->all();
+                            if ($pagoperiodo){
+                                $validar = date('Y-m', strtotime($table->fecha_can));
+                                foreach ($pagoperiodo as $val) {
+                                    $validar2 = date('Y-m', strtotime($val->mensualidad));
+                                    if ($validar2 > $validar){
+                                        $val->delete();
+                                    }
+                                }
+                            }                            
                         } else {
                             $msg = "El registro no sufrio ningun cambio";
                             $tipomsg = "danger";                        

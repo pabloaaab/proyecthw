@@ -46,6 +46,7 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
         <?= $form->field($model, 'valor_matricula')->input("text") ?>
         <?= $form->field($model, 'valor_mensual')->input("text") ?>
         <?= $form->field($model, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?>
+        <?= $form->field($model, 'tipo_jornada')->dropdownList(['Semana' => 'Semana', 'Sabado' => 'Sabado', 'Domingo' => 'Domingo'], ['prompt' => 'Seleccione...']) ?>
         <?= $form->field($model, 'sede')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?>
     </div>
 

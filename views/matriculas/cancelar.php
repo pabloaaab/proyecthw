@@ -25,12 +25,14 @@ $form = ActiveForm::begin([
             'enableAjaxValidation' => true,
         ]);
 ?>
-
+    <br>
+    <br>
+    <br>
 <div class="row" id="matricula">
     <div class="col-lg-3">                       
         <?= $form->field($model, 'motivo_can')->textArea(['maxlength' => true]) ?>      
         <?= $form->field($model,'fecha_can')->widget(DatePicker::className(),['name' => 'check_issue_date',
-                'value' => date('d-m-Y', strtotime('+2 days')),
+                'value' => date('Y-mm-d', strtotime('+2 days')),
                 'options' => ['placeholder' => 'Seleccione una fecha ...'],
                 'pluginOptions' => [
                     'format' => 'yyyy-mm-d',

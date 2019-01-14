@@ -65,8 +65,8 @@ $this->title = 'Inscritos   ';
                 <th scope="col">Apellido_1</th>
                 <th scope="col">Apellido_2</th>
                 <th scope="col">Teléfono</th>
-                <th scope="col">Municipio</th>
-                <th scope="col">Email</th>
+                <th scope="col">Municipio</th>                
+                <th scope="col">Autoriza</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -76,6 +76,7 @@ $this->title = 'Inscritos   ';
             <tbody>
             <?php foreach ($model as $val): ?>
             <tr>
+                <?php if ($val->autoriza == 1) {$autoriza = "SI"; } else {$autoriza = "NO"; } ?>
                 <th scope="row"><?= $val->consecutivo ?></th>
                 <td><?= $val->tipo_doc ?></td>
                 <td><?= $val->identificacion ?></td>
@@ -84,12 +85,16 @@ $this->title = 'Inscritos   ';
                 <td><?= $val->apellido1 ?></td>
                 <td><?= $val->apellido2 ?></td>
                 <td><?= $val->telefono ?></td>
-                <td><?= $val->municipio ?></td>
-                <td><?= $val->email ?></td>
+                <td><?= $val->municipio ?></td>                
+                <td><?= $autoriza ?></td>
                 <td><a href="<?= Url::toRoute(["inscritos/editar", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-document-edit.svg" align="center" width="20px" height="20px" title="Editar"></a></td>
                 <td><a href="<?= Url::toRoute(["inscritos/firma_estudiante", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-pencil.svg" align="center" width="20px" height="20px" title="Firma Estudiante"></a></td>
                 <td><a href="<?= Url::toRoute(["inscritos/firma_acudiente", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-pencil.svg" align="center" width="20px" height="20px" title="Firma Acudiente"></a></td>
-                <td><a href="<?= Url::toRoute(["inscritos/imprimir", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-print.svg" align="center" width="20px" height="20px" title="Imprimir"></a></td>
+                <?php if ($val->autoriza == 1 && $val->firma != "") { ?>
+                <td><a href="<?= Url::toRoute(["inscritos/imprimir", "consecutivo" => $val->consecutivo]) ?>"><img src="svg/si-glyph-print.svg" align="center" width="20px" height="20px" title="Imprimir"></a></td>
+                <?php } else { ?>
+                    <td></td>
+                <?php } ?>    
             </tr>
             </tbody>
             <?php endforeach; ?>

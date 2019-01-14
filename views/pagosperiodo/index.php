@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Pagos Periodos';
 ?>
@@ -27,6 +28,16 @@ $this->title = 'Pagos Periodos';
 ]);
 ?>
 
+<?php
+if (Yii::$app->user->identity->role == 2){
+    $sede = ArrayHelper::map(\app\models\Sede::find()->where(['=','estado',1])->all(), 'sede','sede');
+}else{
+    $sede = ArrayHelper::map(\app\models\Sede::find()->where(['=','sede',Yii::$app->user->identity->sede])->all(), 'sede','sede');
+}
+$nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
+
+?>    
+    
 <div class="panel panel-primary panel-filters">
     <div class="panel-heading">
         Filtros de busqueda <i class="glyphicon glyphicon-filter"></i>
@@ -36,7 +47,11 @@ $this->title = 'Pagos Periodos';
         <div class="row" >
             <?= $formulario->field($form, "identificacion")->input("search") ?>
             <?= $formulario->field($form, "nivel")->input("search") ?>
-            <?= $formulario->field($form, "sede")->input("search") ?>
+            <?php if (Yii::$app->user->identity->role == 2){ ?>
+                <?= $formulario->field($form, 'sede')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?> 
+            <?php }else{ ?>
+                <?= $formulario->field($form, 'sede')->dropDownList($sede) ?>
+            <?php } ?>
             <?= $formulario->field($form, "mensualidad")->input("search") ?>
             <?= $formulario->field($form, 'anulado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>
             <?= $formulario->field($form, 'pagado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>
@@ -88,12 +103,14 @@ $this->title = 'Pagos Periodos';
                 <td><?= $anulado ?></td>
                 <td><?= $val->sede ?></td>
                 <td><?= $val->nivel ?></td>
+                <?php if (Yii::$app->user->identity->role == 2){ ?>
                 <?php if ($val->anulado == 0) { ?>
                 <td><a href="<?= Url::toRoute(["pagosperiodo/editar", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-document-edit.svg" align="center" width="20px" height="20px" title="Editar"></a></td>                                                
                 <?php } else { ?>
                 <td></td>
                 <?php } ?>
                 <td><a href="<?= Url::toRoute(["pagosperiodo/cerrar", "consecutivo" => $val->consecutivo]) ?>"><img src="svg/si-glyph-delete.svg" align="center" width="20px" height="20px" title="Cerrar Pago"></a></td>
+                <?php } ?>
             </tr>
             </tbody>
             <?php endforeach; ?>

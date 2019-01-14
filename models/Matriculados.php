@@ -29,6 +29,7 @@ use Yii;
  * @property string $ultimo_periodo_generado
  * @property string $estado2
  * @property string $fecha_cierre
+ * @property string $tipo_jornada
  *
  * @property Inscritos $entificacion
  */
@@ -48,12 +49,12 @@ class Matriculados extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['identificacion', 'fechamat', 'nivel', 'valor_matricula', 'valor_mensual', 'docente', 'sede'], 'required', 'message' => 'Campo requerido'],
+            [['identificacion', 'fechamat', 'nivel', 'valor_matricula', 'valor_mensual', 'docente', 'sede','tipo_jornada'], 'required', 'message' => 'Campo requerido'],
             ['identificacion', 'identificacion_no_existe'],
             ['nivel', 'identificacion_nivel_abierto'],
             ['nivel', 'identificacion_nivel_aprobado'],
             [['fechamat', 'fecha_ren1', 'fecha_ren2', 'fecha_can','fecha_cierre'], 'safe'],
-            [['motivo_can', 'observaciones'], 'string'],
+            [['motivo_can', 'observaciones','tipo_jornada'], 'string'],
             [['valor_matricula', 'valor_mensual'], 'number'],
             [['grupo', 'programa1', 'acudiente1', 'programa2', 'acudiente2'], 'string', 'max' => 50],
             [['identificacion', 'docente', 'ultimo_periodo_generado'], 'string', 'max' => 20],
@@ -90,6 +91,7 @@ class Matriculados extends \yii\db\ActiveRecord
             'ultimo_periodo_generado' => 'Ultimo Periodo Generado',
             'estado2' => 'Estado2',
             'fecha_cierre' => 'Fecha Cierre',
+            'tipo_jornada' => 'Jornada',
         ];
     }
 
@@ -107,7 +109,7 @@ class Matriculados extends \yii\db\ActiveRecord
     public function identificacion_nivel_abierto($attribute, $params)
     {
         //Buscar el email en la tabla
-        $table = Matriculados::find()->where("nivel=:nivel", [":nivel" => $this->nivel])->andWhere("identificacion=:identificacion", [':identificacion' => $this->identificacion])->andWhere("estado2=:estado2", [':estado2' => 'ABIERTA']);
+        $table = Matriculados::find()->where("nivel=:nivel", [":nivel" => $this->nivel])->andWhere("identificacion=:identificacion", [':identificacion' => $this->identificacion])->andWhere("estado2=:estado2", [':estado2' => 'ABIERTA'])->andWhere("fechamat!=:fechamat", [':fechamat' => $this->fechamat]);
         //Si el email existe mostrar el error
         if ($table->count() == 1)
         {
@@ -118,7 +120,7 @@ class Matriculados extends \yii\db\ActiveRecord
     public function identificacion_nivel_aprobado($attribute, $params)
     {
         //Buscar el email en la tabla
-        $table = Matriculados::find()->where("nivel=:nivel", [":nivel" => $this->nivel])->andWhere("identificacion=:identificacion", [':identificacion' => $this->identificacion])->andWhere("estado2=:estado2", [':estado2' => 'APROBADA']);
+        $table = Matriculados::find()->where("nivel=:nivel", [":nivel" => $this->nivel])->andWhere("identificacion=:identificacion", [':identificacion' => $this->identificacion])->andWhere("estado2=:estado2", [':estado2' => 'APROBADA'])->andWhere("fechamat!=:fechamat", [':fechamat' => $this->fechamat]);
         //Si el email existe mostrar el error
         if ($table->count() == 1)
         {

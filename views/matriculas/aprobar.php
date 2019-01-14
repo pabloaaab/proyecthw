@@ -17,23 +17,24 @@ $this->title = 'Aprobar Matricula';
     <h3 class="alert-success"><?= $msg ?></h3>
 <?php } ?>
 
-<?php
-$form = ActiveForm::begin([
-            "method" => "post",
-            'id' => 'formulario',
-            'enableClientValidation' => false,
-            'enableAjaxValidation' => true,
-        ]);
+<?php $form = ActiveForm::begin([
+    "method" => "post",
+    'id' => 'formulario',
+    'enableClientValidation' => false,
+    'enableAjaxValidation' => true,
+]);
 ?>
-
+<br>
+<br>
+<br>
 <div class="row" id="matricula">
     <div class="col-lg-3">                       
         <?= $form->field($model, 'observaciones')->textArea(['maxlength' => true]) ?>      
         <?= $form->field($model,'fecha_cierre')->widget(DatePicker::className(),['name' => 'check_issue_date',
-                'value' => date('d-m-Y', strtotime('+2 days')),
+                'value' => date('d-M-Y', strtotime('+2 days')),
                 'options' => ['placeholder' => 'Seleccione una fecha ...'],
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-d',
+                    'format' => 'yyyy-m-d',
                     'todayHighlight' => true]]) ?>                 
     </div>
 

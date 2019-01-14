@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Inscritos;
+use app\models\Autorizacion;
 use app\models\FormInscrito;
 use yii\helpers\Url;
 use app\models\FormFiltroInscritos;
@@ -348,4 +349,11 @@ use app\models\FormFirmaAcudiente;
             }
             return $this->render("firmaAcudiente", ["model" => $model, "msg" => $msg]);
         }
+        
+        public function actionImprimir($consecutivo) {
+            $formato = Autorizacion::findOne(1);
+            $model = Inscritos::find()->where(['consecutivo' => $consecutivo])->one();
+            return $this->render("generarimprimir", ["model" => $model, 'formato' => $formato]);
+        }
+
 }

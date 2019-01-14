@@ -14,6 +14,7 @@ class FormFiltroMatriculas extends Model
     public $nivel;
     public $docente;
     public $sede;
+    public $jornada;
 
     public function rules()
     {
@@ -23,6 +24,7 @@ class FormFiltroMatriculas extends Model
             ['nivel', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
             ['docente', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
             ['sede', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
+            ['jornada', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
         ];
     }
 
@@ -33,6 +35,7 @@ class FormFiltroMatriculas extends Model
             'nivel' => 'Nivel:',
             'docente' => 'N° Docente:',
             'sede' => 'Sede:',
+            'jornada' => 'Jornada:',
         ];
     }
 }

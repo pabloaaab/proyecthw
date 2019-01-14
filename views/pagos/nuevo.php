@@ -31,7 +31,7 @@ $this->title = 'Nuevo Pago Mensualidad';
         <?= $form->field($model, 'ttpago')->dropdownList(['Efectivo' => 'Efectivo', 'Consignacion' => 'Consignacion'], ['prompt' => 'Seleccione...']) ?>
         <?= $form->field($model, 'bono')->dropdownList(['si' => 'SI']) ?>
         <?= $form->field($model, 'total')->input("text",['readonly' => true]) ?>
-        <?= $form->field($model, 'observaciones')->textArea(['maxlength' => true]) ?>
+        <?= $form->field($model, 'observaciones')->textArea(['maxlength' => true, 'value' => 'Pago mensualidad de '.$model->mensualidad]) ?>
     </div>
 
 </div>

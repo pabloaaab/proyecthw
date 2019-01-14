@@ -60,9 +60,16 @@ class PagosperiodoController extends Controller {
                     $form->getErrors();
                 }
             } else {
-                $table = PagosPeriodo::find()
+                if(Yii::$app->user->identity->role == 2){
+                    $table = PagosPeriodo::find()
                         ->Where(['=', 'cerro_grupo', '0'])
+                        ->orderBy('consecutivo desc'); 
+                }else{
+                    $table = PagosPeriodo::find()
+                        ->Where(['=', 'cerro_grupo', '0'])
+                        ->andWhere(['=', 'sede', Yii::$app->user->identity->sede])    
                         ->orderBy('consecutivo desc');
+                }                
                 $count = clone $table;
                 $pages = new Pagination([
                     'pageSize' => 30,

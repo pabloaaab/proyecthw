@@ -69,7 +69,7 @@ $f = ActiveForm::begin([
                 <th scope="col">N°</th>                                
                 <th scope="col">Mes</th>                                
                 <th scope="col">N° Registros</th>                
-                <th scope="col"></th>                                
+                <!--<th scope="col"></th>-->                                
             </tr>
         </thead>
         <tbody>
@@ -80,7 +80,7 @@ $f = ActiveForm::begin([
                     <th scope="row"><?= $i; ?></th>                
                     <td><?= $val->mensualidad ?></td>                                                
                     <td><?= $registros ?></td>                                    
-                    <td><a href="<?= Url::toRoute(["periodos/generarperiodoclonar", "mesaclonar" => $val->mensualidad]) ?>"><img src="svg/si-glyph-plus.svg" align="center" width="20px" height="20px" title="Clonar"></a></td>
+                    <!--<td><a href="<?= Url::toRoute(["periodos/generarperiodoclonar", "mesaclonar" => $val->mensualidad]) ?>"><img src="svg/si-glyph-plus.svg" align="center" width="20px" height="20px" title="Clonar"></a></td>-->
                 </tr>
             </tbody>
             <?php $i = $i + 1; ?>
