@@ -174,6 +174,7 @@ class PagosController extends Controller {
                     $pago->resolucion = $resolucion->resolucion;
                     $pago->tipo_pago = "mensualidad";
                     $pago->afecta_pago = 1;
+                    $pago->sede = $table->sede;
                     $pago->save(false);
                     //update pago periodo        
                     $table->nropago = $pago->nropago;

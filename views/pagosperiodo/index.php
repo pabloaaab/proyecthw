@@ -45,14 +45,21 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
 	
     <div class="panel-body" id="filtropagosperiodo">
         <div class="row" >
-            <?= $formulario->field($form, "identificacion")->input("search") ?>
-            <?= $formulario->field($form, "nivel")->input("search") ?>
+            <?= $formulario->field($form, "identificacion")->input("search") ?>            
             <?php if (Yii::$app->user->identity->role == 2){ ?>
                 <?= $formulario->field($form, 'sede')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?> 
             <?php }else{ ?>
                 <?= $formulario->field($form, 'sede')->dropDownList($sede) ?>
             <?php } ?>
-            <?= $formulario->field($form, "mensualidad")->input("search") ?>
+            <?php
+            $periodos = \app\models\PagosPeriodo::find()
+                    ->groupBy('mensualidad')
+                    ->orderBy('nropago desc')
+                    ->all();
+            ;
+            $periodos = ArrayHelper::map($periodos, "mensualidad", "mensualidad");
+            ?>
+            <?= $formulario->field($form, 'mensualidad')->dropDownList($periodos, ['prompt' => 'Seleccione...']) ?>
             <?= $formulario->field($form, 'anulado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>
             <?= $formulario->field($form, 'pagado')->dropDownList(['1' => 'SI', '0' => 'NO'],['prompt' => 'Seleccione...' ]) ?>
         </div>
@@ -64,12 +71,33 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
 </div>    
     
 <?php $formulario->end() ?>
-    
-    <div class="container-fluid">
-        <div class="col-lg-2">
 
-        </div>
+    <!-- Trigger the modal with a button -->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Informe</h4>
+      </div>
+      <div class="modal-body">          
+        <p class="alert-danger">Total Pagos Generados por Cancelar: <?= $totaldeudagenerada ?></p>
+        <p class="alert-danger">Total Pagos Pendientes por Cancelar: <?= $totaldeuda ?></p>                
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
     </div>
+
+  </div>
+</div>
+    
+    <div class="alert alert-info">Registros: <?= $pagination->totalCount ?> <a class="btn btn-info" data-toggle="modal" data-target="#myModal">Ver informe</a></div>
+    
     <div class="table-condensed">
         <table class="table table-hover">
             <thead>

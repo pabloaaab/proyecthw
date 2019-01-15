@@ -38,11 +38,8 @@ $this->title = 'Sedes';
         <a align="right" href="<?= Url::toRoute("sedes/nuevo") ?>" class="btn btn-primary">Nuevo Sede</a>
     </div>
 
-    <div class="container-fluid">
-        <div class="col-lg-2">
+<div class="alert alert-info">Registros: <?= $pagination->totalCount ?></div>    
 
-        </div>
-    </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>

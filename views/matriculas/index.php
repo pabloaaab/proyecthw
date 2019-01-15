@@ -66,11 +66,8 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
 
 <?php $formulario->end() ?>
     
-    <div class="container-fluid">
-        <div class="col-lg-2">
-
-        </div>
-    </div>
+<div class="alert alert-info">Registros: <?= $pagination->totalCount ?></div>
+    
     <div class="table-condensed">
         <table class="table table-hover">
             <thead>

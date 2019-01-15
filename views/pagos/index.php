@@ -42,14 +42,12 @@ $f = ActiveForm::begin([
 </div>
 <?php $f->end() ?>
 
-<div class="container-fluid">
-    <div class="col-lg-2">
-
-    </div>
-</div>
 <div class = "form-group" align="right">
     <a href="<?= Url::toRoute("pagos/pagospendientes") ?>" class="btn btn-primary" target="_blank">Nuevo Pago</a>
 </div>
+
+<div class="alert alert-info">Registros: <?= $pagination->totalCount ?></div>
+
 <div class="table-condensed">
     <table class="table table-condensed">
         <thead>

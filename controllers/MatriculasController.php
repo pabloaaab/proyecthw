@@ -120,7 +120,13 @@ class MatriculasController extends Controller {
                     $C2 = 0;
                     $pedagogia = 0;
                     $seb = 0;
-                    foreach ($model as $val){
+                    $niveles = Matriculados::find()
+                            ->where(['=', 'estado2', 'ABIERTA'])
+                            ->andFilterWhere(['like', 'nivel', $nivel])                            
+                            ->andFilterWhere(['like', 'sede', $sede])
+                            ->orderBy('consecutivo desc')
+                            ->all();
+                    foreach ($niveles as $val){
                         if($val->nivel == "A1"){
                             $A1++;
                         }
@@ -142,7 +148,7 @@ class MatriculasController extends Controller {
                         if($val->nivel == "Pedagogia"){
                             $pedagogia++;
                         }
-                        if($val->nivel == "s.e.b"){
+                        if($val->nivel == "S.E.B"){
                             $seb++;
                         }
                     }
@@ -171,7 +177,11 @@ class MatriculasController extends Controller {
                 $C2 = 0;
                 $pedagogia = 0;
                 $seb = 0;
-                foreach ($model as $val){
+                $niveles = Matriculados::find()
+                    ->where(['=', 'estado2', 'ABIERTA'])    
+                    ->orderBy('consecutivo desc')
+                    ->all();                
+                foreach ($niveles as $val){
                     if($val->nivel == "A1"){
                         $A1++;
                     }
@@ -193,7 +203,7 @@ class MatriculasController extends Controller {
                     if($val->nivel == "Pedagogia"){
                         $pedagogia++;
                     }
-                    if($val->nivel == "s.e.b"){
+                    if($val->nivel == "S.E.B"){
                         $seb++;
                     }
                 }

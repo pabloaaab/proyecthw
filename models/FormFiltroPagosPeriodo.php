@@ -11,7 +11,7 @@ use yii\base\Model;
 class FormFiltroPagosPeriodo extends Model
 {
     public $identificacion;
-    public $nivel;
+    //public $nivel;
     public $mensualidad;
     public $sede;
     public $anulado;
@@ -22,7 +22,7 @@ class FormFiltroPagosPeriodo extends Model
         return [
 
             ['identificacion', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
-            ['nivel', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
+            //['nivel', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
             ['mensualidad', 'match', 'pattern' => '/^[a-z0-9-\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
             ['sede', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
             ['anulado', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
@@ -34,7 +34,7 @@ class FormFiltroPagosPeriodo extends Model
     {
         return [
             'identificacion' => 'Nro identificación:',
-            'nivel' => 'Nivel:',
+            //'nivel' => 'Nivel:',
             'mensualidad' => 'Mensualidad:',
             'sede' => 'Sede:',
             'anulado' => 'Anulado:',

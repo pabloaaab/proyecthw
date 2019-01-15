@@ -24,7 +24,6 @@ $this->title = 'Niveles';
                     'labelOptions' => ['class' => 'col-sm-2 control-label'],
                     'options' => []
                 ],
-
 ]);
 ?>
 
@@ -53,7 +52,9 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
 </div>   
     
 <?php $formulario->end() ?>
-        
+
+<div class="alert alert-info">Registros: <?= $pagination->totalCount ?></div>
+    
     <div class="table-responsive table-bordered">
         <table class="table table-responsive">            
             <tr>

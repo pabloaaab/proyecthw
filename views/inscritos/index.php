@@ -46,13 +46,8 @@ $this->title = 'Inscritos   ';
 
     <div class = "form-group" align="right">
         <a align="right" href="<?= Url::toRoute("inscritos/nuevo") ?>" class="btn btn-primary">Nuevo Inscrito</a>
-    </div>
-
-    <div class="container-fluid">
-        <div class="col-lg-2">
-
-        </div>
-    </div>
+    </div>    
+    <div class="alert alert-info">Registros: <?= $pagination->totalCount ?></div>
     <div class="table-condensed">
         <table class="table table-hover">
             <thead>

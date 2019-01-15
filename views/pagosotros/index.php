@@ -52,6 +52,9 @@ $f = ActiveForm::begin([
 <div class = "form-group" align="right">
     <a href="<?= Url::toRoute("pagosotros/nuevo") ?>" class="btn btn-primary">Nuevo Pago</a>
 </div>
+
+<div class="alert alert-info">Registros: <?= $pagination->totalCount ?></div>
+
 <div class="table-condensed">
     <table class="table table-condensed">
         <thead>
