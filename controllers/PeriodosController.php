@@ -69,12 +69,14 @@ class PeriodosController extends Controller {
     }
 
     public function actionGenerarperiodo() {
-        $matriculasabiertas = Matriculados::find()->where(['=', 'estado2', 'ABIERTA'])->all();
+        ob_clean();
+        $matriculasabiertas = Matriculados::find()->where(['=', 'estado2', 'abierta'])->orderBy('consecutivo desc')->all();
         $mensaje = "";
         if(Yii::$app->request->post()) {
             if (isset($_POST["consecutivo"])) {
                 $intIndice = 0;
                 foreach ($_POST["consecutivo"] as $intCodigo) {
+                    ob_clean();
                     $pagosperiodo = new PagosPeriodo();
                     $mensualidad = date("F-Y", strtotime($_POST["periodo"]));
                     $validar = date('Y-m', strtotime($_POST["periodo"]));                    
