@@ -92,12 +92,26 @@ class PagosController extends Controller {
                     $table->motivo = $model->motivo;                    
                     if ($table->save(false)) {
                         $msg = "El registro ha sido actualizado correctamente";
-                        $pagoperiodo = \app\models\PagosPeriodo::find()->where(['nropago' => $nropago])->one();
+                        $pagoperiodo = PagosPeriodo::find()->where(['nropago' => $nropago])->one();
                         $pagoperiodo->anulado = 1;
                         $pagoperiodo->fechaanulado = $model->fechaanulado;
                         $pagoperiodo->usuarioanula = Yii::$app->user->identity->username;
                         $pagoperiodo->motivo = $model->motivo;
                         $pagoperiodo->save(false);
+                        $nuevopagoperiodo = new PagosPeriodo();
+                        $nuevopagoperiodo->identificacion = $pagoperiodo->identificacion;
+                        $nuevopagoperiodo->pago1 = 0;
+                        $nuevopagoperiodo->total = $pagoperiodo->total;
+                        $nuevopagoperiodo->mensualidad = $pagoperiodo->mensualidad;                        
+                        $nuevopagoperiodo->usuarioregistra = Yii::$app->user->identity->username;
+                        $nuevopagoperiodo->observaciones = $pagoperiodo->observaciones;                        
+                        $nuevopagoperiodo->ttpago = $pagoperiodo->ttpago;
+                        $nuevopagoperiodo->resolucion = $pagoperiodo->resolucion;                        
+                        $nuevopagoperiodo->afecta_pago = 0;
+                        $nuevopagoperiodo->sede = $pagoperiodo->sede;
+                        $nuevopagoperiodo->nivel = $pagoperiodo->nivel;                        
+                        $nuevopagoperiodo->matricula = $pagoperiodo->matricula;
+                        $nuevopagoperiodo->insert();
                         return $this->redirect(["pagos/index"]);   
                     } else {
                         $msg = "El registro no sufrio ningun cambio";
