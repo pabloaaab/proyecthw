@@ -163,7 +163,8 @@ function Parte($x)
 { 
     $Rtn=''; 
     $t=''; 
-    $i=''; 
+    //$i=''; 
+	$i=0;
     Do 
     { 
       switch($x) 
@@ -199,7 +200,7 @@ function Parte($x)
          Case 1000: $t = "Mil";break; 
          Case 1000000: $t = "Millón";break; 
       } 
-$i = 0;
+
       If($t == $this->Void) 
       { 
         $i = $i + 1; 
