@@ -262,7 +262,7 @@ class MatriculasController extends Controller {
                     $nota = new Notas;
                     $nota->identificacion = $table->identificacion;
                     $nota->matricula = $table->consecutivo;
-                    $nota->tipo_jornada = $table->tipo_jornada;
+                    //$nota->tipo_jornada = $table->tipo_jornada;
                     $nota->insert();
                 } else {
                     $msg = "error";
