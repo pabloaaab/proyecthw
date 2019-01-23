@@ -248,6 +248,8 @@ class MatriculasController extends Controller {
                 $table->sede = $model->sede;
                 $table->estado2 = "ABIERTA";
                 $table->tipo_jornada = $model->tipo_jornada;
+                $table->horario = $model->horario;
+                $table->dias = $model->dias;
                 if ($table->insert()) {
                     $msg = "Registros guardados correctamente";
                     $model->identificacion = null;
@@ -297,6 +299,8 @@ class MatriculasController extends Controller {
                     $table->docente = $model->docente;
                     $table->sede = $model->sede;
                     $table->tipo_jornada = $model->tipo_jornada;
+                    $table->horario = $model->horario;
+                    $table->dias = $model->dias;
                     if ($table->update()) {
                         $msg = "El registro ha sido actualizado correctamente";
                     } else {
@@ -327,6 +331,8 @@ class MatriculasController extends Controller {
                 $model->docente = $table->docente;
                 $model->sede = $table->sede;
                 $model->tipo_jornada = $table->tipo_jornada;
+                $model->horario = $table->horario;
+                $model->dias = $table->dias;
             } else {
                 return $this->redirect(["matriculas/index"]);
             }

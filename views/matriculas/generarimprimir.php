@@ -3,7 +3,8 @@ $this->title = 'Imprimir Matricula';
 ?>
 	
 <body onload='window.print()'>
-<table width="950" border="0" align="center">
+    <font face="Arial" size = "4.5">
+<table width="96%" height="96%" border="0" align="center">
   <tr>
     <td width="141" rowspan="6"><img src="images/logo.png" width="162" height="167" /></td>
     <td height="30" align="center">&nbsp;</td>
@@ -18,14 +19,14 @@ $this->title = 'Imprimir Matricula';
     <td height="30" align="center"><strong>INSTITUCI&Oacute;N DE EDUCACI&Oacute;N PARA EL TRABAJO Y EL DESARROLLO HUMANO </strong></td>
   </tr>
   <tr>
-    <td height="30" align="center"><span class="Estilo2">Licencia de funcionamiento N&#176 201750009079 de 2017, 600 de 2013 y Registro de programa N&#176 9274 de 2016, 016512 de 2016, 018089 de 2016 y 602 de 2013, 420 de 2014, 034 de 2016 </span></td>
+    <td height="30" align="center"><span class="Estilo2">Licencia de funcionamiento N&#176 201750009079 de 2017, 460 de 2018 y Registro de programa N&#176 9274 de 2016, 016512 de 2016, 018089 de 2016 y 1177 de 2018, 420 de 2014, 034 de 2016 </span></td>
   </tr>
   <tr>
     <td height="30">&nbsp;</td>
   </tr>
 </table>
 
-<table width="950" border="1" align="center" bordercolor="#000000">
+<table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
     <td height="30" colspan="12" align="center"><strong>DATOS PERSONALES </strong></td>
   </tr>
@@ -130,7 +131,7 @@ $this->title = 'Imprimir Matricula';
     <td height="30"></td>
     <td height="30" colspan="2"><?= $model2->nivel ?></td>
     <td height="30" colspan="3"><?php if ($model->firmaacudiente != "") {?><img src="../images/<?php echo $rg['firmaacudiente'];?>" width="80" height="40" /><?php }?></td>
-    <td height="30" colspan="2"><?php if ($model->firma != "") {?><img src="../images/<?php echo $rg['firma'];?>" width="80" height="40" /><?php }?></td>
+    <td height="30" colspan="2"><?php if ($model->firma != "") {?><img src="../images/<?php echo $model->firma;?>" width="80" height="40" /><?php }?></td>
     <td height="30"><img src="../images/firma_ever.PNG" width="80" height="40" /></td>
   </tr>
   <tr align="center">

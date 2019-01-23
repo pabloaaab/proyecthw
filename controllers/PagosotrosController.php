@@ -90,6 +90,7 @@ class PagosotrosController extends Controller {
                 $table->fecha_registro = date("Y-m-d");
                 $table->usuarioregistra = Yii::$app->user->identity->username;
                 $table->observaciones = $model->observaciones;
+                $table->anulado = '';
                 $table->ttpago = $model->ttpago;
                 $table->resolucion = $resolucion->resolucion;
                 $table->tipo_pago = "otros";

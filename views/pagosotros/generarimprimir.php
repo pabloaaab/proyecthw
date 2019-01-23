@@ -14,7 +14,8 @@ if ($model2->anulado == '')
 {
 	?>
 <body onload='window.print()'>
-<table width="950" border="1" align="center" bordercolor="#000000">
+    <font face="Arial" size = "4.5">
+<table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
     <td width="161" rowspan="6" align="center"><img src="images/logo.png" width="139" height="145" /></td>
     <td height="10" align="center">&nbsp;</td>
@@ -40,7 +41,7 @@ if ($model2->anulado == '')
   </tr>
 </table>
 
-<table width="950" border="1" align="center" bordercolor="#000000">
+<table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
     <td height="30" colspan="2"><span class="Estilo26">Facturado a: <?php echo $model->nombre1. ' ' .$model->nombre2. ' ' .$model->apellido1. ' '. $model->apellido2 ." - "." Identificaci&oacute;n: ".$model->identificacion;?></span></td>
     <td colspan="2" align="center"><span class="Estilo26">Factura N&deg;: <?php echo $model2->nropago;?></span></td>
@@ -87,7 +88,7 @@ if ($model2->anulado == '')
     <td align="right"><span class="Estilo28">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
   <tr>
-    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo $model2->usuarioregistra;?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
+    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo Yii::$app->user->identity->nombrecompleto; ?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
   </tr>
   <tr>
     <td height="30" colspan="4" align="center"><span class="Estilo25"><?php echo utf8_decode($model2->resolucion);?> </span></td>
@@ -99,7 +100,7 @@ else
 {
 ?>
 <body onload='window.print()'>
-<table width="950" border="1" align="center" bordercolor="#000000">
+<table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
     <td width="161" rowspan="6" align="center"><img src="images/logo.png" width="139" height="145" /></td>
     <td height="10" align="center">&nbsp;</td>
@@ -125,7 +126,7 @@ else
   </tr>
 </table>
 
-<table width="950" border="1" align="center" bordercolor="#000000">
+<table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
     <td height="30" colspan="2"><span class="Estilo26">Facturado a: <?php echo $model->nombre1. ' ' .$model->nombre2. ' ' .$model->apellido1. ' '. $model->apellido2 ." - "." Identificaci&oacute;n: ".$model->identificacion;?></span></td>
     <td colspan="2" align="center"><span class="Estilo26">Factura N&deg;: <?php echo $model2->nropago;?></span></td>
@@ -172,7 +173,7 @@ else
     <td align="right"><span class="Estilo28">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
   <tr>
-    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo $model2->usuarioregistra;?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
+    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo Yii::$app->user->identity->nombrecompleto; ?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
   </tr>
   <tr>
     <td height="30" colspan="4" align="center"><span class="Estilo25"><?php echo $model2->resolucion;?> </span></td>

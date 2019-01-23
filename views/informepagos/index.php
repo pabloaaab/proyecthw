@@ -78,15 +78,15 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
         <h4 class="modal-title">Informe</h4>
       </div>
       <div class="modal-body">          
-        <p class="alert-info">Total otros pagos: <?= $result[0]['otrospagos'] ?></p>
-        <p class="alert-danger">Total otros pagos Anulados: <?= $result[0]['otrospagosanulados'] ?></p>        
-        <p class="alert-info">Total pagos sede Medellin: <?= $result[0]['pagosmedellin'] ?></p>
-        <p class="alert-danger">Total pagos sede Medellin Anulados: <?= $result[0]['pagosmedellinanulado'] ?></p>
-        <p class="alert-info">Total pagos sede Rionegro: <?= $result[0]['pagosrionegro'] ?></p>
-        <p class="alert-danger">Total pagos sede Rionegro Anulados: <?= $result[0]['pagosrionegroanulado'] ?></p>
-        <p class="alert-info">Subtotal: <?= $subtotal ?></p>
-        <p class="alert-danger">Total Anulados: <?= $totalanulado ?></p>
-        <p class="alert-info"><b>Total General: <?= $grantotal ?></b></p>
+          <p class="alert-info">Total otros pagos: <?= '$ '.number_format($result[0]['otrospagos']) ?></p>
+        <p class="alert-danger">Total otros pagos Anulados: <?= '$ '.number_format($result[0]['otrospagosanulados']) ?></p>        
+        <p class="alert-info">Total pagos sede Medellin: <?= '$ '.number_format($result[0]['pagosmedellin']) ?></p>
+        <p class="alert-danger">Total pagos sede Medellin Anulados: <?= '$ '.number_format($result[0]['pagosmedellinanulado']) ?></p>
+        <p class="alert-info">Total pagos sede Rionegro: <?= '$ '.number_format($result[0]['pagosrionegro']) ?></p>
+        <p class="alert-danger">Total pagos sede Rionegro Anulados: <?= '$ '.number_format($result[0]['pagosrionegroanulado']) ?></p>
+        <p class="alert-info">Subtotal: <?= '$ '.number_format($subtotal) ?></p>
+        <p class="alert-danger">Total Anulados: <?= '$ '.number_format($totalanulado) ?></p>
+        <p class="alert-info"><b>Total General: <?= '$ '.number_format($grantotal) ?></b></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

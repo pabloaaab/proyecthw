@@ -30,6 +30,8 @@ use Yii;
  * @property string $estado2
  * @property string $fecha_cierre
  * @property string $tipo_jornada
+ * @property string $horario
+ * @property string $dias
  *
  * @property Inscritos $entificacion
  */
@@ -58,7 +60,7 @@ class Matriculados extends \yii\db\ActiveRecord
             [['valor_matricula', 'valor_mensual'], 'number'],
             [['grupo', 'programa1', 'acudiente1', 'programa2', 'acudiente2'], 'string', 'max' => 50],
             [['identificacion', 'docente', 'ultimo_periodo_generado'], 'string', 'max' => 20],
-            [['estado', 'nivel', 'sede', 'estado2'], 'string', 'max' => 25],
+            [['estado', 'nivel', 'sede', 'estado2','dias','horario'], 'string', 'max' => 25],
             [['identificacion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscritos::className(), 'targetAttribute' => ['identificacion' => 'identificacion']],
         ];
     }
@@ -92,6 +94,8 @@ class Matriculados extends \yii\db\ActiveRecord
             'estado2' => 'Estado2',
             'fecha_cierre' => 'Fecha Cierre',
             'tipo_jornada' => 'Jornada',
+            'horario' => 'Horario',
+            'dias' => 'Días',
         ];
     }
 

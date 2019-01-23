@@ -7,7 +7,7 @@ $this->title = 'Headway';
 <div class="site-index">
 
     <div class="jumbotron">
-        <img src="images/logo.png" align="center" width="150px" height="150px">
+        <img src="images/logo.png" align="center" width="255px" height="330px">
         <h1>Bienvenidos!</h1>
 
         <p class="lead">Escuela de Idiomas Headway.</p>

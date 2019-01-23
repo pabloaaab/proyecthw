@@ -184,6 +184,7 @@ class PagosController extends Controller {
                     $pago->usuarioregistra = Yii::$app->user->identity->username;
                     $pago->observaciones = $model->observaciones;
                     $pago->bono = $model->bono;
+                    $pago->anulado = '';
                     $pago->ttpago = $model->ttpago;
                     $pago->resolucion = $resolucion->resolucion;
                     $pago->tipo_pago = "mensualidad";
