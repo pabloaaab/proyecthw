@@ -17,7 +17,7 @@ if ($model2->anulado == '')
     <font face="Arial" size = "4.5">
 <table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
-    <td width="161" rowspan="6" align="center"><img src="images/logo.png" width="139" height="145" /></td>
+    <td width="161" rowspan="6" align="center"><img src="images/logo.png" width="155" height="190" /></td>
     <td height="10" align="center">&nbsp;</td>
     <td height="10" align="center">&nbsp;</td>
   </tr>
@@ -102,7 +102,7 @@ else
 <body onload='window.print()'>
 <table width="96%" height="96%" border="1" align="center" bordercolor="#000000">
   <tr>
-    <td width="161" rowspan="6" align="center"><img src="images/logo.png" width="139" height="145" /></td>
+    <td width="161" rowspan="6" align="center"><img src="images/logo.png" width="155" height="190" /></td>
     <td height="10" align="center">&nbsp;</td>
     <td height="10" align="center">&nbsp;</td>
   </tr>

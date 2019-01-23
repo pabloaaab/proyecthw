@@ -6,7 +6,7 @@ $this->title = 'Imprimir Matricula';
     <font face="Arial" size = "4.5">
 <table width="96%" height="96%" border="0" align="center">
   <tr>
-    <td width="141" rowspan="6"><img src="images/logo.png" width="162" height="167" /></td>
+    <td width="141" rowspan="6"><img src="images/logo.png" width="162" height="200" /></td>
     <td height="30" align="center">&nbsp;</td>
   </tr>
   <tr>
