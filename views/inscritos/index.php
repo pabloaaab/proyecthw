@@ -19,7 +19,7 @@ $this->title = 'Inscritos   ';
     "enableClientValidation" => true,
     'options' => ['class' => 'form-horizontal'],
     'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-10 form-group">{input}{error}</div>',
+                    'template' => '{label}<div class="col-sm-4 form-group">{input}{error}</div>',
                     'labelOptions' => ['class' => 'col-sm-2 control-label'],
                     'options' => []
                 ],
@@ -33,7 +33,14 @@ $this->title = 'Inscritos   ';
 	
     <div class="panel-body" id="filtromatriculas">
         <div class="row" >
-            <?= $f->field($form, "q")->input("search") ?>
+            <?= $f->field($form, "identificacion")->input("search") ?>
+            <?= $f->field($form, "email")->input("search") ?>
+            <?= $f->field($form, "nombre1")->input("search") ?>
+            <?= $f->field($form, "nombre2")->input("search") ?>
+            <?= $f->field($form, "apellido1")->input("search") ?>
+            <?= $f->field($form, "apellido2")->input("search") ?>
+            <?= $f->field($form, "telefono")->input("search") ?>
+            <?= $f->field($form, "celular")->input("search") ?>
         </div>
         <div class="panel-footer text-right">
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
@@ -60,6 +67,7 @@ $this->title = 'Inscritos   ';
                 <th scope="col">Apellido_1</th>
                 <th scope="col">Apellido_2</th>
                 <th scope="col">Teléfono</th>
+                <th scope="col">Celular</th>
                 <th scope="col">Municipio</th>                
                 <th scope="col">Autoriza</th>
                 <th scope="col"></th>
@@ -80,6 +88,7 @@ $this->title = 'Inscritos   ';
                 <td><?= $val->apellido1 ?></td>
                 <td><?= $val->apellido2 ?></td>
                 <td><?= $val->telefono ?></td>
+                <td><?= $val->celular ?></td>
                 <td><?= $val->municipio ?></td>                
                 <td><?= $autoriza ?></td>
                 <td><a href="<?= Url::toRoute(["inscritos/editar", "consecutivo" => $val->consecutivo]) ?>" ><img src="svg/si-glyph-document-edit.svg" align="center" width="20px" height="20px" title="Editar"></a></td>

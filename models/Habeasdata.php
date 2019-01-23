@@ -40,8 +40,7 @@ class Habeasdata extends \yii\db\ActiveRecord
             ['identificacion', 'identificacion_existe'],
             ['identificacion', 'identificacion_no_existe'],
             [['fecha_creacion', 'fecha_modificacion', 'fechaautorizacion'], 'safe'],
-            [['sede_fk','identificacion','fechaautorizacion','autorizacion','nombre'], 'required'],
-            [['nombre'], 'string', 'max' => 1350],
+            [['sede_fk','identificacion','fechaautorizacion','autorizacion'], 'required'],            
             [['firma'], 'string', 'max' => 900],
             [['sede_fk'], 'exist', 'skipOnError' => true, 'targetClass' => Sede::className(), 'targetAttribute' => ['sede_fk' => 'consecutivo']],
         ];
@@ -53,8 +52,7 @@ class Habeasdata extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => '',
-            'nombre' => 'Nombres y Apelidos:',
+            'id' => '',            
             'identificacion' => 'Identificación:',
             'fecha_creacion' => 'Fecha Creacion:',
             'fecha_modificacion' => 'Fecha Modificacion:',

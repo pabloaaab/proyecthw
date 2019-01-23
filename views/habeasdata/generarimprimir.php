@@ -3,6 +3,7 @@
 use inquid\pdf\FPDF;
 use app\models\Habeasdata;
 use app\models\FormatoAutorizacion;
+use app\models\Inscritos;
 
 class PDF extends FPDF {
 
@@ -13,8 +14,8 @@ class PDF extends FPDF {
 	  $this->Ln(8);
     }
     
-    function Body($pdf,$model,$formato) {
-        //contenido
+    function Body($pdf,$model,$formato,$nombreinscrito) {
+        //contenido        
 	$pdf->SetXY(10,50);
 	$pdf->SetFont('Arial','B',10);	
 	$pdf->MultiCell(0,5, utf8_decode($formato->formato) ,0,'J');
@@ -30,7 +31,7 @@ class PDF extends FPDF {
 	$pdf->SetXY(10, 200);
 	$pdf->Cell(10, 5, "___________________________________", 0, 0, 'J');	
 	$pdf->SetXY(10, 210); //paciente
-	$pdf->Cell(10, 5, utf8_decode('Nombre: '.$model->nombre), 0, 0, 'J');
+	$pdf->Cell(10, 5, utf8_decode('Nombre: '.$nombreinscrito->nombreestudiante2), 0, 0, 'J');
 	$pdf->SetXY(10, 220); //identificacion
 	$pdf->Cell(10, 5, utf8_decode('Identificacion: '.$model->identificacion), 0, 0, 'J');
 	$pdf->SetXY(10, 230); //fecha
@@ -46,10 +47,11 @@ class PDF extends FPDF {
     } 
 	
 } 
+$nombreinscrito = Inscritos::find()->where(['=','identificacion',$model->identificacion])->one();
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->Body($pdf,$model,$formato);
+$pdf->Body($pdf,$model,$formato,$nombreinscrito);
 $pdf->AliasNbPages();
 $pdf->SetFont('Arial', '', 10);
 $pdf->Output("Habeasdata.pdf", 'D');

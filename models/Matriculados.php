@@ -115,7 +115,7 @@ class Matriculados extends \yii\db\ActiveRecord
         //Buscar el email en la tabla
         $table = Matriculados::find()->where("nivel=:nivel", [":nivel" => $this->nivel])->andWhere("identificacion=:identificacion", [':identificacion' => $this->identificacion])->andWhere("estado2=:estado2", [':estado2' => 'ABIERTA'])->andWhere("fechamat!=:fechamat", [':fechamat' => $this->fechamat]);
         //Si el email existe mostrar el error
-        if ($table->count() == 1)
+        if ($table->count() > 0)
         {
             $this->addError($attribute, "El número de identificación ya tiene una matricula abierta para el nivel ".$this->nivel);
         }
@@ -126,7 +126,7 @@ class Matriculados extends \yii\db\ActiveRecord
         //Buscar el email en la tabla
         $table = Matriculados::find()->where("nivel=:nivel", [":nivel" => $this->nivel])->andWhere("identificacion=:identificacion", [':identificacion' => $this->identificacion])->andWhere("estado2=:estado2", [':estado2' => 'APROBADA'])->andWhere("fechamat!=:fechamat", [':fechamat' => $this->fechamat]);
         //Si el email existe mostrar el error
-        if ($table->count() == 1)
+        if ($table->count() > 0)
         {
             $this->addError($attribute, "El número de identificación ya tiene una matricula aprobada para el nivel ".$this->nivel);
         }

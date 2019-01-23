@@ -28,14 +28,33 @@ use app\models\FormFirmaAcudiente;
         {
             if (!Yii::$app->user->isGuest) {
                 $form = new FormFiltroInscritos;
-                $search = null;
+                $email = null;
+                $identificación = null;
+                $nombre1 = null;
+                $nombre2 = null;
+                $apellido1 = null;
+                $apellido2 = null;
+                $telefono = null;
+                $celular = null;
                 if ($form->load(Yii::$app->request->get())) {
                     if ($form->validate()) {
-                        $search = Html::encode($form->q);
+                        $email = Html::encode($form->email);
+                        $identificación = Html::encode($form->identificacion);
+                        $nombre1 = Html::encode($form->nombre1);
+                        $nombre2 = Html::encode($form->nombre2);
+                        $apellido1 = Html::encode($form->apellido1);
+                        $apellido2 = Html::encode($form->apellido2);
+                        $telefono = Html::encode($form->telefono);
+                        $celular = Html::encode($form->celular);
                         $table = Inscritos::find()
-                            ->where(['like', 'consecutivo', $search])
-                            ->orWhere(['like', 'identificacion', $search])
-                            ->orWhere(['like', 'nombre1', $search])
+                            ->andFilterWhere(['=', 'email', $email])
+                            ->andFilterWhere(['=', 'identificacion', $identificación])
+                            ->andFilterWhere(['like', 'nombre1', $nombre1])
+                            ->andFilterWhere(['like', 'nombre2', $nombre2])
+                            ->andFilterWhere(['like', 'apellido1', $apellido1])
+                            ->andFilterWhere(['like', 'apellido2', $apellido2])
+                            ->andFilterWhere(['=', 'telefono', $telefono])
+                            ->andFilterWhere(['=', 'celular', $celular])    
                             ->orderBy('consecutivo desc');
                         $count = clone $table;
                         $pages = new Pagination([
@@ -64,8 +83,7 @@ use app\models\FormFirmaAcudiente;
                 }
                 return $this->render('index', [
                     'model' => $model,
-                    'form' => $form,
-                    'search' => $search,
+                    'form' => $form,                    
                     'pagination' => $pages,
 
                 ]);

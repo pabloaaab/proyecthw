@@ -34,8 +34,7 @@ $sede = ArrayHelper::map(Sede::find()->where(['=','estado',1])->all(), 'consecut
 <div class="row" id="personal">
     <div class="col-lg-3">
         <?= $form->field($model, 'id')->input("hidden") ?>
-        <?= $form->field($model, 'identificacion')->input("text") ?>
-        <?= $form->field($model, 'nombre')->input("text") ?>
+        <?= $form->field($model, 'identificacion')->input("text") ?>        
         <?= $form->field($model, 'sede_fk')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?>
         <?= $form->field($model, 'autorizacion')->dropdownList(['1' => 'Si', '0' => 'No'], ['prompt' => 'Seleccione...']) ?>
         <?= $form->field($model, 'fechaautorizacion')->input("date") ?>

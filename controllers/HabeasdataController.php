@@ -87,8 +87,9 @@ use app\models\FormFirmaEstudiante;
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $table = new Habeasdata;
+                    $nombreinscrito = Inscritos::find()->where(['=','identificacion',$model->identificacion])->one();
                     $table->identificacion = $model->identificacion;
-                    $table->nombre = $model->nombre;
+                    $table->nombre = $nombreinscrito->nombreEstudiante2;
                     $table->sede_fk = $model->sede_fk;                                        
                     $table->autorizacion = $model->autorizacion;
                     $table->fechaautorizacion = $model->fechaautorizacion;
@@ -124,9 +125,10 @@ use app\models\FormFirmaEstudiante;
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $table = Habeasdata::find()->where(['id' => $model->id])->one();
+                    $nombreinscrito = Inscritos::find()->where(['=','identificacion',$model->identificacion])->one();
                     if ($table) {
                         $table->identificacion = $model->identificacion;
-                        $table->nombre = $model->nombre;
+                        $table->nombre = $nombreinscrito->nombreEstudiante2;
                         $table->sede_fk = $model->sede_fk;                                        
                         $table->autorizacion = $model->autorizacion;
                         $table->fechaautorizacion = $model->fechaautorizacion;
@@ -148,11 +150,11 @@ use app\models\FormFirmaEstudiante;
 
             if (Yii::$app->request->get("id")) {
                 $id = Html::encode($_GET["id"]);
-                $table = Habeasdata::find()->where(['id' => $id])->one();
+                $table = Habeasdata::find()->where(['id' => $id])->one();                
                 if ($table) {
                     $model->id = $table->id;
                     $model->identificacion = $table->identificacion;
-                    $model->nombre = $table->nombre;
+                    //$model->nombre = $nombreinscrito->nombreEstudiante2;
                     $model->sede_fk = $table->sede_fk;                    
                     $model->autorizacion = $table->autorizacion;
                     $model->fechaautorizacion = $table->fechaautorizacion;                    

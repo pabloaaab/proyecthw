@@ -28,5 +28,10 @@ class Inscritos extends ActiveRecord
     {
         return "{$this->identificacion} - {$this->nombre1}  {$this->nombre2}  {$this->apellido1}  {$this->apellido2}";
     }
+    
+    public function getNombreEstudiante2()
+    {
+        return "{$this->nombre1}  {$this->nombre2}  {$this->apellido1}  {$this->apellido2}";
+    }
 
 }
