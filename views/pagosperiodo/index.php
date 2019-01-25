@@ -120,11 +120,11 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
             <?php foreach ($model as $val): ?>
             <tr>
                 <?php if ($val->anulado == 1) { $anulado = "SI"; }else { $anulado = "NO"; } ?>
-                <?php if ($val->afecta_pago == 1) { $pagado = "SI"; }else { $pagado = "NO"; } ?>
+                <?php if ($val->afecta_pago == 1) { $pagado = "SI"; }else { $pagado = "NO"; } ?>                
                 <th scope="row"><?= $val->consecutivo ?></th>                
                 <td><?= $val->nropago ?></td>                                
                 <td><?= $val->mensualidad ?></td>
-                <td><?= $val->identificacion ?></td>
+                <td><?= $val->identificacion.' - '.$val->nombres ?></td>
                 <td><?= "$ ".number_format($val->total) ?></td>
                 <td><?= "$ ".number_format($val->pago1) ?></td>
                 <td><?= $pagado ?></td>

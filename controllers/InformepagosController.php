@@ -17,8 +17,9 @@ use app\models\Pagos;
 use yii\helpers\Url;
 use app\models\FormFiltroInformesPagos;
 use yii\web\UploadedFile;
-
+use moonland\phpexcel\Excel;
 use yii\helpers\ArrayHelper;
+
 
 
 class InformepagosController extends Controller {
@@ -106,9 +107,9 @@ class InformepagosController extends Controller {
                     $form->getErrors();
                 }
                 
-                /*if (isset($_GET["excel"])) {
+                if (isset($_GET["excel"])) {
                     $this->actionExcel($identificacion);
-                }*/
+                }
             } else {
                 $table = Pagos::find()                        
                         ->orderBy('nropago desc');
@@ -153,31 +154,79 @@ class InformepagosController extends Controller {
         }
     }
     
-    /*public function actionExcel($model) {
+    public function actionExcel($model) {
         
-        \moonland\phpexcel\Excel::export([
-   	'models' => Pagos::find()->where(['=','identificacion',1035917181])->all(),
-      	'columns' => [
-      		'identificacion.name:text:Author Name',
-      		[
-      				'attribute' => 'content',
-      				'header' => 'Content Post',
-      				'format' => 'text',
-      				'value' => function($model) {
-      					return Pagos::removeText('example', $model->content);
-      				},
-      		],
-      		'like_it:text:Reader like this content',
-      		'created_at:datetime',
-      		[
-      				'attribute' => 'updated_at',
-      				'format' => 'date',
-      		],
-      	],
-      	'headers' => [
-     		'created_at' => 'Date Created Content',
-		],
-]);    
-    }*/
+        $objPHPExcel = new \PHPExcel();
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("EMPRESA")
+            ->setLastModifiedBy("EMPRESA")
+            ->setTitle("Office 2007 XLSX Test Document")
+            ->setSubject("Office 2007 XLSX Test Document")
+            ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+            ->setKeywords("office 2007 openxml php")
+            ->setCategory("Test result file");
+        $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(10);
+        $objPHPExcel->getActiveSheet()->getStyle('1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);        
+        $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A1', 'Cliente')
+                    ->setCellValue('B1', 'Orden Producción')
+                    ->setCellValue('C1', 'Cantidad por Hora')
+                    ->setCellValue('D1', 'Cantidad Diaria')
+                    ->setCellValue('E1', 'Tiempo Entrega Días')
+                    ->setCellValue('F1', 'Nro Horas')
+                    ->setCellValue('G1', 'Días Entrega')
+                    ->setCellValue('H1', 'Costo Muestra Operaría')
+                    ->setCellValue('I1', 'Costo por Hora');
+
+        $i = 2;
+        
+        foreach ($model as $val) {
+            
+            /*$cliente = "";
+            if ($costoproducciondiario->idcliente){
+                $arCliente = \app\models\Cliente::findOne($costoproducciondiario->idcliente);
+                $cliente = $arCliente->nombrecorto;
+            }*/
+            
+            $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A' . $i, $val->identificacion)
+                    /*->setCellValue('B' . $i, $costoproducciondiario->ordenproduccion)
+                    ->setCellValue('C' . $i, $costoproducciondiario->cantidad_x_hora)
+                    ->setCellValue('D' . $i, $costoproducciondiario->cantidad_diaria)
+                    ->setCellValue('E' . $i, $costoproducciondiario->tiempo_entrega_dias)
+                    ->setCellValue('F' . $i, $costoproducciondiario->nro_horas)
+                    ->setCellValue('G' . $i, $costoproducciondiario->dias_entrega)
+                    ->setCellValue('H' . $i, $costoproducciondiario->costo_muestra_operaria)
+                    ->setCellValue('I' . $i, $costoproducciondiario->costo_x_hora)*/;
+            $i++;
+        }
+
+        $objPHPExcel->getActiveSheet()->setTitle('Costo_produccion_diaria');
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Costo_produccion_diaria.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+        // If you're serving to IE over SSL, then the following may be needed
+        header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+        header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header ('Pragma: public'); // HTTP/1.0
+        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save('php://output');
+        exit;	   
+    }
 
 }

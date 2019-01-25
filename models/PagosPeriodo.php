@@ -99,4 +99,10 @@ class PagosPeriodo extends \yii\db\ActiveRecord
             'matricula' => 'Matricula',
         ];
     }
+    
+    public function getNombres()
+    {
+        $estudiante = Inscritos::find()->where(['=','identificacion',$this->identificacion])->one();
+        return $estudiante->nombre1.' '.$estudiante->nombre2.' '.$estudiante->apellido1.' '.$estudiante->apellido2;
+    }
 }

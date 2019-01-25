@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
+use moonland\phpexcel\Excel;
 
 $this->title = 'Informe Pagos';
 ?>
@@ -145,6 +146,6 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
     </div>
 </div>
 
-
+<?= Html::submitButton("<span class='glyphicon glyphicon-floppy-disk'></span> Editar", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
 
 <?php $formulario->end() ?>
