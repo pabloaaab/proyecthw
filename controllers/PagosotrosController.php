@@ -82,6 +82,7 @@ class PagosotrosController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 $resolucion = Resolucion::find()->where(['codigo_resolucion_pk' => 1])->one();
+                $sedeinscrito = Inscritos::find()->where(['=','identificacion',$model->identificacion])->one();
                 $table = new Pagos;
                 $table->identificacion = $model->identificacion;
                 $table->mensualidad = $model->mensualidad;
@@ -94,6 +95,7 @@ class PagosotrosController extends Controller {
                 $table->ttpago = $model->ttpago;
                 $table->resolucion = $resolucion->resolucion;
                 $table->tipo_pago = "otros";
+                $table->sede = $sedeinscrito->municipio;
                 if ($table->insert()) {
                     $msg = "Registros guardados correctamente";
                     return $this->redirect(["pagosotros/index"]);                    

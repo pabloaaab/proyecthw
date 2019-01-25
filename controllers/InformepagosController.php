@@ -18,6 +18,9 @@ use yii\helpers\Url;
 use app\models\FormFiltroInformesPagos;
 use yii\web\UploadedFile;
 
+use yii\helpers\ArrayHelper;
+
+
 class InformepagosController extends Controller {
 
     public function actionIndex() {
@@ -102,6 +105,10 @@ class InformepagosController extends Controller {
                 } else {
                     $form->getErrors();
                 }
+                
+                if (isset($_GET["excel"])) {
+                    $this->actionExcel($identificacion);
+                }
             } else {
                 $table = Pagos::find()                        
                         ->orderBy('nropago desc');
@@ -144,6 +151,33 @@ class InformepagosController extends Controller {
         } else {
             return $this->redirect(["site/login"]);
         }
-    }                
+    }
+    
+    public function actionExcel($model) {
+        
+        \moonland\phpexcel\Excel::export([
+   	'models' => Pagos::find()->where(['=','identificacion',1035917181])->all(),
+      	'columns' => [
+      		'identificacion.name:text:Author Name',
+      		[
+      				'attribute' => 'content',
+      				'header' => 'Content Post',
+      				'format' => 'text',
+      				'value' => function($model) {
+      					return Pagos::removeText('example', $model->content);
+      				},
+      		],
+      		'like_it:text:Reader like this content',
+      		'created_at:datetime',
+      		[
+      				'attribute' => 'updated_at',
+      				'format' => 'date',
+      		],
+      	],
+      	'headers' => [
+     		'created_at' => 'Date Created Content',
+		],
+]);    
+    }
 
 }

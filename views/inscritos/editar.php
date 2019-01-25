@@ -28,7 +28,8 @@ $this->title = 'Editar Inscrito';
 <?php
 $lugarExp = ArrayHelper::map(Municipio::find()->all(), 'opcion','opcion');
 $municipioNac = ArrayHelper::map(Municipio::find()->all(), 'opcion','opcion');
-$sede = ArrayHelper::map(Municipio::find()->all(), 'opcion','opcion');
+//$sede = ArrayHelper::map(Municipio::find()->all(), 'opcion','opcion');
+$sede = ArrayHelper::map(\app\models\Sede::find()->where(['=','estado',1])->all(), 'sede','sede');
 $departamento_nac = ArrayHelper::map(Departamentos::find()->all(), 'opcion','opcion');
 $ciudadFirma = ArrayHelper::map(Municipio::find()->all(), 'opcion','opcion');
 ?>

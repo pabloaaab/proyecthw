@@ -63,7 +63,7 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
     </div>
 </div>    
     
-<?php $formulario->end() ?>
+
 
 <!-- Trigger the modal with a button -->
 
@@ -122,7 +122,7 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
                         $anulado = "SI";
                     } ?>
                     <?php if ($val->sede == "") {
-                        $sede = "Otros Pagos";
+                        $sede = "sin definir";
                     } else {
                         $sede = $val->sede;
                     } ?>
@@ -145,3 +145,6 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
     </div>
 </div>
 
+<?= Html::submitButton("<span class='glyphicon glyphicon-floppy-disk'></span> Editar", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
+
+<?php $formulario->end() ?>
