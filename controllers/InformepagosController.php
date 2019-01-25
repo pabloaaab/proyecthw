@@ -106,9 +106,9 @@ class InformepagosController extends Controller {
                     $form->getErrors();
                 }
                 
-                if (isset($_GET["excel"])) {
+                /*if (isset($_GET["excel"])) {
                     $this->actionExcel($identificacion);
-                }
+                }*/
             } else {
                 $table = Pagos::find()                        
                         ->orderBy('nropago desc');
@@ -153,7 +153,7 @@ class InformepagosController extends Controller {
         }
     }
     
-    public function actionExcel($model) {
+    /*public function actionExcel($model) {
         
         \moonland\phpexcel\Excel::export([
    	'models' => Pagos::find()->where(['=','identificacion',1035917181])->all(),
@@ -178,6 +178,6 @@ class InformepagosController extends Controller {
      		'created_at' => 'Date Created Content',
 		],
 ]);    
-    }
+    }*/
 
 }
