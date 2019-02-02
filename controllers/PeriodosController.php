@@ -71,6 +71,7 @@ class PeriodosController extends Controller {
     public function actionGenerarperiodo() {
         ob_clean();
         $matriculasabiertas = Matriculados::find()->where(['=', 'estado2', 'abierta'])->orderBy('consecutivo desc')->all();
+        $count = count($matriculasabiertas);
         $mensaje = "";
         if(Yii::$app->request->post()) {
             if (isset($_POST["consecutivo"])) {
@@ -92,7 +93,7 @@ class PeriodosController extends Controller {
                         $pagosperiodo->identificacion = $estudiante->identificacion;
                         $pagosperiodo->mensualidad = $mensualidad;
                         $pagosperiodo->pago1 = 0;
-                        $pagosperiodo->total = $_POST["valor_mensual"][$intIndice];
+                        $pagosperiodo->total = $estudiante->valor_mensual;
                         $pagosperiodo->afecta_pago = 0;
                         $pagosperiodo->anulado = 0;
                         $pagosperiodo->sede = $estudiante->sede;
@@ -113,6 +114,7 @@ class PeriodosController extends Controller {
         return $this->render('generarperiodo', [
             'matriculasabiertas' => $matriculasabiertas,            
             'mensaje' => $mensaje,
+            'count' => $count,
 
         ]);
     }

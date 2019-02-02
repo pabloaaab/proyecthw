@@ -82,6 +82,7 @@ class FormInscrito extends Model
             ['direccion', 'default'],
             ['sexo', 'default'],
             ['telefono', 'required', 'message' => 'Campo requerido'],
+            ['sexo', 'required', 'message' => 'Campo requerido'],
             ['email', 'required', 'message' => 'Campo requerido'],
             ['celular', 'required', 'message' => 'Campo requerido'],
             ['barrio', 'required', 'message' => 'Campo requerido'],

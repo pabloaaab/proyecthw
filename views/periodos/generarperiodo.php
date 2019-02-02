@@ -53,7 +53,7 @@ if ($mensaje != ""){
 <div class="table table-responsive">
     <div class="panel panel-primary ">
         <div class="panel-heading">
-            Registros
+            Registros <?= $count ?>
         </div>
         <div class="panel-body">
             <table class="table table-condensed">
@@ -72,8 +72,8 @@ if ($mensaje != ""){
                 <?php foreach ($matriculasabiertas as $val): ?>
                 <tr>
                     <?php if($val->docente){
-                        $docente = \app\models\Inscritos::find()->where(['=','identificacion',$val->docente])->one();
-                        $dato = $docente->nombredocente;
+                        $docente = Inscritos::find()->where(['=','identificacion',$val->docente])->one();
+                        $dato = $val->docente;
                         } else {
                             $dato = "Sin definir";
                         }
@@ -83,7 +83,7 @@ if ($mensaje != ""){
                     <td><?= $dato ?></td>
                     <td><?= $val->nivel ?></td>
                     <td><?= $val->sede ?></td>
-                    <td><input type="text" name="valor_mensual[]" value="<?= $val->valor_mensual ?>"></td>                    
+                    <td><?= '$ '.number_format($val->valor_mensual) ?></td>                    
                     <td><input type="checkbox" name="consecutivo[]" value="<?= $val->consecutivo ?>" checked="true" readonly="true" onclick="this.checked=!this.checked"></td>
                 </tr>
                 </tbody>
