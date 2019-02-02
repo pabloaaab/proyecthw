@@ -41,7 +41,7 @@ class PagosperiodoController extends Controller {
                     $table = PagosPeriodo::find()                            
                             ->Where(['=', 'cerro_grupo', '0'])                            
                             ->andFilterWhere(['like', 'anulado', $anulado])
-                            ->andFilterWhere(['like', 'pagado', $pagado])
+                            ->andFilterWhere(['like', 'afecta_pago', $pagado])
                             ->andFilterWhere(['like', 'mensualidad', $mensualidad])
                             ->andFilterWhere(['like', 'identificacion', $identificacion])                            
                             ->andFilterWhere(['like', 'sede', $sede])
