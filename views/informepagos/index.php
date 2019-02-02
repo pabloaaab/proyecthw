@@ -146,6 +146,6 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
     </div>
 </div>
 
-<?= Html::submitButton("<span class='glyphicon glyphicon-floppy-disk'></span> Editar", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
+<?= Html::submitButton("<span class='glyphicon glyphicon-floppy-disk'></span> excel", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
 
 <?php $formulario->end() ?>

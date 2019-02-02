@@ -155,7 +155,7 @@ class InformepagosController extends Controller {
     }
     
     public function actionExcel($model) {
-        
+        include_once '..\vendor\moonlandsoft\yii2-phpexcel\Excel.php';
         $objPHPExcel = new \PHPExcel();
         // Set document properties
         $objPHPExcel->getProperties()->setCreator("EMPRESA")
