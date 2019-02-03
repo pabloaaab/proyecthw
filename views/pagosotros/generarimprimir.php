@@ -1,5 +1,11 @@
 
 <?php
+
+use app\models\Users;
+use app\models\User;
+
+$usuario = Users::find()->where(['=','username', $model2->usuarioregistra])->one();
+
 $this->title = 'Imprimir Otros Pagos';
 $msg = "Pago de ".$model2->mensualidad."";
 $saldo = 0;
@@ -88,7 +94,7 @@ if ($model2->anulado == '')
     <td align="right"><span class="Estilo28">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
   <tr>
-    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo Yii::$app->user->identity->nombrecompleto; ?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
+    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo $usuario->nombrecompleto; ?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
   </tr>
   <tr>
     <td height="30" colspan="4" align="center"><span class="Estilo25"><?php echo utf8_decode($model2->resolucion);?> </span></td>
@@ -173,7 +179,7 @@ else
     <td align="right"><span class="Estilo28">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
   <tr>
-    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo Yii::$app->user->identity->nombrecompleto; ?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
+    <td height="50" colspan="4"><span class="Estilo25"><strong>Cajero(a): <?php echo $usuario->nombrecompleto; ?> - Fecha: </strong><?php echo $model2->fecha_registro;?></span></td>
   </tr>
   <tr>
     <td height="30" colspan="4" align="center"><span class="Estilo25"><?php echo $model2->resolucion;?> </span></td>
