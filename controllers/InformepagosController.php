@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\FormFiltroInformesPagos;
+use app\models\Matriculados;
+use app\models\Pagos;
 use Codeception\Lib\HelperModule;
 use yii;
 use yii\base\Model;
@@ -12,13 +15,12 @@ use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Matriculados;
-use app\models\Pagos;
 use yii\helpers\Url;
-use app\models\FormFiltroInformesPagos;
 use yii\web\UploadedFile;
-use moonland\phpexcel\Excel;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
+use moonland\phpexcel\Excel;
+use app\models\UsuarioDetalle;
 
 
 
@@ -108,7 +110,7 @@ class InformepagosController extends Controller {
                 }
                 
                 if (isset($_GET["excel"])) {
-                    $this->actionExcel($identificacion);
+                    $this->actionExcel($model);
                 }
             } else {
                 $table = Pagos::find()                        
@@ -154,8 +156,8 @@ class InformepagosController extends Controller {
         }
     }
     
-    public function actionExcel($model) {
-        include_once '..\vendor\moonlandsoft\yii2-phpexcel\Excel.php';
+    public function actionExcel($id) {
+        //$costoproducciondiario = CostoProduccionDiaria::find()->all();
         $objPHPExcel = new \PHPExcel();
         // Set document properties
         $objPHPExcel->getProperties()->setCreator("EMPRESA")
@@ -189,24 +191,24 @@ class InformepagosController extends Controller {
 
         $i = 2;
         
-        foreach ($model as $val) {
+        foreach ($costoproducciondiario as $costoproducciondiario) {
             
-            /*$cliente = "";
+            $cliente = "";
             if ($costoproducciondiario->idcliente){
                 $arCliente = \app\models\Cliente::findOne($costoproducciondiario->idcliente);
                 $cliente = $arCliente->nombrecorto;
-            }*/
+            }
             
             $objPHPExcel->setActiveSheetIndex(0)
-                    ->setCellValue('A' . $i, $val->identificacion)
-                    /*->setCellValue('B' . $i, $costoproducciondiario->ordenproduccion)
+                    ->setCellValue('A' . $i, $cliente)
+                    ->setCellValue('B' . $i, $costoproducciondiario->ordenproduccion)
                     ->setCellValue('C' . $i, $costoproducciondiario->cantidad_x_hora)
                     ->setCellValue('D' . $i, $costoproducciondiario->cantidad_diaria)
                     ->setCellValue('E' . $i, $costoproducciondiario->tiempo_entrega_dias)
                     ->setCellValue('F' . $i, $costoproducciondiario->nro_horas)
                     ->setCellValue('G' . $i, $costoproducciondiario->dias_entrega)
                     ->setCellValue('H' . $i, $costoproducciondiario->costo_muestra_operaria)
-                    ->setCellValue('I' . $i, $costoproducciondiario->costo_x_hora)*/;
+                    ->setCellValue('I' . $i, $costoproducciondiario->costo_x_hora);
             $i++;
         }
 
@@ -226,7 +228,7 @@ class InformepagosController extends Controller {
         header ('Pragma: public'); // HTTP/1.0
         $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
         $objWriter->save('php://output');
-        exit;	   
+        exit;	    
     }
 
 }
