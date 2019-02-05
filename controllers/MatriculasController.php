@@ -15,6 +15,7 @@ use yii\widgets\ActiveForm;
 use app\models\Matriculados;
 use app\models\Notas;
 use app\models\PagosPeriodo;
+use app\models\FormMatriculados;
 use yii\helpers\Url;
 use app\models\FormFiltromatriculas;
 use app\models\FormCancelarMatricula;
@@ -264,6 +265,13 @@ class MatriculasController extends Controller {
                     $nota = new Notas;
                     $nota->identificacion = $table->identificacion;
                     $nota->matricula = $table->consecutivo;
+                    $nota->nivel = $table->nivel;
+                    $nota->docente = $table->docente;
+                    $nota->tipo_jornada = $table->tipo_jornada;
+                    $nota->horario = $table->horario;
+                    $nota->dias = $table->dias;
+                    $nota->sede = $table->sede;
+                    $nota->estado2 = 'ABIERTA';
                     //$nota->tipo_jornada = $table->tipo_jornada;
                     $nota->insert();
                 } else {
@@ -278,7 +286,7 @@ class MatriculasController extends Controller {
     }
 
     public function actionEditar($consecutivo) {
-        $model = new Matriculados;
+        $model = new FormMatriculados();
         $msg = null;
         $tipomsg = null;
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
@@ -301,7 +309,15 @@ class MatriculasController extends Controller {
                     $table->tipo_jornada = $model->tipo_jornada;
                     $table->horario = $model->horario;
                     $table->dias = $model->dias;
-                    if ($table->update()) {
+                    if ($table->save(false)) {
+                        $nota = Notas::find()->where(['=','matricula',$consecutivo])->one();
+                        $nota->sede = $table->sede;
+                        $nota->docente = $table->docente;
+                        $nota->nivel = $table->nivel;
+                        $nota->tipo_jornada = $table->tipo_jornada;
+                        $nota->horario = $table->horario;
+                        $nota->dias = $table->dias;
+                        $nota->save(false);
                         $msg = "El registro ha sido actualizado correctamente";
                     } else {
                         $msg = "El registro no sufrio ningun cambio";
@@ -321,6 +337,7 @@ class MatriculasController extends Controller {
             $consecutivo = Html::encode($_GET["consecutivo"]);
             $table = Matriculados::find()->where(['consecutivo' => $consecutivo])->one();
             if ($table) {
+                $model->consecutivo = $table->consecutivo;
                 $model->identificacion = $table->identificacion;
                 $model->fechamat = $table->fechamat;
                 $model->acudiente1 = $table->acudiente1;
@@ -360,6 +377,9 @@ class MatriculasController extends Controller {
                         $table->fecha_cierre = $model->fecha_can;
                         $table->estado2 = 'CANCELADA';                        
                         if ($table->save(false)) {
+                            $nota = Notas::find()->where(['=','matricula',$consecutivo])->one();
+                            $nota->estado2 = $table->estado2; 
+                            $nota->save(false);
                             $msg = "El registro ha sido actualizado correctamente";
                             $pagoperiodo = PagosPeriodo::find()->where(['=','identificacion',$table->identificacion])->all();
                             if ($pagoperiodo){
@@ -426,6 +446,9 @@ class MatriculasController extends Controller {
                             $tipomsg = "danger";
                         }else{
                             if ($table->save(false)) {
+                                $nota = Notas::find()->where(['=','matricula',$consecutivo])->one();
+                                $nota->estado2 = $table->estado2; 
+                                $nota->save(false);
                                 $msg = "El registro ha sido actualizado correctamente";
                             } else {
                                 $msg = "El registro no sufrio ningun cambio";

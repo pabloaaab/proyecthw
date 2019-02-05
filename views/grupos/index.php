@@ -99,4 +99,3 @@ $this->title = 'Grupos';
             <?= LinkPager::widget(['pagination' => $pagination]) ?>
         </div>
     </div>
-

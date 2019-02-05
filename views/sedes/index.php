@@ -68,4 +68,3 @@ $this->title = 'Sedes';
             <?= LinkPager::widget(['pagination' => $pagination]) ?>
         </div>
     </div>
-

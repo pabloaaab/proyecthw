@@ -40,10 +40,10 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
                 'value' => date('d-M-Y', strtotime('+2 days')),
                 'options' => ['placeholder' => 'Seleccione una fecha ...'],
                 'pluginOptions' => [
-                    'format' => 'yyyy-m-d',
+                    'format' => 'yyyy-mm-dd',
                     'todayHighlight' => true]]) ?>        
         <?= $form->field($model, 'nivel')->dropDownList($nivel,['prompt' => 'Seleccione...' ]) ?>
-        <?= $form->field($model, 'valor_matricula')->input("text") ?>
+        <?= $form->field($model, 'valor_matricula')->input("text") ?>        
         <?= $form->field($model, 'valor_mensual')->input("text") ?>
         <?= $form->field($model, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?>        
         <?= $form->field($model, 'sede')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?>
