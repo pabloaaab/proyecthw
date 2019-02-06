@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\Sede;
 use kartik\date\DatePicker;
+use app\models\Horario;
 
 $this->title = 'Editar Matricula';
 ?>
@@ -48,8 +49,90 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
         <?= $form->field($model, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?>        
         <?= $form->field($model, 'sede')->dropDownList($sede,['prompt' => 'Seleccione...' ]) ?>
         <?= $form->field($model, 'tipo_jornada')->dropdownList(['Semana' => 'Semana', 'Sabado' => 'Sabado', 'Domingo' => 'Domingo'], ['prompt' => 'Seleccione...']) ?>
-        <?= $form->field($model, 'horario')->input("text") ?>
-        <?= $form->field($model, 'dias')->input("text") ?>
+        <?php $rows = Horario::find()->all();
+        if ($model->horario){
+            $horario = explode("-", $model->horario);
+            $de = $horario[0];
+            $hasta = $horario[1];
+        }else{
+            $de = '';
+            $hasta = '';
+        }
+                
+        echo "<b>De</b> <select id='de' name='de' class='form-control'>";
+        echo "<option value='$de' required>$de</option>";
+        if (count($rows) > 0) {
+            foreach ($rows as $row) {
+                echo "<option value='$row->horario' required>$row->horario</option>";
+            }
+        }
+        echo "</select><br>";
+        echo "<b>Hasta</b> <select id='hasta' name='hasta' class='form-control'>";
+        echo "<option value='$hasta' required>$hasta</option>";
+        if (count($rows) > 0) {
+            foreach ($rows as $row) {
+                echo "<option value='$row->horario' required>$row->horario</option>";
+            }
+        }
+        echo "</select><br>";
+        ?>
+        <?php 
+            $cadena= $model->dias;
+            $lunes = '';
+            $martes = '';
+            $miercoles = '';
+            $jueves = '';
+            $viernes = '';
+            $sabado = '';
+            $domingo = ''; 
+            $checklunes = '';
+            $checkmartes = '';
+            $checkmiercoles = '';
+            $checkjueves = '';
+            $checkviernes = '';
+            $checksabado = '';
+            $checkdomingo = '';
+            //$total = count($cadena);
+            for($i=0;$i<strlen($cadena);$i++){
+                $d = $cadena[$i];
+                if ($cadena[$i] == 'l' or $cadena[$i] == 'L'){
+                    $lunes = 'L';
+                    $checklunes = "checked='true'";
+                }
+                if ($cadena[$i] == 'm' or $cadena[$i] == 'M'){
+                    $martes = 'M';
+                    $checkmartes = "checked='true'";
+                }
+                if ($cadena[$i] == 'W' or $cadena[$i] == 'w'){
+                    $miercoles = 'W';
+                    $checkmiercoles = "checked='true'";
+                }
+                if ($cadena[$i] == 'j' or $cadena[$i] == 'J'){
+                    $jueves = 'J';
+                    $checkjueves = "checked='true'";
+                }
+                if ($cadena[$i] == 'v' or $cadena[$i] == 'V'){
+                    $viernes = 'V';
+                    $checkviernes = "checked='true'";
+                }
+                if ($cadena[$i] == 'S' or $cadena[$i] == 's'){
+                    $sabado = 'S';
+                    $checksabado = "checked='true'";
+                }
+                if ($cadena[$i] == 'd' or $cadena[$i] == 'D'){
+                    $domingo = 'D';
+                    $checkdomingo = "checked='true'";
+                }
+            } 
+        ?>
+        <input type="checkbox" id="lunes" name="lunes" value="L" <?php echo $checklunes; ?>> Lunes <br>
+        <input type="checkbox" id="martes" name="martes" value="M" <?php echo $checkmartes; ?>> Martes<br>
+        <input type="checkbox" id="miercoles" name="miercoles" value="W" <?php echo $checkmiercoles; ?>> Miercoles <br>
+        <input type="checkbox" id="jueves" name="jueves" value="J" <?php echo $checkjueves; ?>> Jueves <br>
+        <input type="checkbox" id="viernes" name="viernes" value="V" <?php echo $checkviernes; ?>> Viernes <br>
+        <input type="checkbox" id="sabado" name="sabado" value="S" <?php echo $checksabado; ?>> Sabado <br>
+        <input type="checkbox" id="domingo" name="domingo" value="D" <?php echo $checkdomingo; ?>> Domingo <br>                        
+        <br>
     </div>
 
 </div>

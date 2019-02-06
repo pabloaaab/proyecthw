@@ -214,6 +214,9 @@ class SiteController extends Controller
                 if ($table->role == 3){
                         $perfil = "Docente"; 
                 }
+                if ($table->role == 4){
+                        $perfil = "Estudiante"; 
+                }
                 $table->perfil = $perfil;
                 $table->sede = $model->sede;
                 //Si el registro es guardado correctamente

@@ -59,7 +59,7 @@ class FormRegister extends model{
     public function attributeLabels()
     {
         return [
-            'username' => 'Usuario:',
+            'username' => 'Identificacion:',
             'email' => 'Email:',
             'password' => 'Clave:',
             'password_repeat' => 'Confirmar Clave:',

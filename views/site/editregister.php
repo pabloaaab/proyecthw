@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
@@ -21,6 +22,7 @@ $form = ActiveForm::begin([
                 'options' => []
             ],
         ]);
+$sede = ArrayHelper::map(\app\models\Sede::find()->where(['=','estado',1])->all(), 'sede','sede');
 ?>
 
 <div class="panel panel-primary">
@@ -32,7 +34,7 @@ $form = ActiveForm::begin([
             <?= $form->field($model, "username")->input("text") ?>                
         </div>        
         <div class="row">            
-            <?= $form->field($model, 'role')->dropdownList(['1' => 'ADMINISTRATIVO', '2' => 'ADMINISTRADOR'], ['prompt' => 'Seleccione el tipo de usuario para el sistema']) ?>
+            <?= $form->field($model, 'role')->dropdownList(['1' => 'ADMINISTRATIVO', '2' => 'ADMINISTRADOR', '3' => 'DOCENTE', '4' => 'ESTUDIANTE'], ['prompt' => 'Seleccione...']) ?>
         </div>
         <div class="row">
             <?= $form->field($model, "email")->input("email") ?>           
@@ -41,7 +43,7 @@ $form = ActiveForm::begin([
             <?= $form->field($model, "nombrecompleto")->input("text") ?>               
         </div>
         <div class="row">
-            <?= $form->field($model, "sede")->input("text") ?>    
+            <?= $form->field($model, 'sede')->dropDownList($sede, ['prompt' => 'Seleccione...']) ?>    
         </div>
         <div class="row">            
             <?= $form->field($model, 'activo')->dropdownList(['1' => 'ACTIVO', '0' => 'INACTIVO'], ['prompt' => 'Seleccione el estado del usuario']) ?>

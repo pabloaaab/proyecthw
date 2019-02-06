@@ -37,6 +37,16 @@ if (Yii::$app->user->identity->role == 2){
 $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
 $docentes = app\models\Inscritos::find()->Where(['=', 'tipo_personal', 'Docente'])->all();
 $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
+$horario = app\models\Matriculados::find()
+                    ->groupBy('horario')
+                    ->orderBy('consecutivo desc')
+                    ->all();            
+$horario = ArrayHelper::map($horario, "horario", "horario");
+$dias = app\models\Matriculados::find()
+                    ->groupBy('dias')
+                    ->orderBy('consecutivo desc')
+                    ->all();            
+$dias = ArrayHelper::map($dias, "dias", "dias");
 ?>    
     
 <div class="panel panel-primary panel-filters">
@@ -55,6 +65,8 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
             <?php } ?>            
             <?= $formulario->field($form, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?>
             <?= $formulario->field($form, 'jornada')->dropdownList(['Semana' => 'Semana', 'Sabado' => 'Sabado', 'Domingo' => 'Domingo'], ['prompt' => 'Seleccione...']) ?>
+            <?= $formulario->field($form, 'horario')->dropDownList($horario,['prompt' => 'Seleccione...' ]) ?>
+            <?= $formulario->field($form, 'dias')->dropDownList($dias,['prompt' => 'Seleccione...' ]) ?>
         </div>
         <div class="panel-footer text-right">
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>

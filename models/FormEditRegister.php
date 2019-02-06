@@ -34,7 +34,7 @@ class FormEditRegister extends model{
     public function attributeLabels()
     {
         return [
-            'username' => 'Usuario:',
+            'username' => 'Identificacion:',
             'nombrecompleto' => 'Nombre:',
             'role' => 'Tipo Usuario:',
             'sede' => 'Sede:',

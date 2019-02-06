@@ -10,6 +10,8 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Inscritos;
 
 $this->title = 'Notas';
 
@@ -30,13 +32,58 @@ $this->title = 'Notas';
 ]);
 ?>
 
+<?php
+$sede = ArrayHelper::map(\app\models\Sede::find()->where(['=','estado',1])->all(), 'sede','sede');
+$nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
+if (Yii::$app->user->identity->role == 2){
+    $docentes = app\models\Inscritos::find()->Where(['=', 'tipo_personal', 'Docente'])->all();
+    $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
+}
+if (Yii::$app->user->identity->role == 4){
+    $docentes = app\models\Inscritos::find()->Where(['=', 'tipo_personal', 'Docente'])->all();
+    $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
+}
+if (Yii::$app->user->identity->role == 3){
+    $docentes = app\models\Inscritos::find()->Where(['=', 'tipo_personal', 'Docente'])->andWhere((['=','identificacion',Yii::$app->user->identity->username]))->all();
+    $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
+}
+$horario = app\models\Notas::find()
+                    ->groupBy('horario')
+                    ->orderBy('consecutivo desc')
+                    ->all();            
+$horario = ArrayHelper::map($horario, "horario", "horario");
+$dias = app\models\Notas::find()
+                    ->groupBy('dias')
+                    ->orderBy('consecutivo desc')
+                    ->all();            
+$dias = ArrayHelper::map($dias, "dias", "dias");
+
+?> 
+
 <div class="panel panel-primary panel-filters">
     <div class="panel-heading">
         Filtros de busqueda <i class="glyphicon glyphicon-filter"></i>
     </div>	
     <div class="panel-body" id="nuevopago">
         <div class="row" >
-            <?= $formulario->field($form, "identificacion")->input("search") ?>                        
+            <?php if (Yii::$app->user->identity->role == 4){ ?>
+                <?= $formulario->field($form, "identificacion")->input("search",['value' => Yii::$app->user->identity->username, 'readonly' => true]) ?>
+            <?php } else { ?>
+                <?= $formulario->field($form, "identificacion")->input("search") ?>
+            <?php } ?>            
+            <?= $formulario->field($form, 'nivel')->dropDownList($nivel,['prompt' => 'Seleccione...' ]) ?>
+            <?php if (Yii::$app->user->identity->role == 2){ ?>
+                <?= $formulario->field($form, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?> 
+            <?php } ?>
+            <?php if (Yii::$app->user->identity->role == 4){ ?>
+                <?= $formulario->field($form, 'docente')->dropDownList($docentes,['prompt' => 'Seleccione...' ]) ?> 
+            <?php } ?>
+            <?php if (Yii::$app->user->identity->role == 3){ ?>
+                <?= $formulario->field($form, 'docente')->dropDownList($docentes) ?> 
+            <?php } ?>                
+            <?= $formulario->field($form, 'tipo_jornada')->dropdownList(['Semana' => 'Semana', 'Sabado' => 'Sabado', 'Domingo' => 'Domingo'], ['prompt' => 'Seleccione...']) ?>
+            <?= $formulario->field($form, 'horario')->dropDownList($horario,['prompt' => 'Seleccione...' ]) ?>
+            <?= $formulario->field($form, 'dias')->dropDownList($dias,['prompt' => 'Seleccione...' ]) ?>
         </div>
         <div class="panel-footer text-right">            
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary",]) ?>
@@ -65,7 +112,7 @@ $form = ActiveForm::begin([
 <div class="table-responsive">
 <div class="panel panel-primary ">
     <div class="panel-heading">
-        Registros: <?= $count ?>
+        Registros: <?= $pagination->totalCount ?>
     </div>
         <table class="table table-hover">
             <thead>
@@ -73,28 +120,36 @@ $form = ActiveForm::begin([
                 <th scope="col">Consecutivo</th>                                                                                                
                 <th scope="col">identificacion</th>                
                 <th scope="col">Docente</th>
+                <th scope="col">Nivel</th>
+                <th scope="col">Jornada</th>
                 <th scope="col">Listening</th>
                 <th scope="col">Reading</th>
                 <th scope="col">Speaking</th>
-                <th scope="col">Writing</th>                
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Writing</th>                                
                 <th scope="col">Observaciones</th>
                 <th scope="col"></th>                
             </tr>
             </thead>
             <tbody>                           
             <?php foreach ($model as $val): ?>
+            <?php $docente = Inscritos::find()->where(['=','identificacion',$val->docente])->one() ?>    
             <tr>                                
                 <td><?= $val->consecutivo ?></td>
-                <td><?= $val->identificacion ?></td>
-                <td><?= $val->docente ?></td>
-                <td><input type="text" name="n1[]" value="<?= $val->nota1 ?>" size="2px"></td>
-                <td><input type="text" name="n2[]" value="<?= $val->nota2 ?>" size="2px"></td>
-                <td><input type="text" name="n3[]" value="<?= $val->nota3 ?>" size="2px"></td>
-                <td><input type="text" name="n4[]" value="<?= $val->nota4 ?>" size="2px"></td>                
-                <td><input type="text" name='nf[]' value="<?= $val->nf ?>" size="2px"></td>
-                <td><input type="text" name='nfp[]' value="<?= $val->nfp ?>" size="2px"></td>
+                <td><?= $val->entificacion->nombreEstudiante ?></td>
+                <td><?= $docente->nombreDocente ?></td>
+                <td><?= $val->nivel ?></td>
+                <td><?= $val->tipo_jornada ?></td>
+                <?php if (Yii::$app->user->identity->role <> 4) { ?>
+                    <td><input type="text" name="n1[]" value="<?= $val->nota1 ?>" size="2px"></td>
+                    <td><input type="text" name="n2[]" value="<?= $val->nota2 ?>" size="2px"></td>
+                    <td><input type="text" name="n3[]" value="<?= $val->nota3 ?>" size="2px"></td>
+                    <td><input type="text" name="n4[]" value="<?= $val->nota4 ?>" size="2px"></td>
+                <?php } else { ?>
+                    <td><?= $val->nota1 ?></td>
+                    <td><?= $val->nota2 ?></td>
+                    <td><?= $val->nota3 ?></td>
+                    <td><?= $val->nota4 ?></td>
+                <?php } ?>
                 <td><?= $val->observaciones ?></td>                
                 <td></td>
                 <td><input type="hidden" name="consecutivo[]" value="<?= $val->consecutivo ?>" size="2px"></td>
@@ -103,9 +158,12 @@ $form = ActiveForm::begin([
             <?php endforeach; ?>
         </table>        
     </div>
+    <?php if (Yii::$app->user->identity->role <> 4){ ?>
     <div class="panel-footer text-right">        
         <?= Html::submitButton("<span class='glyphicon glyphicon-floppy-disk'></span> Actualizar", ["class" => "btn btn-success",]) ?>
     </div>
+    <?php } ?>
+    <?= LinkPager::widget(['pagination' => $pagination]) ?>
 </div>
 
 <?php $form->end() ?>

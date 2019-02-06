@@ -33,6 +33,8 @@ class MatriculasController extends Controller {
             $docente = null;
             $sede = null;
             $jornada = null;
+            $horario = null;
+            $dias = null;
             if ($form->load(Yii::$app->request->get())) {
                 if ($form->validate()) {
                     $nivel = Html::encode($form->nivel);
@@ -40,6 +42,8 @@ class MatriculasController extends Controller {
                     $docente = Html::encode($form->docente);
                     $sede = Html::encode($form->sede);
                     $jornada = Html::encode($form->jornada);
+                    $horario = Html::encode($form->horario);
+                    $dias = Html::encode($form->dias);
                     $table = Matriculados::find()
                             ->where(['<>', 'estado2', 'ANTERIOR'])
                             ->andFilterWhere(['like', 'nivel', $nivel])
@@ -47,6 +51,8 @@ class MatriculasController extends Controller {
                             ->andFilterWhere(['like', 'docente', $docente])
                             ->andFilterWhere(['like', 'sede', $sede])
                             ->andFilterWhere(['like', 'tipo_jornada', $jornada])
+                            ->andFilterWhere(['like', 'horario', $horario])
+                            ->andFilterWhere(['like', 'dias', $dias])
                             ->orderBy('consecutivo desc');
                     $count = clone $table;
                     $pages = new Pagination([
@@ -249,8 +255,43 @@ class MatriculasController extends Controller {
                 $table->sede = $model->sede;
                 $table->estado2 = "ABIERTA";
                 $table->tipo_jornada = $model->tipo_jornada;
-                $table->horario = $model->horario;
-                $table->dias = $model->dias;
+                $table->horario = $_POST['de'].'-'.$_POST['hasta'];
+                if (isset($_POST['lunes'])){
+                    $lunes = $_POST['lunes'];
+                }else{
+                    $lunes = '';
+                }
+                if (isset($_POST['martes'])){
+                    $martes = $_POST['martes'];
+                }else{
+                    $martes = '';
+                }
+                if (isset($_POST['miercoles'])){
+                    $miercoles = $_POST['miercoles'];
+                }else{
+                    $miercoles = '';
+                }
+                if (isset($_POST['jueves'])){
+                    $jueves = $_POST['jueves'];
+                }else{
+                    $jueves = '';
+                }
+                if (isset($_POST['viernes'])){
+                    $viernes = $_POST['viernes'];
+                }else{
+                    $viernes = '';
+                }
+                if (isset($_POST['sabado'])){
+                    $sabado = $_POST['sabado'];
+                }else{
+                    $sabado = '';
+                }
+                if (isset($_POST['domingo'])){
+                    $domingo = $_POST['domingo'];
+                }else{
+                    $domingo = '';
+                }                
+                $table->dias = $lunes.' '.$martes.' '.$miercoles.' '.$jueves.' '.$viernes.' '.$sabado.' '.$domingo;
                 if ($table->insert()) {
                     $msg = "Registros guardados correctamente";
                     $model->identificacion = null;
@@ -307,15 +348,50 @@ class MatriculasController extends Controller {
                     $table->docente = $model->docente;
                     $table->sede = $model->sede;
                     $table->tipo_jornada = $model->tipo_jornada;
-                    $table->horario = $model->horario;
-                    $table->dias = $model->dias;
+                    $table->horario = $_POST['de'].'-'.$_POST['hasta'];
+                    if (isset($_POST['lunes'])){
+                    $lunes = $_POST['lunes'];
+                }else{
+                    $lunes = '';
+                }
+                if (isset($_POST['martes'])){
+                    $martes = $_POST['martes'];
+                }else{
+                    $martes = '';
+                }
+                if (isset($_POST['miercoles'])){
+                    $miercoles = $_POST['miercoles'];
+                }else{
+                    $miercoles = '';
+                }
+                if (isset($_POST['jueves'])){
+                    $jueves = $_POST['jueves'];
+                }else{
+                    $jueves = '';
+                }
+                if (isset($_POST['viernes'])){
+                    $viernes = $_POST['viernes'];
+                }else{
+                    $viernes = '';
+                }
+                if (isset($_POST['sabado'])){
+                    $sabado = $_POST['sabado'];
+                }else{
+                    $sabado = '';
+                }
+                if (isset($_POST['domingo'])){
+                    $domingo = $_POST['domingo'];
+                }else{
+                    $domingo = '';
+                }                
+                $table->dias = $lunes.' '.$martes.' '.$miercoles.' '.$jueves.' '.$viernes.' '.$sabado.' '.$domingo;
                     if ($table->save(false)) {
                         $nota = Notas::find()->where(['=','matricula',$consecutivo])->one();
                         $nota->sede = $table->sede;
                         $nota->docente = $table->docente;
                         $nota->nivel = $table->nivel;
                         $nota->tipo_jornada = $table->tipo_jornada;
-                        $nota->horario = $table->horario;
+                        $nota->horario = $_POST['de'].'-'.$_POST['hasta'];
                         $nota->dias = $table->dias;
                         $nota->save(false);
                         $msg = "El registro ha sido actualizado correctamente";

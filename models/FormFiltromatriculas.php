@@ -15,6 +15,8 @@ class FormFiltroMatriculas extends Model
     public $docente;
     public $sede;
     public $jornada;
+    public $horario;
+    public $dias;
 
     public function rules()
     {
@@ -25,6 +27,8 @@ class FormFiltroMatriculas extends Model
             ['docente', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
             ['sede', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
             ['jornada', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
+            ['horario', 'match', 'pattern' => '/^[-a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
+            ['dias', 'match', 'pattern' => '/^[-a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
         ];
     }
 
@@ -36,6 +40,8 @@ class FormFiltroMatriculas extends Model
             'docente' => 'N° Docente:',
             'sede' => 'Sede:',
             'jornada' => 'Jornada:',
+            'horario' => 'Horario:',
+            'dias' => 'Días:',
         ];
     }
 }

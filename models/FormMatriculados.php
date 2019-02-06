@@ -46,7 +46,7 @@ class FormMatriculados extends Model
             [['valor_matricula', 'valor_mensual'], 'number'],
             [['grupo', 'programa1', 'acudiente1', 'programa2', 'acudiente2'], 'string', 'max' => 50],
             [['identificacion', 'docente', 'ultimo_periodo_generado'], 'string', 'max' => 20],
-            [['estado', 'nivel', 'sede', 'estado2','dias','horario'], 'string', 'max' => 25],
+            [['estado', 'nivel', 'sede', 'estado2','horario','dias'], 'string', 'max' => 25],
             [['identificacion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscritos::className(), 'targetAttribute' => ['identificacion' => 'identificacion']],
         ];
     }
@@ -80,8 +80,8 @@ class FormMatriculados extends Model
             'estado2' => 'Estado2',
             'fecha_cierre' => 'Fecha Cierre',
             'tipo_jornada' => 'Jornada',
-            'horario' => 'Horario',
-            'dias' => 'Días',
+            //'horario' => 'Horario',
+            //'dias' => 'Días',
         ];
     }
 
