@@ -138,4 +138,13 @@ return array (
       '@kartik/depdrop' => $vendorDir . '/kartik-v/yii2-widget-depdrop/src',
     ),
   ),
+  'alexgx/yii2-phpexcel' => 
+  array (
+    'name' => 'alexgx/yii2-phpexcel',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@alexgx/phpexcel' => $vendorDir . '/alexgx/yii2-phpexcel',
+    ),
+  ),
 );

@@ -25,6 +25,7 @@ return array(
     'inquid\\pdf\\' => array($vendorDir . '/inquid/yii2-fpdf'),
     'dmstr\\' => array($vendorDir . '/dmstr/yii2-adminlte-asset'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
+    'alexgx\\phpexcel\\' => array($vendorDir . '/alexgx/yii2-phpexcel'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),

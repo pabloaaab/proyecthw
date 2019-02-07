@@ -141,11 +141,12 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
             </tbody>
 <?php endforeach; ?>
     </table>    
-    <div class = "form-group" align="left">
-<?= LinkPager::widget(['pagination' => $pagination]) ?>
+    <div class="panel-footer text-right">
+        <?= Html::submitButton("<span class='glyphicon glyphicon-export'></span> excel", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
     </div>
+    <div class = "form-group" align="left">
+        <?= LinkPager::widget(['pagination' => $pagination]) ?>
+    </div>    
 </div>
-
-<?= Html::submitButton("<span class='glyphicon glyphicon-floppy-disk'></span> excel", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
 
 <?php $formulario->end() ?>

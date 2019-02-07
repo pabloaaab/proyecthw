@@ -25,7 +25,8 @@
         "dmstr/yii2-adminlte-asset": "^2.1",
         "kartik-v/yii2-mpdf": "dev-master",
         "inquid/yii2-fpdf": "*",
-        "moonlandsoft/yii2-phpexcel": "*"
+        "moonlandsoft/yii2-phpexcel": "*",
+        "alexgx/yii2-phpexcel" : "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

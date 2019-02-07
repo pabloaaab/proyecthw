@@ -119,6 +119,10 @@ class ComposerStaticInitda04a37dc982d38f8e98f3fbecae1a9c
         array (
             'cebe\\markdown\\' => 14,
         ),
+        'a' => 
+        array (
+            'alexgx\\phpexcel\\' => 16,
+        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -250,6 +254,10 @@ class ComposerStaticInitda04a37dc982d38f8e98f3fbecae1a9c
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
         ),
+        'alexgx\\phpexcel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alexgx/yii2-phpexcel',
+        ),
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
@@ -370,6 +378,10 @@ class ComposerStaticInitda04a37dc982d38f8e98f3fbecae1a9c
             'Prophecy\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
+            ),
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
             ),
         ),
         'H' => 

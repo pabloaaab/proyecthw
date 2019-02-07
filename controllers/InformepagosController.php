@@ -21,6 +21,7 @@ use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use moonland\phpexcel\Excel;
 use app\models\UsuarioDetalle;
+use PHPExcel;
 
 
 
@@ -156,7 +157,7 @@ class InformepagosController extends Controller {
         }
     }
     
-    public function actionExcel($id) {
+    public function actionExcel($model) {
         //$costoproducciondiario = CostoProduccionDiaria::find()->all();
         $objPHPExcel = new \PHPExcel();
         // Set document properties
@@ -191,33 +192,29 @@ class InformepagosController extends Controller {
 
         $i = 2;
         
-        foreach ($costoproducciondiario as $costoproducciondiario) {
+        foreach ($model as $val) {
             
-            $cliente = "";
-            if ($costoproducciondiario->idcliente){
-                $arCliente = \app\models\Cliente::findOne($costoproducciondiario->idcliente);
-                $cliente = $arCliente->nombrecorto;
-            }
+            
             
             $objPHPExcel->setActiveSheetIndex(0)
-                    ->setCellValue('A' . $i, $cliente)
-                    ->setCellValue('B' . $i, $costoproducciondiario->ordenproduccion)
-                    ->setCellValue('C' . $i, $costoproducciondiario->cantidad_x_hora)
-                    ->setCellValue('D' . $i, $costoproducciondiario->cantidad_diaria)
-                    ->setCellValue('E' . $i, $costoproducciondiario->tiempo_entrega_dias)
-                    ->setCellValue('F' . $i, $costoproducciondiario->nro_horas)
-                    ->setCellValue('G' . $i, $costoproducciondiario->dias_entrega)
-                    ->setCellValue('H' . $i, $costoproducciondiario->costo_muestra_operaria)
-                    ->setCellValue('I' . $i, $costoproducciondiario->costo_x_hora);
+                    ->setCellValue('A' . $i, $val->nropago)
+                    ->setCellValue('B' . $i, $val->nropago)
+                    ->setCellValue('C' . $i, $val->nropago)
+                    ->setCellValue('D' . $i, $val->nropago)
+                    ->setCellValue('E' . $i, $val->nropago)
+                    ->setCellValue('F' . $i, $val->nropago)
+                    ->setCellValue('G' . $i, $val->nropago)
+                    ->setCellValue('H' . $i, $val->nropago)
+                    ->setCellValue('I' . $i, $val->nropago);
             $i++;
         }
 
-        $objPHPExcel->getActiveSheet()->setTitle('Costo_produccion_diaria');
+        $objPHPExcel->getActiveSheet()->setTitle('informe');
         $objPHPExcel->setActiveSheetIndex(0);
 
         // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Costo_produccion_diaria.xlsx"');
+        header('Content-Disposition: attachment;filename="informe.xlsx"');
         header('Cache-Control: max-age=0');
         // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');

@@ -1,5 +1,51 @@
 [
     {
+        "name": "alexgx/yii2-phpexcel",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/AlexGx/yii2-phpexcel.git",
+            "reference": "386f8d1c1248071b9c25fd4781a0d767fecb810b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/AlexGx/yii2-phpexcel/zipball/386f8d1c1248071b9c25fd4781a0d767fecb810b",
+            "reference": "386f8d1c1248071b9c25fd4781a0d767fecb810b",
+            "shasum": ""
+        },
+        "require": {
+            "phpoffice/phpexcel": "1.8.1",
+            "yiisoft/yii2": "*"
+        },
+        "time": "2017-05-10T14:44:10+00:00",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "alexgx\\phpexcel\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Alexander Gubarev",
+                "email": "gubarev.alex@gmail.com",
+                "homepage": "http://actionmedia-labs.net"
+            }
+        ],
+        "description": "PhpExcel component extension for Yii2.",
+        "keywords": [
+            "PHPExcel",
+            "component",
+            "extension",
+            "yii"
+        ]
+    },
+    {
         "name": "almasaeed2010/adminlte",
         "version": "v2.4.8",
         "version_normalized": "2.4.8.0",
@@ -2073,6 +2119,66 @@
         ]
     },
     {
+        "name": "phpoffice/phpexcel",
+        "version": "1.8.1",
+        "version_normalized": "1.8.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPOffice/PHPExcel.git",
+            "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+            "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+            "shasum": ""
+        },
+        "require": {
+            "ext-xml": "*",
+            "ext-xmlwriter": "*",
+            "php": ">=5.2.0"
+        },
+        "time": "2015-05-01T07:00:55+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "PHPExcel": "Classes/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Maarten Balliauw",
+                "homepage": "http://blog.maartenballiauw.be"
+            },
+            {
+                "name": "Mark Baker"
+            },
+            {
+                "name": "Franck Lefevre",
+                "homepage": "http://blog.rootslabs.net"
+            },
+            {
+                "name": "Erik Tilt"
+            }
+        ],
+        "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+        "homepage": "http://phpexcel.codeplex.com",
+        "keywords": [
+            "OpenXML",
+            "excel",
+            "php",
+            "spreadsheet",
+            "xls",
+            "xlsx"
+        ],
+        "abandoned": "phpoffice/phpspreadsheet"
+    },
+    {
         "name": "phpoffice/phpspreadsheet",
         "version": "1.6.0",
         "version_normalized": "1.6.0.0",
@@ -2983,27 +3089,27 @@
     },
     {
         "name": "sebastian/diff",
-        "version": "3.0.1",
-        "version_normalized": "3.0.1.0",
+        "version": "3.0.2",
+        "version_normalized": "3.0.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/diff.git",
-            "reference": "366541b989927187c4ca70490a35615d3fef2dce"
+            "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/366541b989927187c4ca70490a35615d3fef2dce",
-            "reference": "366541b989927187c4ca70490a35615d3fef2dce",
+            "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
+            "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
             "shasum": ""
         },
         "require": {
             "php": "^7.1"
         },
         "require-dev": {
-            "phpunit/phpunit": "^7.0",
+            "phpunit/phpunit": "^7.5 || ^8.0",
             "symfony/process": "^2 || ^3.3 || ^4"
         },
-        "time": "2018-06-10T07:54:39+00:00",
+        "time": "2019-02-04T06:01:07+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
