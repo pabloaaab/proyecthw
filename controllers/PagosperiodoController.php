@@ -100,6 +100,19 @@ class PagosperiodoController extends Controller {
                 } else {
                     $form->getErrors();
                 }
+                if(isset($_POST['excel'])){
+                    $table = PagosPeriodo::find()                            
+                            ->Where(['=', 'cerro_grupo', '0'])                            
+                            ->andFilterWhere(['like', 'anulado', $anulado])
+                            ->andFilterWhere(['like', 'afecta_pago', $pagado])
+                            ->andFilterWhere(['like', 'mensualidad', $mensualidad])
+                            ->andFilterWhere(['like', 'identificacion', $identificacion])                            
+                            ->andFilterWhere(['like', 'sede', $sede])
+                            ->orderBy('consecutivo desc');
+                    
+                    $model = $table->all();
+                    $this->actionExcel($model);                    
+                }
             } else {
                 if(Yii::$app->user->identity->role == 2){
                     $table = PagosPeriodo::find()
@@ -129,7 +142,10 @@ class PagosperiodoController extends Controller {
 
                 $result = $command->queryAll();
                 $totaldeuda = $result[0]['totaldeuda'];
-                $totaldeudagenerada = $result[0]['totaldeuda'];                
+                $totaldeudagenerada = $result[0]['totaldeuda'];
+                if(isset($_POST['excel'])){
+                    //$this->actionExcel($model);                    
+                }                
             }
             return $this->render('index', [
                         'model' => $model,
@@ -236,6 +252,82 @@ class PagosperiodoController extends Controller {
         }        
         
         return $this->render("cerrar", ["model" => $model, "msg" => $msg, "tipomsg" => $tipomsg]);
-    }        
+    }
+    
+    public function actionExcel($model) {
+        //$costoproducciondiario = CostoProduccionDiaria::find()->all();
+        $objPHPExcel = new \PHPExcel();
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("EMPRESA")
+            ->setLastModifiedBy("EMPRESA")
+            ->setTitle("Office 2007 XLSX Test Document")
+            ->setSubject("Office 2007 XLSX Test Document")
+            ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+            ->setKeywords("office 2007 openxml php")
+            ->setCategory("Test result file");
+        $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(10);
+        $objPHPExcel->getActiveSheet()->getStyle('1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);        
+        $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A1', 'Código')
+                    ->setCellValue('B1', 'Nro Pago')
+                    ->setCellValue('C1', 'Mensualidad')
+                    ->setCellValue('D1', 'Estudiante')                                        
+                    ->setCellValue('E1', 'Valor a Pagar')
+                    ->setCellValue('F1', 'Valor Pagado')
+                    ->setCellValue('G1', 'Pagado')
+                    ->setCellValue('H1', 'Anulado')
+                    ->setCellValue('I1', 'Sede')
+                    ->setCellValue('J1', 'Nivel');
+
+        $i = 2;
+        
+        foreach ($model as $val) {
+            if ($val->anulado == "") { $anulado = "NO"; } else { $anulado = "SI"; }
+            if ($val->afecta_pago == 1) { $pagado = "SI"; }else { $pagado = "NO"; }
+            $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A' . $i, $val->consecutivo)
+                    ->setCellValue('B' . $i, $val->nropago)
+                    ->setCellValue('C' . $i, $val->mensualidad)
+                    ->setCellValue('D' . $i, $val->identificacion.' - '.$val->nombres)                    
+                    ->setCellValue('E' . $i, number_format($val->total))
+                    ->setCellValue('F' . $i, number_format($val->pago1))
+                    ->setCellValue('G' . $i, $pagado)
+                    ->setCellValue('H' . $i, $anulado)                    
+                    ->setCellValue('I' . $i, $val->sede)
+                    ->setCellValue('J' . $i, $val->nivel);                    
+                    
+            $i++;
+        }
+
+        $objPHPExcel->getActiveSheet()->setTitle('pagosperiodo');
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="pagosperiodo.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+        // If you're serving to IE over SSL, then the following may be needed
+        header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+        header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header ('Pragma: public'); // HTTP/1.0
+        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save('php://output');
+        //return $model;
+        exit;
+        
+    }
 
 }

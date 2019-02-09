@@ -84,6 +84,7 @@ $dias = ArrayHelper::map($dias, "dias", "dias");
             <?= $formulario->field($form, 'tipo_jornada')->dropdownList(['Semana' => 'Semana', 'Sabado' => 'Sabado', 'Domingo' => 'Domingo'], ['prompt' => 'Seleccione...']) ?>
             <?= $formulario->field($form, 'horario')->dropDownList($horario,['prompt' => 'Seleccione...' ]) ?>
             <?= $formulario->field($form, 'dias')->dropDownList($dias,['prompt' => 'Seleccione...' ]) ?>
+            <?= $formulario->field($form, 'estado')->dropdownList(['ABIERTA' => 'Abierta', 'APROBADA' => 'Aprobada', 'CANCELADA' => 'Cancelada'], ['prompt' => 'Seleccione...']) ?>
         </div>
         <div class="panel-footer text-right">            
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary",]) ?>
@@ -127,6 +128,7 @@ $form = ActiveForm::begin([
                 <th scope="col">Speaking</th>
                 <th scope="col">Writing</th>                                
                 <th scope="col">Observaciones</th>
+                <th scope="col">Comentarios</th>
                 <th scope="col"></th>                
             </tr>
             </thead>
@@ -143,14 +145,21 @@ $form = ActiveForm::begin([
                     <td><input type="text" name="n1[]" value="<?= $val->nota1 ?>" size="2px"></td>
                     <td><input type="text" name="n2[]" value="<?= $val->nota2 ?>" size="2px"></td>
                     <td><input type="text" name="n3[]" value="<?= $val->nota3 ?>" size="2px"></td>
-                    <td><input type="text" name="n4[]" value="<?= $val->nota4 ?>" size="2px"></td>
+                    <td><input type="text" name="n4[]" value="<?= $val->nota4 ?>" size="2px"></td>                    
                 <?php } else { ?>
                     <td><?= $val->nota1 ?></td>
                     <td><?= $val->nota2 ?></td>
                     <td><?= $val->nota3 ?></td>
                     <td><?= $val->nota4 ?></td>
                 <?php } ?>
-                <td><?= $val->observaciones ?></td>                
+                <td><?= $val->observaciones ?></td>
+                <?php if (Yii::$app->user->identity->role <> 4) { ?>
+                <td>
+                    <textarea name="comentarios[]" rows="1" cols="36"><?= $val->comentarios ?></textarea>
+                </td>
+                <?php } else { ?>
+                <td><?= $val->comentarios ?></td>
+                <?php } ?>
                 <td></td>
                 <td><input type="hidden" name="consecutivo[]" value="<?= $val->consecutivo ?>" size="2px"></td>
             </tr>

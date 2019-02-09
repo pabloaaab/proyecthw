@@ -110,8 +110,17 @@ class InformepagosController extends Controller {
                     $form->getErrors();
                 }
                 
-                if (isset($_GET["excel"])) {
-                    $this->actionExcel($model);
+                if(isset($_POST['excel'])){
+                    $table = Pagos::find()                            
+                            //->andFilterWhere(['like', 'nivel', $nivel])
+                            ->andFilterWhere(['like', 'identificacion', $identificacion])
+                            ->andFilterWhere(['like', 'fecha_registro', $fechapago])
+                            ->andFilterWhere(['like', 'tipo_pago', $tipopago])
+                            ->andFilterWhere(['like', 'sede', $sede])
+                            ->orderBy('nropago desc');
+                    
+                    $model = $table->all();
+                    $this->actionExcel($model);                    
                 }
             } else {
                 $table = Pagos::find()                        
@@ -141,6 +150,9 @@ class InformepagosController extends Controller {
                 $subtotal = $result[0]['otrospagos'] + $result[0]['pagosmedellin'] + $result[0]['pagosrionegro'];
                 $totalanulado = $result[0]['otrospagosanulados'] + $result[0]['pagosmedellinanulado'] + $result[0]['pagosrionegroanulado'];
                 $grantotal = $subtotal - $totalanulado;
+                if(isset($_POST['excel'])){
+                    //$this->actionExcel($model);                    
+                }
             }
             
             return $this->render('index', [
@@ -178,34 +190,39 @@ class InformepagosController extends Controller {
         $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);        
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);        
         $objPHPExcel->setActiveSheetIndex(0)
-                    ->setCellValue('A1', 'Cliente')
-                    ->setCellValue('B1', 'Orden Producción')
-                    ->setCellValue('C1', 'Cantidad por Hora')
-                    ->setCellValue('D1', 'Cantidad Diaria')
-                    ->setCellValue('E1', 'Tiempo Entrega Días')
-                    ->setCellValue('F1', 'Nro Horas')
-                    ->setCellValue('G1', 'Días Entrega')
-                    ->setCellValue('H1', 'Costo Muestra Operaría')
-                    ->setCellValue('I1', 'Costo por Hora');
+                    ->setCellValue('A1', 'Nro Pago')
+                    ->setCellValue('B1', 'Estudiante')
+                    ->setCellValue('C1', 'Pago')
+                    ->setCellValue('D1', 'Tipo Pago')
+                    ->setCellValue('E1', 'Valor Pago')
+                    ->setCellValue('F1', 'Fecha Pago')
+                    ->setCellValue('G1', 'Sede')
+                    ->setCellValue('H1', 'Nivel')
+                    ->setCellValue('I1', 'Observaciones')
+                    ->setCellValue('J1', 'Anulado');
 
         $i = 2;
         
         foreach ($model as $val) {
-            
-            
-            
+            if ($val->anulado == "") {
+                $anulado = "NO";
+            } else {
+                $anulado = "SI";
+            }                        
             $objPHPExcel->setActiveSheetIndex(0)
                     ->setCellValue('A' . $i, $val->nropago)
-                    ->setCellValue('B' . $i, $val->nropago)
-                    ->setCellValue('C' . $i, $val->nropago)
-                    ->setCellValue('D' . $i, $val->nropago)
-                    ->setCellValue('E' . $i, $val->nropago)
-                    ->setCellValue('F' . $i, $val->nropago)
-                    ->setCellValue('G' . $i, $val->nropago)
-                    ->setCellValue('H' . $i, $val->nropago)
-                    ->setCellValue('I' . $i, $val->nropago);
+                    ->setCellValue('B' . $i, $val->entificacion->nombreEstudiante)
+                    ->setCellValue('C' . $i, $val->mensualidad)
+                    ->setCellValue('D' . $i, $val->ttpago)
+                    ->setCellValue('E' . $i, number_format($val->total))
+                    ->setCellValue('F' . $i, $val->fecha_registro)
+                    ->setCellValue('G' . $i, $val->sede)
+                    ->setCellValue('H' . $i, $val->nivel)
+                    ->setCellValue('I' . $i, $val->observaciones)
+                    ->setCellValue('J' . $i, $anulado);
             $i++;
         }
 
@@ -225,7 +242,9 @@ class InformepagosController extends Controller {
         header ('Pragma: public'); // HTTP/1.0
         $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
         $objWriter->save('php://output');
-        exit;	    
+        //return $model;
+        exit;
+        
     }
 
 }

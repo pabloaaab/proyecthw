@@ -141,12 +141,30 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
             </tbody>
 <?php endforeach; ?>
     </table>    
-    <div class="panel-footer text-right">
-        <?= Html::submitButton("<span class='glyphicon glyphicon-export'></span> excel", ["class" => "btn btn-primary", 'name' => 'excel']) ?>
-    </div>
+    
     <div class = "form-group" align="left">
         <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>    
+</div>
+
+<?php $formulario->end() ?>
+
+<?php
+$form = ActiveForm::begin([
+            "method" => "post",
+            'id' => 'formulario',
+            'enableClientValidation' => false,
+            'enableAjaxValidation' => true,
+            'options' => ['class' => 'form-horizontal condensed', 'role' => 'form'],
+            'fieldConfig' => [
+                'template' => '{label}<div class="col-sm-4 form-group">{input}{error}</div>',
+                'labelOptions' => ['class' => 'col-sm-2 control-label'],
+                'options' => []
+            ],
+        ]);
+?>
+<div class="panel-footer text-right">
+    <?= Html::submitButton("<span class='glyphicon glyphicon-export'></span> excel", ["class" => "btn btn-primary", 'name' => 'excel', 'value' => 1]) ?>        
 </div>
 
 <?php $formulario->end() ?>

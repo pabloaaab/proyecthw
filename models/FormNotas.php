@@ -16,6 +16,7 @@ class FormNotas extends Model
     public $tipo_jornada;
     public $horario;    
     public $dias;
+    public $estado;
 
     public function rules()
     {
@@ -26,6 +27,7 @@ class FormNotas extends Model
             ['tipo_jornada', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan números y letras'],
             ['horario', 'match', 'pattern' => '/^[-a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
             ['dias', 'match', 'pattern' => '/^[-a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
+            ['estado', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
         ];
     }
 
@@ -38,6 +40,7 @@ class FormNotas extends Model
             'tipo_jornada' => 'Jornada:',
             'horario' => 'Horario:',
             'dias' => 'Días:',
+            'estado' => 'Estado:',
         ];
     }
 }

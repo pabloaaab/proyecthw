@@ -67,6 +67,7 @@ $dias = ArrayHelper::map($dias, "dias", "dias");
             <?= $formulario->field($form, 'jornada')->dropdownList(['Semana' => 'Semana', 'Sabado' => 'Sabado', 'Domingo' => 'Domingo'], ['prompt' => 'Seleccione...']) ?>
             <?= $formulario->field($form, 'horario')->dropDownList($horario,['prompt' => 'Seleccione...' ]) ?>
             <?= $formulario->field($form, 'dias')->dropDownList($dias,['prompt' => 'Seleccione...' ]) ?>
+            <?= $formulario->field($form, 'estado')->dropdownList(['ABIERTA' => 'Abierta', 'APROBADA' => 'Aprobada', 'CANCELADA' => 'Cancelada'], ['prompt' => 'Seleccione...']) ?>
         </div>
         <div class="panel-footer text-right">
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>

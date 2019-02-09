@@ -35,6 +35,7 @@ class MatriculasController extends Controller {
             $jornada = null;
             $horario = null;
             $dias = null;
+            $estado = null;
             if ($form->load(Yii::$app->request->get())) {
                 if ($form->validate()) {
                     $nivel = Html::encode($form->nivel);
@@ -44,6 +45,7 @@ class MatriculasController extends Controller {
                     $jornada = Html::encode($form->jornada);
                     $horario = Html::encode($form->horario);
                     $dias = Html::encode($form->dias);
+                    $estado = Html::encode($form->estado);
                     $table = Matriculados::find()
                             ->where(['<>', 'estado2', 'ANTERIOR'])
                             ->andFilterWhere(['like', 'nivel', $nivel])
@@ -51,8 +53,9 @@ class MatriculasController extends Controller {
                             ->andFilterWhere(['like', 'docente', $docente])
                             ->andFilterWhere(['like', 'sede', $sede])
                             ->andFilterWhere(['like', 'tipo_jornada', $jornada])
-                            ->andFilterWhere(['like', 'horario', $horario])
-                            ->andFilterWhere(['like', 'dias', $dias])
+                            ->andFilterWhere(['=', 'horario', $horario])
+                            ->andFilterWhere(['=', 'dias', $dias])
+                            ->andFilterWhere(['like', 'estado2', $estado])
                             ->orderBy('consecutivo desc');
                     $count = clone $table;
                     $pages = new Pagination([

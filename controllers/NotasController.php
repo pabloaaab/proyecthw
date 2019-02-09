@@ -30,6 +30,7 @@ class NotasController extends Controller {
         $docente = null;
         $horario = null;
         $dias = null;
+        $estado = null;
         $count = 0;
         $count2 = 0;
         $nf = 0;
@@ -43,7 +44,7 @@ class NotasController extends Controller {
                 $docente = Html::encode($form->docente);
                 $horario = Html::encode($form->horario);
                 $dias = Html::encode($form->dias);
-                
+                $estado = Html::encode($form->estado);
                 //$model = Notas::find()->Where(['<>','matricula',0])->orwhere(['identificacion' => $identificacion])->all();
                 $model = Notas::find()->where(['<>', 'matricula', 0])
                                       ->andFilterWhere(['like', 'identificacion', $identificacion])
@@ -51,7 +52,8 @@ class NotasController extends Controller {
                                       ->andFilterWhere(['like', 'docente', $docente])
                                       ->andFilterWhere(['like', 'tipo_jornada', $tipo_jornada])
                                       ->andFilterWhere(['like', 'horario', $horario])
-                                      ->andFilterWhere(['like', 'dias', $dias]);  
+                                      ->andFilterWhere(['like', 'dias', $dias])
+                                      ->andFilterWhere(['like', 'estado2', $estado]);
                                       $count2 = clone $model;
                     $pages = new Pagination([
                         'pageSize' => 40,
@@ -74,6 +76,7 @@ class NotasController extends Controller {
                     $table->nota2 = $_POST["n2"][$intIndice];
                     $table->nota3 = $_POST["n3"][$intIndice];
                     $table->nota4 = $_POST["n4"][$intIndice];
+                    $table->comentarios = $_POST["comentarios"][$intIndice];
                     if ($table->nota1 > 5 or $table->nota2 > 5 or $table->nota3 > 5 or $table->nota4 > 5){
                         Yii::$app->getSession()->setFlash('warning', 'Las calificaciones estan en una escala de 0 a 5, verificar las notas del registro '.$intCodigo);
                         $error = 1;
@@ -99,7 +102,8 @@ class NotasController extends Controller {
                                           ->andFilterWhere(['like', 'docente', $docente])
                                           ->andFilterWhere(['like', 'tipo_jornada', $tipo_jornada])
                                           ->andFilterWhere(['like', 'horario', $horario])
-                                          ->andFilterWhere(['like', 'dias', $dias]);
+                                          ->andFilterWhere(['like', 'dias', $dias])
+                                          ->andFilterWhere(['like', 'estado2', $estado]);
                                           $count = clone $model;
                     $pages = new Pagination([
                         'pageSize' => 30,
@@ -138,8 +142,7 @@ class NotasController extends Controller {
                     $table->nota2 = $_POST["nota2"][$intIndice];
                     $table->nota3 = $_POST["nota3"][$intIndice];
                     $table->nota4 = $_POST["nota4"][$intIndice];
-                    
-                
+                    $table->comentarios = $_POST["comentarios"][$intIndice];                
                 $intIndice++;
             }
 
