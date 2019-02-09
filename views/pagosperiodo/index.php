@@ -85,8 +85,9 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
         <h4 class="modal-title">Informe</h4>
       </div>
       <div class="modal-body">          
-        <p class="alert-danger">Total Pagos Generados por Cancelar: <?= $totaldeudagenerada ?></p>
-        <p class="alert-danger">Total Pagos Pendientes por Cancelar: <?= $totaldeuda ?></p>                
+        <p class="alert-danger">Total Pagos Generados por Cancelar: $ <?= number_format($totaldeudagenerada) ?></p>
+        <!--<p class="alert-danger">Total Pagos Pendientes por Cancelar: <?= $totaldeuda ?></p>-->
+        <p class="alert-info">Total Pagos Generados Pagados: $ <?= number_format($totaldeudapagada) ?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

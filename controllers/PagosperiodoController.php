@@ -63,7 +63,7 @@ class PagosperiodoController extends Controller {
                     $d1= " ";
                 }
                 if ($pagado != null){
-                    $d2= " and fecha_registro = '". $pagado."'";
+                    $d2= " and afecta_pago = '". $pagado."'";
                 }else{
                     $d2= " ";
                 }
@@ -84,10 +84,12 @@ class PagosperiodoController extends Controller {
                 }
                 $command = $connection->createCommand("
                     SELECT 
-                        SUM(IF(afecta_pago = '0' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeudagenerada       
+                        SUM(IF(afecta_pago = '0' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeudagenerada,
+                        SUM(IF(afecta_pago = '1' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeudapagada
                         FROM pagos_periodo where cerro_grupo = '0' ".$d1.$d2.$d3.$d4.$d5);                                            
                 $result = $command->queryAll();
                 $totaldeudagenerada = $result[0]['totaldeudagenerada'];
+                $totaldeudapagada = $result[0]['totaldeudapagada'];
                     //total deuda
                     $connection2 = Yii::$app->getDb();
                     $command2 = $connection2->createCommand("
@@ -136,7 +138,7 @@ class PagosperiodoController extends Controller {
                 $connection = Yii::$app->getDb();
                 $command = $connection->createCommand("
                     SELECT 
-                        SUM(IF(afecta_pago = '0' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeuda                              
+                        SUM(IF(afecta_pago = '0' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeuda,                              
                         FROM pagos_periodo
                     ");
 
@@ -151,7 +153,8 @@ class PagosperiodoController extends Controller {
                         'model' => $model,
                         'form' => $form,
                         'pagination' => $pages,
-                        'totaldeudagenerada' => $totaldeudagenerada,  
+                        'totaldeudagenerada' => $totaldeudagenerada,
+                        'totaldeudapagada' => $totaldeudapagada,
                         'totaldeuda' => $totaldeuda,  
             ]);
         } else {
@@ -292,15 +295,15 @@ class PagosperiodoController extends Controller {
         $i = 2;
         
         foreach ($model as $val) {
-            if ($val->anulado == "") { $anulado = "NO"; } else { $anulado = "SI"; }
+            if ($val->anulado == 0) { $anulado = "NO"; } else { $anulado = "SI"; }
             if ($val->afecta_pago == 1) { $pagado = "SI"; }else { $pagado = "NO"; }
             $objPHPExcel->setActiveSheetIndex(0)
                     ->setCellValue('A' . $i, $val->consecutivo)
                     ->setCellValue('B' . $i, $val->nropago)
                     ->setCellValue('C' . $i, $val->mensualidad)
                     ->setCellValue('D' . $i, $val->identificacion.' - '.$val->nombres)                    
-                    ->setCellValue('E' . $i, number_format($val->total))
-                    ->setCellValue('F' . $i, number_format($val->pago1))
+                    ->setCellValue('E' . $i, $val->total)
+                    ->setCellValue('F' . $i, $val->pago1)
                     ->setCellValue('G' . $i, $pagado)
                     ->setCellValue('H' . $i, $anulado)                    
                     ->setCellValue('I' . $i, $val->sede)

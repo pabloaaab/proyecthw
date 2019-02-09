@@ -217,7 +217,7 @@ class InformepagosController extends Controller {
                     ->setCellValue('B' . $i, $val->entificacion->nombreEstudiante)
                     ->setCellValue('C' . $i, $val->mensualidad)
                     ->setCellValue('D' . $i, $val->ttpago)
-                    ->setCellValue('E' . $i, number_format($val->total))
+                    ->setCellValue('E' . $i, $val->total)
                     ->setCellValue('F' . $i, $val->fecha_registro)
                     ->setCellValue('G' . $i, $val->sede)
                     ->setCellValue('H' . $i, $val->nivel)
