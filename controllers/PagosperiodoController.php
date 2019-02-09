@@ -138,13 +138,14 @@ class PagosperiodoController extends Controller {
                 $connection = Yii::$app->getDb();
                 $command = $connection->createCommand("
                     SELECT 
-                        SUM(IF(afecta_pago = '0' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeuda,                              
+                        SUM(IF(afecta_pago = '0' and cerro_grupo = '0' and anulado = '0',total,0))   AS totaldeuda                              
                         FROM pagos_periodo
                     ");
 
                 $result = $command->queryAll();
                 $totaldeuda = $result[0]['totaldeuda'];
                 $totaldeudagenerada = $result[0]['totaldeuda'];
+                $totaldeudapagada = $result[0]['totaldeuda'];
                 if(isset($_POST['excel'])){
                     //$this->actionExcel($model);                    
                 }                
