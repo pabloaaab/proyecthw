@@ -69,6 +69,21 @@ class MatriculasController extends Controller {
                 } else {
                     $form->getErrors();
                 }
+                if(isset($_POST['excel'])){
+                    $table = Matriculados::find()
+                            ->where(['<>', 'estado2', 'ANTERIOR'])
+                            ->andFilterWhere(['like', 'nivel', $nivel])
+                            ->andFilterWhere(['like', 'identificacion', $identificación])
+                            ->andFilterWhere(['like', 'docente', $docente])
+                            ->andFilterWhere(['like', 'sede', $sede])
+                            ->andFilterWhere(['like', 'tipo_jornada', $jornada])
+                            ->andFilterWhere(['=', 'horario', $horario])
+                            ->andFilterWhere(['=', 'dias', $dias])
+                            ->andFilterWhere(['like', 'estado2', $estado])
+                            ->orderBy('consecutivo desc')
+                            ->all();
+                    $this->actionExcel($table);                    
+                }
             } else {
                 if(Yii::$app->user->identity->role == 2){
                     $table = Matriculados::find()                        
@@ -88,6 +103,9 @@ class MatriculasController extends Controller {
                         ->offset($pages->offset)
                         ->limit($pages->limit)
                         ->all();
+                if(isset($_POST['excel'])){                                                           
+                    $this->actionExcel($model);                    
+                }
             }
             return $this->render('index', [
                         'model' => $model,
@@ -568,6 +586,90 @@ class MatriculasController extends Controller {
         $model2 = Matriculados::find()->where(['consecutivo' => $consecutivo])->one();
         $model = \app\models\Inscritos::find()->where(['identificacion' => $model2->identificacion])->one();
         return $this->render("generarimprimir", ["model" => $model, "model2" => $model2]);
+    }
+    
+    public function actionExcel($model) {
+        //$costoproducciondiario = CostoProduccionDiaria::find()->all();
+        $objPHPExcel = new \PHPExcel();
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("EMPRESA")
+            ->setLastModifiedBy("EMPRESA")
+            ->setTitle("Office 2007 XLSX Test Document")
+            ->setSubject("Office 2007 XLSX Test Document")
+            ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+            ->setKeywords("office 2007 openxml php")
+            ->setCategory("Test result file");
+        $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(10);
+        $objPHPExcel->getActiveSheet()->getStyle('1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);        
+        $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A1', 'Código')
+                    ->setCellValue('B1', 'Estudiante')
+                    ->setCellValue('C1', 'Nivel')
+                    ->setCellValue('D1', 'Fecha Matricula')                                        
+                    ->setCellValue('E1', 'Docente')
+                    ->setCellValue('F1', 'Sede')
+                    ->setCellValue('G1', 'Valor Mensual')
+                    ->setCellValue('H1', 'Jornada')
+                    ->setCellValue('I1', 'Horario')
+                    ->setCellValue('J1', 'Dias')
+                    ->setCellValue('K1', 'Estado');
+
+        $i = 2;
+        
+        foreach ($model as $val) {
+            if($val->docente){
+                $docente = \app\models\Inscritos::find()->where(['=','identificacion',$val->docente])->one();
+                $dato = $docente->nombredocente;
+            } else {
+                $dato = "Sin definir";
+            }
+               
+            $objPHPExcel->setActiveSheetIndex(0)
+                    ->setCellValue('A' . $i, $val->consecutivo)
+                    ->setCellValue('B' . $i, $val->identificacion.' - '.$val->entificacion->nombreEstudiante2)
+                    ->setCellValue('C' . $i, $val->nivel)
+                    ->setCellValue('D' . $i, $val->fechamat)                    
+                    ->setCellValue('E' . $i, $dato)
+                    ->setCellValue('F' . $i, $val->sede)
+                    ->setCellValue('G' . $i, '$ '.number_format($val->valor_mensual))
+                    ->setCellValue('H' . $i, $val->tipo_jornada)                    
+                    ->setCellValue('I' . $i, $val->horario)
+                    ->setCellValue('J' . $i, $val->dias)
+                    ->setCellValue('K' . $i, $val->estado2);                    
+                    
+            $i++;
+        }
+
+        $objPHPExcel->getActiveSheet()->setTitle('Matriculas');
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="matriculas.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+        // If you're serving to IE over SSL, then the following may be needed
+        header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+        header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header ('Pragma: public'); // HTTP/1.0
+        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+        $objWriter->save('php://output');
+        //return $model;
+        exit;
+        
     }
 
 }
