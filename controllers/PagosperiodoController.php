@@ -280,7 +280,9 @@ class PagosperiodoController extends Controller {
         $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);        
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);        
         $objPHPExcel->setActiveSheetIndex(0)
                     ->setCellValue('A1', 'Código')
                     ->setCellValue('B1', 'Nro Pago')
@@ -291,7 +293,9 @@ class PagosperiodoController extends Controller {
                     ->setCellValue('G1', 'Pagado')
                     ->setCellValue('H1', 'Anulado')
                     ->setCellValue('I1', 'Sede')
-                    ->setCellValue('J1', 'Nivel');
+                    ->setCellValue('J1', 'Nivel')
+                    ->setCellValue('K1', 'Telefono')
+                    ->setCellValue('L1', 'Celular');
 
         $i = 2;
         
@@ -308,7 +312,9 @@ class PagosperiodoController extends Controller {
                     ->setCellValue('G' . $i, $pagado)
                     ->setCellValue('H' . $i, $anulado)                    
                     ->setCellValue('I' . $i, $val->sede)
-                    ->setCellValue('J' . $i, $val->nivel);                    
+                    ->setCellValue('J' . $i, $val->nivel)
+                    ->setCellValue('K' . $i, $val->telefono)
+                    ->setCellValue('L' . $i, $val->celular);                    
                     
             $i++;
         }

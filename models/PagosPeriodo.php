@@ -105,4 +105,16 @@ class PagosPeriodo extends \yii\db\ActiveRecord
         $estudiante = Inscritos::find()->where(['=','identificacion',$this->identificacion])->one();
         return $estudiante->nombre1.' '.$estudiante->nombre2.' '.$estudiante->apellido1.' '.$estudiante->apellido2;
     }
+    
+    public function getTelefono()
+    {
+        $estudiante = Inscritos::find()->where(['=','identificacion',$this->identificacion])->one();
+        return $estudiante->telefono;
+    }
+    
+    public function getCelular()
+    {
+        $estudiante = Inscritos::find()->where(['=','identificacion',$this->identificacion])->one();
+        return $estudiante->celular;
+    }
 }
