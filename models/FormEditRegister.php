@@ -13,7 +13,8 @@ class FormEditRegister extends model{
     public $role;
     public $sede;
     public $email;    
-    public $activo;    
+    public $activo;
+    public $fechacreacion;    
 
     public function rules()
     {
@@ -24,7 +25,7 @@ class FormEditRegister extends model{
             ['username', 'usuario_existe'],
             
             ['nombrecompleto', 'string'],
-
+            ['fechacreacion', 'safe'],
             ['email', 'match', 'pattern' => "/^.{5,80}$/", 'message' => 'Mínimo 5 y máximo 80 caracteres'],
             ['email', 'email', 'message' => 'Formato no válido'],
             ['email', 'email_existe'],                        
@@ -40,6 +41,7 @@ class FormEditRegister extends model{
             'sede' => 'Sede:',
             'email' => 'Email:',
             'activo' => 'Estado:',
+            'fechacreacion' => 'Fecha Creacion:',
         ];
     }
 
@@ -60,7 +62,7 @@ class FormEditRegister extends model{
     {
         //Buscar el usuario en la tabla
         //$table = Users::find()->where("username=:username", [":username" => $this->username]);
-        $table = Users::find()->where("username=:username", [":username" => $this->username])->andWhere("email!=:email", [':email' => $this->email]);
+        $table = Users::find()->where("username=:username", [":username" => $this->username])->andWhere("fechacreacion!=:fechacreacion", [':fechacreacion' => $this->fechacreacion]);
         //Si el username existe mostrar el error
         if ($table->count() == 1)
         {
