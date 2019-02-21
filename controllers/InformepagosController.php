@@ -36,6 +36,7 @@ class InformepagosController extends Controller {
             $sede = null;
             $tipopago = null;            
             $anio_mes_dia = null;
+            $nro_pago = null;
             if ($form->load(Yii::$app->request->get())) {
                 if ($form->validate()) {
                     //$nivel = Html::encode($form->nivel);
@@ -44,6 +45,7 @@ class InformepagosController extends Controller {
                     $sede = Html::encode($form->sede);
                     $tipopago = Html::encode($form->tipo_pago);
                     $anio_mes_dia = Html::encode($form->anio_mes_dia);
+                    $nro_pago = Html::encode($form->nro_pago);
                     if ($anio_mes_dia == "dia"){
                         $fechapago = $fechapago;
                     }
@@ -59,6 +61,7 @@ class InformepagosController extends Controller {
                             ->andFilterWhere(['like', 'fecha_registro', $fechapago])
                             ->andFilterWhere(['like', 'tipo_pago', $tipopago])
                             ->andFilterWhere(['like', 'sede', $sede])
+                            ->andFilterWhere(['=', 'nropago', $nro_pago])
                             ->orderBy('nropago desc');
                     $count = clone $table;
                     $pages = new Pagination([
@@ -91,6 +94,11 @@ class InformepagosController extends Controller {
                 }else{
                     $d4= " ";
                 }
+                if ($nro_pago != null){
+                    $d5= " and nropago = '". $nro_pago."'";
+                }else{
+                    $d5= " ";
+                }
                 $command = $connection->createCommand("
                     SELECT 
                         SUM(IF(tipo_pago = 'otros' and anulado = '',total,0))   AS otrospagos,
@@ -99,7 +107,7 @@ class InformepagosController extends Controller {
                         SUM(IF(tipo_pago = 'mensualidad' and sede = 'medellin' and anulado = 'si',total,0))   AS pagosmedellinanulado,
                         SUM(IF(tipo_pago = 'mensualidad' and sede = 'rionegro' and anulado = '',total,0))   AS pagosrionegro,
                         SUM(IF(tipo_pago = 'mensualidad' and sede = 'rionegro' and anulado = 'si',total,0))   AS pagosrionegroanulado      
-                        FROM pagos where nropago <> 0 ".$d1.$d2.$d3.$d4);
+                        FROM pagos where nropago <> 0 ".$d1.$d2.$d3.$d4.$d5);
                                             
 
                 $result = $command->queryAll();
@@ -117,6 +125,7 @@ class InformepagosController extends Controller {
                             ->andFilterWhere(['like', 'fecha_registro', $fechapago])
                             ->andFilterWhere(['like', 'tipo_pago', $tipopago])
                             ->andFilterWhere(['like', 'sede', $sede])
+                            ->andFilterWhere(['=', 'nropago', $nro_pago])
                             ->orderBy('nropago desc');
                     
                     $model = $table->all();

@@ -15,13 +15,15 @@ class FormFiltroInformesPagos extends Model
     public $fechapago;
     public $sede;
     public $tipo_pago;
-    public $anio_mes_dia;    
+    public $anio_mes_dia;
+    public $nro_pago;
 
     public function rules()
     {
         return [
 
             ['identificacion', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
+            ['nro_pago', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
             //['nivel', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
             ['fechapago', 'safe'],            
             ['sede', 'match', 'pattern' => '/^[a-z\s]+$/i', 'message' => 'Sólo se aceptan letras'],
@@ -39,6 +41,7 @@ class FormFiltroInformesPagos extends Model
             'sede' => 'Sede:',
             'tipo_pago' => 'Tipo de Pago:',
             'anio_mes_dia' => 'Fecha Año-Mes-Día:',
+            'nro_pago' => 'Nro Pago:',
         ];
     }
 }

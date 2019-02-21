@@ -50,7 +50,7 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
                     'format' => 'yyyy-mm-dd',
                     'todayHighlight' => true]]) ?>     
             <?= $formulario->field($form, 'tipo_pago')->dropDownList(['mensualidad' => 'Mensualidad','otros' => 'Otros Pagos'],['prompt' => 'Seleccione...' ]) ?>                        
-            
+            <?= $formulario->field($form, "nro_pago")->input("search") ?>
         </div>
         <div class="row">
               <?= $formulario->field($form, 'anio_mes_dia')->radio(['label' => 'Fecha Dia','value' => "dia", 'uncheck' => null]) ?>
