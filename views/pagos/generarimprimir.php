@@ -98,7 +98,7 @@ else
     <td align="right"><span class="Estilo25">$ 0</span></td>
   </tr>
   <tr>
-    <td height="30" colspan="2"><span class="Estilo25"><strong>Observaciones: <?php echo $msg." - ".$msg3;?></strong></span></td>
+    <td height="30" colspan="2"><span class="Estilo25"><strong>Observaciones: <?php echo $model2->observaciones;?></strong></span></td>
     <td align="right"><span class="Estilo28">Total:</span></td>
     <td align="right"><span class="Estilo28">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
@@ -204,7 +204,7 @@ else
     <td align="right"><span class="Estilo25">$ 0</span></td>
   </tr>
   <tr>
-    <td height="30" colspan="2"><span class="Estilo25"><strong>Observaciones: <?php echo $msg." - ".$msg3." ".$anulado ;?></strong></span></td>
+    <td height="30" colspan="2"><span class="Estilo25"><strong>Observaciones: <?php echo $model2->observaciones." ".$anulado ;?></strong></span></td>
     <td align="right"><span class="Estilo28">Total:</span></td>
     <td align="right"><span class="Estilo28">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
