@@ -148,6 +148,10 @@ class MatriculasController extends Controller {
                     $C2 = 0;
                     $pedagogia = 0;
                     $seb = 0;
+                    $A1Frances = 0;
+                    $A2Frances = 0;
+                    $B1Frances = 0;
+                    $B2Frances = 0;
                     $niveles = Matriculados::find()
                             ->where(['=', 'estado2', 'ABIERTA'])
                             ->andFilterWhere(['like', 'nivel', $nivel])                            
@@ -179,6 +183,18 @@ class MatriculasController extends Controller {
                         if($val->nivel == "S.E.B"){
                             $seb++;
                         }
+                        if($val->nivel == "A1 Frances"){
+                            $A1Frances++;
+                        }
+                        if($val->nivel == "A2 Frances"){
+                            $A2Frances++;
+                        }
+                        if($val->nivel == "B1 Frances"){
+                            $B1Frances++;
+                        }
+                        if($val->nivel == "B2 Frances"){
+                            $B2Frances++;
+                        }
                     }
                 } else {
                     $form->getErrors();
@@ -205,6 +221,10 @@ class MatriculasController extends Controller {
                 $C2 = 0;
                 $pedagogia = 0;
                 $seb = 0;
+                $A1Frances = 0;
+                $A2Frances = 0;
+                $B1Frances = 0;
+                $B2Frances = 0;
                 $niveles = Matriculados::find()
                     ->where(['=', 'estado2', 'ABIERTA'])    
                     ->orderBy('consecutivo desc')
@@ -234,6 +254,18 @@ class MatriculasController extends Controller {
                     if($val->nivel == "S.E.B"){
                         $seb++;
                     }
+                    if($val->nivel == "A1 Frances"){
+                        $A1Frances++;
+                    }
+                    if($val->nivel == "A2 Frances"){
+                        $A2Frances++;
+                    }
+                    if($val->nivel == "B1 Frances"){
+                        $B1Frances++;
+                    }
+                    if($val->nivel == "B2 Frances"){
+                        $B2Frances++;
+                    }
                 }
             }
             return $this->render('niveles', [
@@ -248,6 +280,10 @@ class MatriculasController extends Controller {
                         'C2' => $C2,
                         'pedagogia' => $pedagogia,
                         'seb' => $seb,
+                        'A1Frances' => $A1Frances,
+                        'A2Frances' => $A2Frances,
+                        'B1Frances' => $B1Frances,
+                        'B2Frances' => $B2Frances,
             ]);
         } else {
             return $this->redirect(["site/login"]);

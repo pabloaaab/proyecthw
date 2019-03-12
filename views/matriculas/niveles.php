@@ -66,6 +66,10 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
                 <th scope="col">Total C2: <?= $C2 ?></th>                
                 <th scope="col">Total Pedagogia: <?= $pedagogia ?></th>
                 <th scope="col">Total S.E.B: <?= $seb ?>
+                <th scope="col">Total A1 Frances: <?= $A1Frances ?></th>                                
+                <th scope="col">Total A2 Frances: <?= $A2Frances ?></th>
+                <th scope="col">Total B1 Frances: <?= $B1Frances ?></th>
+                <th scope="col">Total B2 Frances: <?= $B2Frances ?></th>    
             </tr>            
         </table>
     </div>    

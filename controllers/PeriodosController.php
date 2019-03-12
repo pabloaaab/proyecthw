@@ -86,6 +86,7 @@ class PeriodosController extends Controller {
                     $pagosperiodosgenerados = PagosPeriodo::find()
                         ->where(['=', 'mensualidad', $mensualidad])
                         ->andWhere(['=', 'identificacion', $estudiante->identificacion])
+                        ->andWhere(['=','nivel', $estudiante->nivel])    
                         ->all();
                     $reg = count($pagosperiodosgenerados);
                     if ($reg == 0) {
