@@ -64,6 +64,11 @@ $this->title = 'Imprimir Matricula';
     <td height="30" colspan="2"><?= $model->comuna ?></td>
     <td height="30" colspan="2"><?= $model->telefono ?></td>
   </tr>
+  <tr align="center">
+    <td height="30" colspan="5"><strong>Seguro </strong></td>
+    <td height="30" colspan="7"><?= $model2->seguro ?></td>    
+  </tr>
+  <tr>
   <tr>
     <td height="30" colspan="12" align="center"><strong>DATOS FAMILIARES </strong></td>
   </tr>

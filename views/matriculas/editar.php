@@ -131,7 +131,8 @@ $docentes = ArrayHelper::map($docentes, "identificacion", "nombredocente");
         <input type="checkbox" id="jueves" name="jueves" value="J" <?php echo $checkjueves; ?>> Jueves <br>
         <input type="checkbox" id="viernes" name="viernes" value="V" <?php echo $checkviernes; ?>> Viernes <br>
         <input type="checkbox" id="sabado" name="sabado" value="S" <?php echo $checksabado; ?>> Sabado <br>
-        <input type="checkbox" id="domingo" name="domingo" value="D" <?php echo $checkdomingo; ?>> Domingo <br>                        
+        <input type="checkbox" id="domingo" name="domingo" value="D" <?php echo $checkdomingo; ?>> Domingo <br>
+        <?= $form->field($model, 'seguro')->input("text") ?>
         <br>
     </div>
 

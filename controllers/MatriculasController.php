@@ -312,6 +312,7 @@ class MatriculasController extends Controller {
                 $table->sede = $model->sede;
                 $table->estado2 = "ABIERTA";
                 $table->tipo_jornada = $model->tipo_jornada;
+                $table->seguro = $model->seguro;
                 $table->horario = $_POST['de'].'-'.$_POST['hasta'];
                 if (isset($_POST['lunes'])){
                     $lunes = $_POST['lunes'];
@@ -360,6 +361,7 @@ class MatriculasController extends Controller {
                     $model->valor_mensual = null;
                     $model->docente = null;
                     $model->sede = null;
+                    $model->seguro = null;
                     $nota = new Notas;
                     $nota->identificacion = $table->identificacion;
                     $nota->matricula = $table->consecutivo;
@@ -405,6 +407,7 @@ class MatriculasController extends Controller {
                     $table->docente = $model->docente;
                     $table->sede = $model->sede;
                     $table->tipo_jornada = $model->tipo_jornada;
+                    $table->seguro = $model->seguro;
                     $table->horario = $_POST['de'].'-'.$_POST['hasta'];
                     if (isset($_POST['lunes'])){
                     $lunes = $_POST['lunes'];
@@ -483,6 +486,7 @@ class MatriculasController extends Controller {
                 $model->tipo_jornada = $table->tipo_jornada;
                 $model->horario = $table->horario;
                 $model->dias = $table->dias;
+                $model->seguro = $table->seguro;
             } else {
                 return $this->redirect(["matriculas/index"]);
             }

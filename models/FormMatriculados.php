@@ -33,6 +33,7 @@ class FormMatriculados extends Model
     public $programa2;
     public $fecha_can;
     public $acudiente2;
+    public $seguro;
     
     public function rules()
     {
@@ -44,7 +45,7 @@ class FormMatriculados extends Model
             [['fechamat', 'fecha_ren1', 'fecha_ren2', 'fecha_can','fecha_cierre'], 'safe'],
             [['motivo_can', 'observaciones','tipo_jornada'], 'string'],
             [['valor_matricula', 'valor_mensual'], 'number'],
-            [['grupo', 'programa1', 'acudiente1', 'programa2', 'acudiente2'], 'string', 'max' => 50],
+            [['grupo', 'programa1', 'acudiente1', 'programa2', 'acudiente2','seguro'], 'string', 'max' => 50],
             [['identificacion', 'docente', 'ultimo_periodo_generado'], 'string', 'max' => 20],
             [['estado', 'nivel', 'sede', 'estado2','horario','dias'], 'string', 'max' => 25],
             [['identificacion'], 'exist', 'skipOnError' => true, 'targetClass' => Inscritos::className(), 'targetAttribute' => ['identificacion' => 'identificacion']],
@@ -82,6 +83,7 @@ class FormMatriculados extends Model
             'tipo_jornada' => 'Jornada',
             //'horario' => 'Horario',
             //'dias' => 'Días',
+            'seguro' => 'Seguro',
         ];
     }
 
