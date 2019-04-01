@@ -119,7 +119,7 @@ if (!Yii::$app->user->isGuest) {
                 ['label' => 'Pagos Mensualidad', 'url' => ['/pagos/index']],
                 ['label' => 'Pagos Periodo', 'url' => ['/pagosperiodo/index']],
                 ['label' => 'HabeasData', 'url' => ['/habeasdata/index']],
-                ['label' => 'Notas', 'url' => ['/site/index']],
+                ['label' => 'Notas', 'url' => ['/notas/notas']],
             ]
         ],                        
         ],
