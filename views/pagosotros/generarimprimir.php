@@ -84,7 +84,7 @@ if ($model2->anulado == '')
   <tr>
     <td height="30" align="center"><span class="Estilo28">Pagos Pendientes </span></td>
     <td height="30" align="center"><span class="Estilo28">Saldo</span></td>
-    <td align="right"><span class="Estilo25">Efectivo:</span></td>
+    <td align="right"><span class="Estilo25"><?php echo $model2->ttpago.':';?></span></td>
     <td align="right"><span class="Estilo25">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
   <tr>
@@ -169,7 +169,7 @@ else
   <tr>
     <td height="30" align="center"><span class="Estilo28">Pagos Pendientes </span></td>
     <td height="30" align="center"><span class="Estilo28">Saldo</span></td>
-    <td align="right"><span class="Estilo25">Efectivo:</span></td>
+    <td align="right"><span class="Estilo25"><?php echo $model2->ttpago.':';?></span></td>
     <td align="right"><span class="Estilo25">$ <?php echo number_format($model2->total);?></span></td>
   </tr>
   <tr>
