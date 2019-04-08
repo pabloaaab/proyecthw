@@ -64,6 +64,7 @@ if (!Yii::$app->user->isGuest) {
                 'items' => [
                     ['label' => 'Informe Pagos', 'url' => ['/informepagos/index']],
                     ['label' => 'Consulta Niveles', 'url' => ['/matriculas/niveles']],
+                    ['label' => 'Generar Acceso Estudiantes', 'url' => ['/site/generaracceso']],
                 ]
             ],
             [
