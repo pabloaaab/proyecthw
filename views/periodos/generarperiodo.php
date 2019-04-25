@@ -84,7 +84,8 @@ if ($mensaje != ""){
                     <td><?= $val->nivel ?></td>
                     <td><?= $val->sede ?></td>
                     <td><?= '$ '.number_format($val->valor_mensual) ?></td>                    
-                    <td><input type="checkbox" name="consecutivo[]" value="<?= $val->consecutivo ?>" checked="true" readonly="true" onclick="this.checked=!this.checked"></td>
+                    <!--<td><input type="checkbox" name="consecutivo[]" value="<?= $val->consecutivo ?>" checked="true" readonly="true" onclick="this.checked=!this.checked"></td>-->
+                    <td><input type="checkbox" name="consecutivo[]" value="<?= $val->consecutivo ?>" checked="true" ></td>
                 </tr>
                 </tbody>
                 <?php endforeach; ?>
