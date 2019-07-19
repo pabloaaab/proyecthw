@@ -651,7 +651,9 @@ class MatriculasController extends Controller {
         $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);        
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
         $objPHPExcel->setActiveSheetIndex(0)
                     ->setCellValue('A1', 'Código')
                     ->setCellValue('B1', 'Estudiante')
@@ -663,7 +665,9 @@ class MatriculasController extends Controller {
                     ->setCellValue('H1', 'Jornada')
                     ->setCellValue('I1', 'Horario')
                     ->setCellValue('J1', 'Dias')
-                    ->setCellValue('K1', 'Estado');
+                    ->setCellValue('K1', 'Estado')
+                    ->setCellValue('L1', 'Fecha Cierre')
+                    ->setCellValue('M1', 'Fecha Cancelación');
 
         $i = 2;
         
@@ -686,7 +690,9 @@ class MatriculasController extends Controller {
                     ->setCellValue('H' . $i, $val->tipo_jornada)                    
                     ->setCellValue('I' . $i, $val->horario)
                     ->setCellValue('J' . $i, $val->dias)
-                    ->setCellValue('K' . $i, $val->estado2);                    
+                    ->setCellValue('K' . $i, $val->estado2)
+                    ->setCellValue('l' . $i, $val->fecha_cierre)
+                    ->setCellValue('m' . $i, $val->fecha_can);                    
                     
             $i++;
         }

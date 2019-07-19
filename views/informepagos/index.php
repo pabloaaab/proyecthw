@@ -87,7 +87,7 @@ $nivel = ArrayHelper::map(\app\models\Nivel::find()->all(), 'nivel','nivel');
         <p class="alert-danger">Total pagos sede Rionegro Anulados: <?= '$ '.number_format($result[0]['pagosrionegroanulado']) ?></p>
         <p class="alert-info">Subtotal: <?= '$ '.number_format($subtotal) ?></p>
         <p class="alert-danger">Total Anulados: <?= '$ '.number_format($totalanulado) ?></p>
-        <p class="alert-info"><b>Total General: <?= '$ '.number_format($grantotal) ?></b></p>
+        <!--<p class="alert-info"><b>Total General: <?= '$ '.number_format($grantotal) ?></b></p>-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
