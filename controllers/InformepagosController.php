@@ -179,6 +179,7 @@ class InformepagosController extends Controller {
     }
     
     public function actionExcel($model) {
+        ob_clean();
         //$costoproducciondiario = CostoProduccionDiaria::find()->all();
         $objPHPExcel = new \PHPExcel();
         // Set document properties
