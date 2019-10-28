@@ -135,9 +135,9 @@ $this->title = 'Imprimir Matricula';
     <td height="30" colspan="3"><?= $model2->fechamat ?></td>
     <td height="30"></td>
     <td height="30" colspan="2"><?= $model2->nivel ?></td>
-    <td height="30" colspan="3"><?php if ($model->firmaacudiente != "") {?><img src="../images/<?php echo $rg['firmaacudiente'];?>" width="80" height="40" /><?php }?></td>
-    <td height="30" colspan="2"><?php if ($model->firma != "") {?><img src="../images/<?php echo $model->firma;?>" width="80" height="40" /><?php }?></td>
-    <td height="30"><img src="../images/firma_ever.PNG" width="80" height="40" /></td>
+    <td height="30" colspan="3"><?php if ($model->firmaacudiente != "") {?><img src="../web/firmaAcudiente/<?php echo $rg['firmaacudiente'];?>" width="80" height="40" /><?php }?></td>
+    <td height="30" colspan="2"><?php if ($model->firma != "") {?><img src="../web/firmaEstudiante/<?php echo $model->firma;?>" width="80" height="40" /><?php }?></td>
+    <td height="30"><img src="../web/firmaAcudiente//firma_ever.PNG" width="80" height="40" /></td>
   </tr>
   <tr align="center">
     <td height="30" colspan="3"><?= $model2->fecha_ren2 ?></td>
